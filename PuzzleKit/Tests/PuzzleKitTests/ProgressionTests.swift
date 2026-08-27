@@ -89,11 +89,13 @@ struct PlayerProfileTests {
     func dailyIsClaimedOnce() {
         var profile = PlayerProfile()
         let day = "2026-03-01"
-        #expect(profile.applyDaily(outcome(level: 40), on: day, bonusGems: 25))
+        let claimed = profile.applyDaily(outcome(level: 40), on: day, bonusGems: 25)
+        #expect(claimed)
         #expect(profile.gems == 38)
         #expect(profile.hasClearedDaily(on: day))
 
-        #expect(!profile.applyDaily(outcome(level: 40), on: day, bonusGems: 25))
+        let claimed2 = profile.applyDaily(outcome(level: 40), on: day, bonusGems: 25)
+        #expect(!claimed2)
         #expect(profile.gems == 38, "a second clear on the same day must pay nothing")
         #expect(profile.stats.dailyClears == 1)
     }
@@ -101,19 +103,24 @@ struct PlayerProfileTests {
     @Test("gems cannot be overspent")
     func spendingIsGuarded() {
         var profile = PlayerProfile(gems: 100)
-        #expect(!profile.spendGems(101))
+        let spent = profile.spendGems(101)
+        #expect(!spent)
         #expect(profile.gems == 100)
-        #expect(profile.spendGems(100))
+        let spent2 = profile.spendGems(100)
+        #expect(spent2)
         #expect(profile.gems == 0)
-        #expect(!profile.spendGems(1))
+        let spent3 = profile.spendGems(1)
+        #expect(!spent3)
     }
 
     @Test("hints cannot go negative")
     func hintsAreGuarded() {
         var profile = PlayerProfile(hints: 1)
-        #expect(profile.spendHint())
+        let usedHint = profile.spendHint()
+        #expect(usedHint)
         #expect(profile.hints == 0)
-        #expect(!profile.spendHint())
+        let usedHint2 = profile.spendHint()
+        #expect(!usedHint2)
         #expect(profile.hints == 0)
     }
 
@@ -242,14 +249,20 @@ struct SeededRandomTests {
     func generatorIsReproducible() {
         var a = SeededRandom(seed: 12_345)
         var b = SeededRandom(seed: 12_345)
-        for _ in 0..<64 { #expect(a.next() == b.next()) }
+        for _ in 0..<64 {
+            let left = a.next()
+            let right = b.next()
+            #expect(left == right)
+        }
     }
 
     @Test("different seeds diverge")
     func seedsDiverge() {
         var a = SeededRandom(seed: 1)
         var b = SeededRandom(seed: 2)
-        #expect((0..<32).contains { _ in a.next() != b.next() })
+        var diverged = false
+        for _ in 0..<32 where a.next() != b.next() { diverged = true }
+        #expect(diverged)
     }
 
     @Test("bounded draws stay in range and cover it")
@@ -262,8 +275,11 @@ struct SeededRandomTests {
             seen.insert(value)
         }
         #expect(seen.count == 7)
-        #expect(rng.int(below: 1) == 0)
-        #expect(rng.int(below: 0) == 0)
+        // Degenerate bounds return zero rather than trapping.
+        let singleton = rng.int(below: 1)
+        let empty = rng.int(below: 0)
+        #expect(singleton == 0)
+        #expect(empty == 0)
     }
 
     @Test("shuffling is a permutation, not a resample")

@@ -49,16 +49,22 @@ struct PuzzleEngineTests {
         let blueprint = LevelGenerator.generate(level: 12, track: .free)
         var engine = PuzzleEngine(blueprint: blueprint)
         let endpoint = blueprint.solution[0][0]
-        #expect(engine.beginDrag(at: endpoint))
+        let grabbed = engine.beginDrag(at: endpoint)
+        #expect(grabbed)
         engine.endDrag()
 
         // An empty, non-endpoint cell has nothing to grab.
         let interior = blueprint.solution.first { $0.count >= 3 }?[1]
         #expect(interior != nil, "expected at least one colour longer than two cells")
-        if let interior { #expect(!engine.beginDrag(at: interior)) }
+        if let interior {
+            let grabbedInterior = engine.beginDrag(at: interior)
+            #expect(!grabbedInterior)
+        }
         // Off-board taps are ignored rather than crashing.
-        #expect(!engine.beginDrag(at: Coordinate(-1, 0)))
-        #expect(!engine.beginDrag(at: Coordinate(blueprint.width, 0)))
+        let grabbed2 = engine.beginDrag(at: Coordinate(-1, 0))
+        #expect(!grabbed2)
+        let grabbed3 = engine.beginDrag(at: Coordinate(blueprint.width, 0))
+        #expect(!grabbed3)
     }
 
     @Test("a trail only extends onto adjacent cells")
@@ -66,12 +72,15 @@ struct PuzzleEngineTests {
         let blueprint = LevelGenerator.generate(level: 20, track: .free)
         var engine = PuzzleEngine(blueprint: blueprint)
         let path = blueprint.solution[0]
-        #expect(engine.beginDrag(at: path[0]))
+        let grabbed = engine.beginDrag(at: path[0])
+        #expect(grabbed)
         // Jumping two cells ahead is not a legal step.
         if path.count > 2 {
-            #expect(!engine.extendDrag(to: path[2]))
+            let stepped = engine.extendDrag(to: path[2])
+            #expect(!stepped)
         }
-        #expect(engine.extendDrag(to: path[1]))
+        let stepped2 = engine.extendDrag(to: path[1])
+        #expect(stepped2)
         engine.endDrag()
     }
 
@@ -81,11 +90,15 @@ struct PuzzleEngineTests {
         var engine = PuzzleEngine(blueprint: blueprint)
         let path = blueprint.solution.first { $0.count >= 4 } ?? blueprint.solution[0]
 
-        #expect(engine.beginDrag(at: path[0]))
-        #expect(engine.extendDrag(to: path[1]))
-        #expect(engine.extendDrag(to: path[2]))
+        let grabbed = engine.beginDrag(at: path[0])
+        #expect(grabbed)
+        let stepped = engine.extendDrag(to: path[1])
+        #expect(stepped)
+        let stepped2 = engine.extendDrag(to: path[2])
+        #expect(stepped2)
         #expect(engine.filledCells == 3)
-        #expect(engine.extendDrag(to: path[1]))
+        let stepped3 = engine.extendDrag(to: path[1])
+        #expect(stepped3)
         #expect(engine.filledCells == 2)
         #expect(engine.color(at: path[2]) == nil)
         engine.endDrag()
@@ -101,7 +114,8 @@ struct PuzzleEngineTests {
 
         // Grabbing the finished trail's far end restarts it, which is the
         // player's way of undoing a colour.
-        #expect(engine.beginDrag(at: path[path.count - 1]))
+        let grabbed = engine.beginDrag(at: path[path.count - 1])
+        #expect(grabbed)
         engine.endDrag()
         #expect(!engine.isConnected(color: 0))
     }
@@ -131,19 +145,25 @@ struct PuzzleEngineTests {
         // The fixture puts colour 0's endpoint at (0,0) directly beside colour
         // 1's endpoint at (1,0), so the rule is exercised exactly, not by luck.
         var engine = PuzzleEngine(blueprint: TestBoards.trio)
-        #expect(engine.beginDrag(at: Coordinate(0, 0)))
-        #expect(!engine.extendDrag(to: Coordinate(1, 0)))
+        let grabbed = engine.beginDrag(at: Coordinate(0, 0))
+        #expect(grabbed)
+        let stepped = engine.extendDrag(to: Coordinate(1, 0))
+        #expect(!stepped)
         // The legal step below it still works.
-        #expect(engine.extendDrag(to: Coordinate(0, 1)))
+        let stepped2 = engine.extendDrag(to: Coordinate(0, 1))
+        #expect(stepped2)
         engine.endDrag()
     }
 
     @Test("walls block both grabbing and crossing")
     func wallsAreImpassableOnTheFixture() {
         var engine = PuzzleEngine(blueprint: TestBoards.walled)
-        #expect(!engine.beginDrag(at: Coordinate(1, 1)))
-        #expect(engine.beginDrag(at: Coordinate(1, 0)))
-        #expect(!engine.extendDrag(to: Coordinate(1, 1)))
+        let grabbed = engine.beginDrag(at: Coordinate(1, 1))
+        #expect(!grabbed)
+        let grabbed2 = engine.beginDrag(at: Coordinate(1, 0))
+        #expect(grabbed2)
+        let stepped = engine.extendDrag(to: Coordinate(1, 1))
+        #expect(!stepped)
         engine.endDrag()
     }
 
@@ -189,13 +209,16 @@ struct PuzzleEngineTests {
         let blueprint = LevelGenerator.generate(level: level, track: .pro)
         guard let wall = blueprint.blocked.min() else { return }
         var engine = PuzzleEngine(blueprint: blueprint)
-        #expect(!engine.beginDrag(at: wall))
+        let grabbed = engine.beginDrag(at: wall)
+        #expect(!grabbed)
 
         if let approach = wall.neighbours(width: blueprint.width, height: blueprint.height)
             .compactMap({ cell in blueprint.endpointColor(at: cell).map { (cell, $0) } })
             .first {
-            #expect(engine.beginDrag(at: approach.0))
-            #expect(!engine.extendDrag(to: wall))
+            let grabbed2 = engine.beginDrag(at: approach.0)
+            #expect(grabbed2)
+            let stepped = engine.extendDrag(to: wall)
+            #expect(!stepped)
             engine.endDrag()
         }
     }
