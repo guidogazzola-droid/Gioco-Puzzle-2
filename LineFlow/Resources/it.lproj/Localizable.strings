@@ -6,6 +6,8 @@
 
 /* MARK: - Comune */
 "app.name" = "Line Flow SW";
+"splash.tagline" = "Ogni colore trova la sua strada.";
+"splash.skipHint" = "Tocca due volte per saltare.";
 "common.back" = "Indietro";
 "common.close" = "Chiudi";
 "common.done" = "Fine";

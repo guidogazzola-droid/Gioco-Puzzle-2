@@ -6,6 +6,8 @@
 
 /* MARK: - Common */
 "app.name" = "Line Flow SW";
+"splash.tagline" = "Every colour finds its way.";
+"splash.skipHint" = "Double tap to skip.";
 "common.back" = "Back";
 "common.close" = "Close";
 "common.done" = "Done";

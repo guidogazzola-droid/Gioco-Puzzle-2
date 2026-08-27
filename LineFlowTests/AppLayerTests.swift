@@ -298,3 +298,61 @@ struct GameThemeTests {
         #expect(Set(glyphs).count == 14)
     }
 }
+
+/// The splash draws a fixed set of flows instead of a generated board, so the
+/// properties the generator guarantees at runtime have to be guaranteed here by
+/// hand. Getting one wrong is not a crash: it is a hole in the first screen
+/// anyone sees, of the kind that survives every casual look at the code.
+struct SplashFlowTests {
+
+    @Test("the splash flows cover the grid exactly once")
+    func tilesTheGrid() {
+        var seen: Set<SplashView.GridPoint> = []
+        var duplicates = 0
+        for flow in SplashView.flows {
+            for point in flow {
+                if seen.contains(point) { duplicates += 1 }
+                seen.insert(point)
+            }
+        }
+        #expect(duplicates == 0)
+        #expect(seen.count == SplashView.columns * SplashView.rows)
+    }
+
+    @Test("every step of a splash flow moves to a neighbouring cell")
+    func stepsAreAdjacent() {
+        var breaks = 0
+        for flow in SplashView.flows {
+            guard flow.count > 1 else { continue }
+            for index in 1..<flow.count {
+                let previous = flow[index - 1]
+                let point = flow[index]
+                let distance = abs(previous.column - point.column) + abs(previous.row - point.row)
+                if distance != 1 { breaks += 1 }
+            }
+        }
+        #expect(breaks == 0)
+    }
+
+    @Test("no splash cell falls outside the grid")
+    func staysInBounds() {
+        var outside = 0
+        for flow in SplashView.flows {
+            for point in flow {
+                let inColumns = point.column >= 0 && point.column < SplashView.columns
+                let inRows = point.row >= 0 && point.row < SplashView.rows
+                if !inColumns || !inRows { outside += 1 }
+            }
+        }
+        #expect(outside == 0)
+    }
+
+    @Test("a flow long enough to animate has two distinct ends")
+    func endsAreDistinct() {
+        var degenerate = 0
+        for flow in SplashView.flows {
+            if flow.count < 2 || flow[0] == flow[flow.count - 1] { degenerate += 1 }
+        }
+        #expect(degenerate == 0)
+    }
+}
