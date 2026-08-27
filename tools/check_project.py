@@ -15,6 +15,8 @@ import re
 import sys
 import xml.dom.minidom
 
+WORKFLOWS = sorted(pathlib.Path(".github/workflows").glob("*.yml")) if \
+    pathlib.Path(".github/workflows").is_dir() else []
 PROJECT = pathlib.Path("PrismFlow.xcodeproj/project.pbxproj")
 SCHEME = pathlib.Path("PrismFlow.xcodeproj/xcshareddata/xcschemes/PrismFlow.xcscheme")
 PLISTS = [
@@ -89,13 +91,36 @@ def check_plists(failures):
             failures.append("the app icon has an alpha channel; iOS icons must be opaque")
 
 
+def check_workflows(failures):
+    """Parse the CI workflows. An inline script with the wrong indentation
+    silently invalidates the whole document, and GitHub only tells you after
+    you have pushed it."""
+    if not WORKFLOWS:
+        return
+    try:
+        import yaml
+    except ImportError:
+        print("  (PyYAML not installed - skipping workflow syntax check)")
+        return
+    for path in WORKFLOWS:
+        try:
+            document = yaml.safe_load(path.read_text())
+        except Exception as error:
+            failures.append(f"{path} is not valid YAML: {error}")
+            continue
+        if not isinstance(document, dict) or "jobs" not in document:
+            failures.append(f"{path} has no jobs")
+
+
 def main():
     failures = []
     targets = check_pbxproj(failures)
     check_scheme(failures, {t[0] for t in targets})
     check_plists(failures)
+    check_workflows(failures)
 
     print(f"targets: {sorted(name for _, name in targets)}")
+    print(f"workflows: {[p.name for p in WORKFLOWS]}")
     for failure in failures:
         print(f"  FAIL  {failure}")
     print("project structure ok" if not failures else f"{len(failures)} problems")
