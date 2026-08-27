@@ -8,7 +8,7 @@ extension Color {
     init(hex: String) {
         let cleaned = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
         var value: UInt64 = 0
-        Scanner(string: cleaned).scanHexInt64(&value)
+        _ = Scanner(string: cleaned).scanHexInt64(&value)
 
         let red, green, blue, alpha: Double
         switch cleaned.count {

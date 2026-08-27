@@ -63,7 +63,7 @@ struct ShopView: View {
                 ForEach(CosmeticCatalog.items(in: category)) { cosmetic in
                     CosmeticTile(
                         cosmetic: cosmetic,
-                        state: state(for: cosmetic),
+                        availability: availability(for: cosmetic),
                         action: { handle(cosmetic) }
                     )
                 }
@@ -71,19 +71,20 @@ struct ShopView: View {
         }
     }
 
-    private func state(for cosmetic: Cosmetic) -> CosmeticTile.State {
+    private func availability(for cosmetic: Cosmetic) -> CosmeticTile.Availability {
         let entitlements = services.entitlements
         if services.isEquipped(cosmetic) && entitlements.canUse(cosmetic) { return .equipped }
         if entitlements.canUse(cosmetic) { return .owned }
 
-        switch entitlements.lockReason(for: cosmetic) {
+        guard let reason = entitlements.lockReason(for: cosmetic) else { return .owned }
+        switch reason {
         case .needsGems(let price):
             return .buyableWithGems(price: price, affordable: services.profile.gems >= price)
         case .needsStars(let stars):
             return .needsStars(stars, current: services.profile.totalStars)
         case .needsPurchase(let product):
             return .needsPurchase(services.store.displayPrice(for: product))
-        case .needsPro, .none:
+        case .needsPro:
             return .needsPro
         }
     }
@@ -94,7 +95,8 @@ struct ShopView: View {
             services.equip(cosmetic)
             return
         }
-        switch entitlements.lockReason(for: cosmetic) {
+        guard let reason = entitlements.lockReason(for: cosmetic) else { return }
+        switch reason {
         case .needsGems:
             services.buyWithGems(cosmetic)
         case .needsPurchase(let product):
@@ -102,7 +104,8 @@ struct ShopView: View {
         case .needsPro:
             paywallContext = .cosmetic(cosmetic.id)
             isShowingPaywall = true
-        case .needsStars, .none:
+        case .needsStars:
+            // Nothing to buy - the player has to play for it.
             break
         }
     }
@@ -303,7 +306,7 @@ struct ShopView: View {
 /// One cosmetic in the shop grid.
 struct CosmeticTile: View {
 
-    enum State: Equatable {
+    enum Availability: Equatable {
         case equipped
         case owned
         case buyableWithGems(price: Int, affordable: Bool)
@@ -313,7 +316,7 @@ struct CosmeticTile: View {
     }
 
     let cosmetic: Cosmetic
-    let state: State
+    let availability: Availability
     let action: () -> Void
 
     var body: some View {
@@ -331,7 +334,8 @@ struct CosmeticTile: View {
             .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Ink.card))
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .strokeBorder(state == .equipped ? Ink.accent : Ink.stroke, lineWidth: state == .equipped ? 2 : 1)
+                    .strokeBorder(availability == .equipped ? Ink.accent : Ink.stroke,
+                            lineWidth: availability == .equipped ? 2 : 1)
             )
         }
         .buttonStyle(.plain)
@@ -339,7 +343,7 @@ struct CosmeticTile: View {
     }
 
     private var isDisabled: Bool {
-        switch state {
+        switch availability {
         case .equipped: true
         case .needsStars: true
         case .buyableWithGems(_, let affordable): !affordable
@@ -356,7 +360,7 @@ struct CosmeticTile: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            if case .needsPro = state {
+            if case .needsPro = availability {
                 ProBadge().padding(4)
             }
         }
@@ -364,7 +368,7 @@ struct CosmeticTile: View {
 
     @ViewBuilder
     private var statusLabel: some View {
-        switch state {
+        switch availability {
         case .equipped:
             Label("cosmetic.equipped", systemImage: "checkmark.circle.fill")
                 .font(.caption.weight(.semibold))
