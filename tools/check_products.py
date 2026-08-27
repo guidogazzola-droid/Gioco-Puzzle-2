@@ -19,12 +19,12 @@ import sys
 
 CATALOG = pathlib.Path("PuzzleKit/Sources/PuzzleKit/Economy/ProductCatalog.swift")
 STOREKIT = pathlib.Path("Configuration/Products.storekit")
-STRINGS = sorted(pathlib.Path(".").glob("PrismFlow/Resources/*.lproj/Localizable.strings"))
+STRINGS = sorted(pathlib.Path(".").glob("LineFlow/Resources/*.lproj/Localizable.strings"))
 
 
 def swift_products():
     text = CATALOG.read_text()
-    ids = set(re.findall(r'= "(com\.prismflow\.game\.[\w.]+)"', text))
+    ids = set(re.findall(r'= "(com\.sabettalineflow\.app\.[\w.]+)"', text))
     group = re.search(r'subscriptionGroupID = "([^"]+)"', text)
     return ids, (group.group(1) if group else None)
 
@@ -67,7 +67,7 @@ def main():
     for path in STRINGS:
         keys = set(re.findall(r'^\s*"([^"]+)"\s*=', path.read_text(encoding="utf-8"), re.M))
         for identifier in sorted(declared):
-            short = identifier.removeprefix("com.prismflow.game.")
+            short = identifier.removeprefix("com.sabettalineflow.app.")
             for suffix in ("name", "description"):
                 key = f"product.{short}.{suffix}"
                 if key not in keys:

@@ -1,6 +1,6 @@
 import Foundation
 
-/// Where a Prism Flow Pro subscription currently stands.
+/// Where a Line Flow SW Pro subscription currently stands.
 ///
 /// Grace period is deliberately entitled and billing retry is not: Apple keeps
 /// serving content during a grace period while it retries the charge, and

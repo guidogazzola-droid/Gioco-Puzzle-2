@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the Prism Flow cosmetic palettes and verifies that every colour in a
+"""Builds the Line Flow SW cosmetic palettes and verifies that every colour in a
 palette is perceptually separable from every other one.
 
 Distinguishable colours are a *gameplay* requirement in a Flow puzzle, not a

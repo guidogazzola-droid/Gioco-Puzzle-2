@@ -1,11 +1,11 @@
-/* Prism Flow - English (development language)
+/* Line Flow SW - English (development language)
 
    Format specifiers use positional arguments (%1$ld) so translators can
    reorder them freely, and %ld rather than %d because the values are Swift
    Ints. tools/check_localization.py verifies this file against the source. */
 
 /* MARK: - Common */
-"app.name" = "Prism Flow";
+"app.name" = "Line Flow SW";
 "common.back" = "Back";
 "common.close" = "Close";
 "common.done" = "Done";
@@ -32,10 +32,10 @@
 "home.daily.play" = "Play";
 "home.daily.replay" = "Play again";
 "home.pro.title" = "Pro track";
-"home.pro.subtitle" = "Bigger boards, more colours and wall cells. Included with Prism Flow Pro.";
+"home.pro.subtitle" = "Bigger boards, more colours and wall cells. Included with Line Flow SW Pro.";
 "home.pro.subtitleActive" = "Bigger boards, more colours and wall cells. Your subscription is active.";
 "home.pro.play" = "Play the Pro track";
-"home.pro.unlock" = "See Prism Flow Pro";
+"home.pro.unlock" = "See Line Flow SW Pro";
 "home.shop" = "Styles";
 "home.removeAds" = "Remove ads";
 
@@ -139,9 +139,9 @@
 "product.style.orchid.description" = "The Orchid colour set, yours permanently.";
 "product.style.neon.name" = "Neon style pack";
 "product.style.neon.description" = "Comet trail and Starfield backdrop, yours permanently.";
-"product.pro.monthly.name" = "Prism Flow Pro";
+"product.pro.monthly.name" = "Line Flow SW Pro";
 "product.pro.monthly.description" = "Monthly subscription. Pro levels, no ads, every style.";
-"product.pro.yearly.name" = "Prism Flow Pro (yearly)";
+"product.pro.yearly.name" = "Line Flow SW Pro (yearly)";
 "product.pro.yearly.description" = "Twelve months of Pro at a lower monthly rate.";
 "period.day" = "day";
 "period.week" = "week";
@@ -159,7 +159,7 @@
 "store.banner.restoreFailed" = "Nothing to restore on this Apple Account.";
 
 /* MARK: - Paywall */
-"paywall.title" = "Prism Flow Pro";
+"paywall.title" = "Line Flow SW Pro";
 "paywall.headline.general" = "Everything unlocked, and no ads.";
 "paywall.headline.proTrack" = "The Pro track is a whole second campaign: bigger boards, more colours, wall cells.";
 "paywall.headline.removeAds" = "Pro removes every ad — and unlocks the rest of the game too.";
@@ -180,7 +180,7 @@
 "settings.section.accessibility" = "Accessibility";
 "settings.section.purchases" = "Purchases";
 "settings.section.about" = "About";
-"settings.pro.status" = "Prism Flow Pro";
+"settings.pro.status" = "Line Flow SW Pro";
 "settings.pro.active" = "Active";
 "settings.pro.trial" = "Free trial";
 "settings.pro.grace" = "Payment issue";

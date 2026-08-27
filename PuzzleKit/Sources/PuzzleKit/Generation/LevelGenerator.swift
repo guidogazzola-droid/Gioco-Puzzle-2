@@ -1,6 +1,6 @@
 import Foundation
 
-/// Builds guaranteed-solvable Prism Flow boards from nothing but a level number.
+/// Builds guaranteed-solvable Line Flow SW boards from nothing but a level number.
 ///
 /// The board is produced by *construction*, never by search: the generator first
 /// partitions every playable cell into vertex-disjoint simple paths, then hands

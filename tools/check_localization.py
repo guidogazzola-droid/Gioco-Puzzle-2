@@ -12,8 +12,8 @@ import pathlib
 import re
 import sys
 
-SOURCE_DIRS = ["PrismFlow", "PuzzleKit/Sources"]
-STRINGS_GLOB = "PrismFlow/Resources/*.lproj/Localizable.strings"
+SOURCE_DIRS = ["LineFlow", "PuzzleKit/Sources"]
+STRINGS_GLOB = "LineFlow/Resources/*.lproj/Localizable.strings"
 
 # Keys built at runtime from an enum or a catalogue rather than written out.
 DYNAMIC_PREFIXES = (

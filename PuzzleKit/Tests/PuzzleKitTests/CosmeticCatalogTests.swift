@@ -116,7 +116,7 @@ struct ProductCatalogTests {
         let ids = StoreProductID.allCases.map(\.rawValue)
         #expect(Set(ids).count == ids.count)
         for id in ids {
-            #expect(id.hasPrefix("com.prismflow.game."))
+            #expect(id.hasPrefix("com.sabettalineflow.app."))
         }
     }
 

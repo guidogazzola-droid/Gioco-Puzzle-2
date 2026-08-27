@@ -1,4 +1,4 @@
-# Prism Flow
+# Line Flow SW
 
 A hybrid-casual flow puzzle for iOS, free to play, monetised with ads, one-off
 purchases and a monthly subscription.
@@ -9,7 +9,7 @@ runs out, because there are no level files: **every board is generated on the
 device from its level number**.
 
 <p align="center">
-  <img src="PrismFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Prism Flow app icon">
+  <img src="LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Line Flow SW app icon">
 </p>
 
 ---
@@ -17,7 +17,7 @@ device from its level number**.
 ## Why generated levels
 
 A puzzle game usually ships hand-authored levels, and the content budget then
-caps the campaign. Prism Flow builds each board by *construction* instead: the
+caps the campaign. Line Flow SW builds each board by *construction* instead: the
 playable cells are partitioned into vertex-disjoint simple paths, and the player
 is handed only the two ends of each path. Because the partition already covers
 the board, a full-coverage solution provably exists — the generator just built
@@ -32,7 +32,7 @@ tracks, zero invalid boards, worst colour-length imbalance 1.9x**.
 
 ## Business model
 
-| | Free | Remove ads (one-off) | Prism Flow Pro (subscription) |
+| | Free | Remove ads (one-off) | Line Flow SW Pro (subscription) |
 |---|---|---|---|
 | Endless free campaign | ✅ | ✅ | ✅ |
 | Daily puzzle | ✅ | ✅ | ✅ |
@@ -55,7 +55,7 @@ Requirements: **Xcode 16 or newer**, iOS 18 deployment target.
 ```bash
 git clone <this repo>
 cd Gioco-Puzzle-2
-open PrismFlow.xcodeproj          # then just run
+open LineFlow.xcodeproj          # then just run
 ```
 
 The scheme already points at `Configuration/Products.storekit`, so purchases,
@@ -84,13 +84,13 @@ PuzzleKit/              Swift package: all game logic, no UI, no UIKit
   Gameplay/             the drag/win engine, scoring
   Progression/          save file, chapters, daily challenge, streaks
   Economy/              products, entitlements, cosmetics, ad pacing
-PrismFlow/              the iOS app
+LineFlow/              the iOS app
   App/                  entry point, service graph, routing
   Features/             board renderer, home, map, shop, paywall, settings
   Services/             StoreKit, ads, persistence, haptics
   DesignSystem/         theme, components, backdrop
   Resources/            asset catalogue, en.lproj, it.lproj
-PrismFlowTests/         app-layer tests
+LineFlowTests/         app-layer tests
 Configuration/          Products.storekit
 tools/                  the validation harnesses and the icon generator
 docs/                   design, monetisation, architecture, release checklist
@@ -112,8 +112,8 @@ generation, economy and progression suites run anywhere Swift does.
 The repository is complete and runnable, but three things are placeholders that
 **must** be replaced — they are listed in full in the release checklist:
 
-1. Your team and bundle identifier (`com.prismflow.game` is a placeholder).
-2. Your privacy policy and support URLs in `PrismFlow/Services/LegalLinks.swift`.
+1. Your team and bundle identifier (`com.sabettalineflow.app` is a placeholder).
+2. Your privacy policy and support URLs in `LineFlow/Services/LegalLinks.swift`.
 3. A real ad network behind `AdService`, if you want ad revenue. The shipped
    `SimulatedAdService` renders an in-app placeholder so the project builds and
    the pacing can be felt without linking an SDK.

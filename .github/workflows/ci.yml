@@ -60,8 +60,8 @@ jobs:
       - name: Build and test
         run: |
           xcodebuild test \
-            -project PrismFlow.xcodeproj \
-            -scheme PrismFlow \
+            -project LineFlow.xcodeproj \
+            -scheme LineFlow \
             -destination "id=${{ steps.simulator.outputs.udid }}" \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO

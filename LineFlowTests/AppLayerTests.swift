@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import PrismFlow
+@testable import LineFlow
 @testable import PuzzleKit
 
 /// Tests for the app layer: the parts that sit between PuzzleKit and SwiftUI.
@@ -13,7 +13,7 @@ struct ProfileStoreTests {
 
     private func temporaryStore() -> (ProfileStore, URL) {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("prismflow-tests-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("lineflow-tests-\(UUID().uuidString)", isDirectory: true)
             .appendingPathComponent("profile.json")
         return (ProfileStore(fileURL: url), url)
     }
@@ -142,7 +142,7 @@ struct AppServicesTests {
 
     private func makeServices() -> AppServices {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("prismflow-services-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("lineflow-services-\(UUID().uuidString)", isDirectory: true)
             .appendingPathComponent("profile.json")
         return AppServices(profileStore: ProfileStore(fileURL: url))
     }

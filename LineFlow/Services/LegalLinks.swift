@@ -18,9 +18,9 @@ enum LegalLinks {
     /// REPLACE BEFORE SUBMISSION with your hosted privacy policy. It must also
     /// be entered in App Store Connect, and it must describe the ad SDK's data
     /// collection if you ship one.
-    static let privacyPolicy = URL(string: "https://prismflow.example.com/privacy")!
+    static let privacyPolicy = URL(string: "https://lineflow.example.com/privacy")!
 
-    static let support = URL(string: "https://prismflow.example.com/support")!
+    static let support = URL(string: "https://lineflow.example.com/support")!
 
     /// Deep link to the system subscription management screen.
     static let manageSubscriptions = URL(

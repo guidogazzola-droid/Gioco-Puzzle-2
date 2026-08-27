@@ -1,6 +1,6 @@
 import Foundation
 
-/// The invariants a Prism Flow board must satisfy to be playable.
+/// The invariants a Line Flow SW board must satisfy to be playable.
 ///
 /// Every generated blueprint is checked against these before it is handed to
 /// the player, so an unsolvable level cannot reach the App Store even if the

@@ -2,7 +2,7 @@ import SwiftUI
 import StoreKit
 import PuzzleKit
 
-/// The Prism Flow Pro paywall.
+/// The Line Flow SW Pro paywall.
 ///
 /// Built on `SubscriptionStoreView` so Apple's own control renders the price,
 /// the renewal period and the introductory offer for the shopper's storefront -

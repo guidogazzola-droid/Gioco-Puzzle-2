@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA00000000000000000000A4"
-               BuildableName = "PrismFlow.app"
-               BlueprintName = "PrismFlow"
-               ReferencedContainer = "container:PrismFlow.xcodeproj">
+               BuildableName = "LineFlow.app"
+               BlueprintName = "LineFlow"
+               ReferencedContainer = "container:LineFlow.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA00000000000000000000A5"
-               BuildableName = "PrismFlowTests.xctest"
-               BlueprintName = "PrismFlowTests"
-               ReferencedContainer = "container:PrismFlow.xcodeproj">
+               BuildableName = "LineFlowTests.xctest"
+               BlueprintName = "LineFlowTests"
+               ReferencedContainer = "container:LineFlow.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA00000000000000000000A4"
-            BuildableName = "PrismFlow.app"
-            BlueprintName = "PrismFlow"
-            ReferencedContainer = "container:PrismFlow.xcodeproj">
+            BuildableName = "LineFlow.app"
+            BlueprintName = "LineFlow"
+            ReferencedContainer = "container:LineFlow.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA00000000000000000000A4"
-            BuildableName = "PrismFlow.app"
-            BlueprintName = "PrismFlow"
-            ReferencedContainer = "container:PrismFlow.xcodeproj">
+            BuildableName = "LineFlow.app"
+            BlueprintName = "LineFlow"
+            ReferencedContainer = "container:LineFlow.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

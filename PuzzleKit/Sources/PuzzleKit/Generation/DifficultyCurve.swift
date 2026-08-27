@@ -3,7 +3,7 @@ import Foundation
 /// The two level tracks the game ships with.
 ///
 /// `free` is the endless track every player can play. `pro` is the harder track
-/// gated behind the Prism Flow Pro subscription: bigger boards, more colours
+/// gated behind the Line Flow SW Pro subscription: bigger boards, more colours
 /// and wall cells, which is the mechanical difference the subscription sells.
 public enum LevelTrack: String, Codable, Sendable, CaseIterable, Identifiable {
     case free

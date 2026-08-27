@@ -1,11 +1,11 @@
-/* Prism Flow - Italiano
+/* Line Flow SW - Italiano
 
    I segnaposto usano argomenti posizionali (%1$ld) per poterli riordinare
    liberamente, e %ld invece di %d perche' i valori sono Int di Swift.
    tools/check_localization.py verifica questo file rispetto al codice. */
 
 /* MARK: - Comune */
-"app.name" = "Prism Flow";
+"app.name" = "Line Flow SW";
 "common.back" = "Indietro";
 "common.close" = "Chiudi";
 "common.done" = "Fine";
@@ -32,10 +32,10 @@
 "home.daily.play" = "Gioca";
 "home.daily.replay" = "Rigioca";
 "home.pro.title" = "Percorso Pro";
-"home.pro.subtitle" = "Griglie piu' grandi, piu' colori e caselle muro. Incluso in Prism Flow Pro.";
+"home.pro.subtitle" = "Griglie piu' grandi, piu' colori e caselle muro. Incluso in Line Flow SW Pro.";
 "home.pro.subtitleActive" = "Griglie piu' grandi, piu' colori e caselle muro. Il tuo abbonamento e' attivo.";
 "home.pro.play" = "Gioca il percorso Pro";
-"home.pro.unlock" = "Scopri Prism Flow Pro";
+"home.pro.unlock" = "Scopri Line Flow SW Pro";
 "home.shop" = "Stili";
 "home.removeAds" = "Togli la pubblicita'";
 
@@ -139,9 +139,9 @@
 "product.style.orchid.description" = "Il set di colori Orchidea, tuo per sempre.";
 "product.style.neon.name" = "Pacchetto stile Neon";
 "product.style.neon.description" = "Traccia Cometa e sfondo Campo stellare, tuoi per sempre.";
-"product.pro.monthly.name" = "Prism Flow Pro";
+"product.pro.monthly.name" = "Line Flow SW Pro";
 "product.pro.monthly.description" = "Abbonamento mensile. Livelli Pro, zero pubblicita', tutti gli stili.";
-"product.pro.yearly.name" = "Prism Flow Pro (annuale)";
+"product.pro.yearly.name" = "Line Flow SW Pro (annuale)";
 "product.pro.yearly.description" = "Dodici mesi di Pro a un costo mensile piu' basso.";
 "period.day" = "giorno";
 "period.week" = "settimana";
@@ -159,7 +159,7 @@
 "store.banner.restoreFailed" = "Nessun acquisto da ripristinare su questo Account Apple.";
 
 /* MARK: - Paywall */
-"paywall.title" = "Prism Flow Pro";
+"paywall.title" = "Line Flow SW Pro";
 "paywall.headline.general" = "Tutto sbloccato, e zero pubblicita'.";
 "paywall.headline.proTrack" = "Il percorso Pro e' una seconda campagna intera: griglie piu' grandi, piu' colori, caselle muro.";
 "paywall.headline.removeAds" = "Pro toglie ogni pubblicita' — e sblocca anche tutto il resto del gioco.";
@@ -180,7 +180,7 @@
 "settings.section.accessibility" = "Accessibilita'";
 "settings.section.purchases" = "Acquisti";
 "settings.section.about" = "Informazioni";
-"settings.pro.status" = "Prism Flow Pro";
+"settings.pro.status" = "Line Flow SW Pro";
 "settings.pro.active" = "Attivo";
 "settings.pro.trial" = "Prova gratuita";
 "settings.pro.grace" = "Problema di pagamento";

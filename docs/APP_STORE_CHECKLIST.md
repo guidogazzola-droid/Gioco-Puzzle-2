@@ -7,8 +7,8 @@ each step unblocks the next.
 
 - [ ] Enrol in the Apple Developer Program (€99/year; as an individual or a
       company — a company enrolment needs a D-U-N-S number and takes longer).
-- [ ] Pick a real bundle identifier and replace `com.prismflow.game` in:
-      `PrismFlow.xcodeproj` (both `PRODUCT_BUNDLE_IDENTIFIER` settings), the
+- [ ] Pick a real bundle identifier and replace `com.sabettalineflow.app` in:
+      `LineFlow.xcodeproj` (both `PRODUCT_BUNDLE_IDENTIFIER` settings), the
       test target (`…​.tests`), and every product id in
       `PuzzleKit/Sources/PuzzleKit/Economy/ProductCatalog.swift` and
       `Configuration/Products.storekit`.
@@ -16,7 +16,7 @@ each step unblocks the next.
       missed one.
 - [ ] Set `DEVELOPMENT_TEAM` in the project (Signing & Capabilities → Team).
 - [ ] Register the App ID with **In-App Purchase** enabled.
-- [ ] Check the name "Prism Flow" is free on the App Store, and reserve it.
+- [ ] Check the name "Line Flow SW" is free on the App Store, and reserve it.
 
 ## 2. Products in App Store Connect
 
@@ -26,7 +26,7 @@ A mismatch shows up as a product that silently never loads.
 - [ ] `…​.removeads` — non-consumable
 - [ ] `…​.style.orchid`, `…​.style.neon` — non-consumable
 - [ ] `…​.gems.pouch` / `.chest` / `.vault` — consumable
-- [ ] Subscription group "Prism Flow Pro" containing `…​.pro.monthly` and
+- [ ] Subscription group "Line Flow SW Pro" containing `…​.pro.monthly` and
       `…​.pro.yearly`, both with a **1-week free trial** introductory offer
 - [ ] Replace `ProductCatalog.subscriptionGroupID` with the real group id that
       App Store Connect assigns. The value in the repo matches the local
@@ -42,7 +42,7 @@ A mismatch shows up as a product that silently never loads.
 ## 3. Legal (guideline 3.1.2 — the most common subscription rejection)
 
 - [ ] Host a real privacy policy and replace `LegalLinks.privacyPolicy` in
-      `PrismFlow/Services/LegalLinks.swift`. The placeholder domain is not real.
+      `LineFlow/Services/LegalLinks.swift`. The placeholder domain is not real.
 - [ ] Host a support page and replace `LegalLinks.support`.
 - [ ] Enter the same privacy policy URL in App Store Connect.
 - [ ] Terms of Use: the repo links Apple's standard EULA, which is acceptable.
@@ -57,7 +57,7 @@ A mismatch shows up as a product that silently never loads.
 
 ## 4. Privacy
 
-- [ ] `PrismFlow/PrivacyInfo.xcprivacy` as committed declares no tracking and no
+- [ ] `LineFlow/PrivacyInfo.xcprivacy` as committed declares no tracking and no
       data collection, which is true of the app **as shipped in this repo**.
 - [ ] If you link an ad or analytics SDK, update it: set `NSPrivacyTracking` to
       true, list the tracking domains, declare the collected data types. See

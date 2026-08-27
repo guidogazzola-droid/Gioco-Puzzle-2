@@ -90,7 +90,7 @@ final class ProfileStore {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
         return base
-            .appendingPathComponent("PrismFlow", isDirectory: true)
+            .appendingPathComponent("LineFlow", isDirectory: true)
             .appendingPathComponent("profile.json")
     }
 }

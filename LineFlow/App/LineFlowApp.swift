@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct PrismFlowApp: App {
+struct LineFlowApp: App {
 
     @State private var services = AppServices()
     @Environment(\.scenePhase) private var scenePhase

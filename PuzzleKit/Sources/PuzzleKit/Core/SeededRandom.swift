@@ -2,7 +2,7 @@ import Foundation
 
 /// Deterministic pseudo-random generator (SplitMix64).
 ///
-/// Every level in Prism Flow is generated on device from a seed derived from
+/// Every level in Line Flow SW is generated on device from a seed derived from
 /// the level number, so the same level looks identical on every device and in
 /// every future build without shipping a single level file. That only works if
 /// the generator is bit-for-bit reproducible, which `Foundation.random` is not.

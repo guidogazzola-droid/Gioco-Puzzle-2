@@ -13,16 +13,16 @@ silently break a purchase. `tools/check_products.py` checks them against
 
 | Identifier | Kind | Suggested price (IT) | Grants |
 |---|---|---|---|
-| `com.prismflow.game.removeads` | Non-consumable | €3,99 | No ads, forever |
-| `com.prismflow.game.style.orchid` | Non-consumable | €4,99 | Orchid palette |
-| `com.prismflow.game.style.neon` | Non-consumable | €4,99 | Comet trail + Starfield backdrop |
-| `com.prismflow.game.gems.pouch` | Consumable | €1,99 | 500 gems |
-| `com.prismflow.game.gems.chest` | Consumable | €4,99 | 1 500 gems |
-| `com.prismflow.game.gems.vault` | Consumable | €9,99 | 4 000 gems |
-| `com.prismflow.game.pro.monthly` | Auto-renewable | €4,99/month | Everything, 1-week free trial |
-| `com.prismflow.game.pro.yearly` | Auto-renewable | €39,99/year | Everything, 1-week free trial |
+| `com.sabettalineflow.app.removeads` | Non-consumable | €3,99 | No ads, forever |
+| `com.sabettalineflow.app.style.orchid` | Non-consumable | €4,99 | Orchid palette |
+| `com.sabettalineflow.app.style.neon` | Non-consumable | €4,99 | Comet trail + Starfield backdrop |
+| `com.sabettalineflow.app.gems.pouch` | Consumable | €1,99 | 500 gems |
+| `com.sabettalineflow.app.gems.chest` | Consumable | €4,99 | 1 500 gems |
+| `com.sabettalineflow.app.gems.vault` | Consumable | €9,99 | 4 000 gems |
+| `com.sabettalineflow.app.pro.monthly` | Auto-renewable | €4,99/month | Everything, 1-week free trial |
+| `com.sabettalineflow.app.pro.yearly` | Auto-renewable | €39,99/year | Everything, 1-week free trial |
 
-Subscription group `21495732` ("Prism Flow Pro"), both plans family-shareable.
+Subscription group `21495732` ("Line Flow SW Pro"), both plans family-shareable.
 Prices are a starting point; App Store pricing is per storefront and the app
 never hard-codes a price — every price shown comes from StoreKit.
 
@@ -101,7 +101,7 @@ To go live with, say, AdMob:
    `Info.plist`; call `ATTrackingManager.requestTrackingAuthorization` and pass
    the result into `AdService.configure(allowsPersonalisedAds:)`. Ask at a
    moment that makes sense — after a few levels, not on first launch.
-6. Update `PrismFlow/PrivacyInfo.xcprivacy`: set `NSPrivacyTracking` to true,
+6. Update `LineFlow/PrivacyInfo.xcprivacy`: set `NSPrivacyTracking` to true,
    list the network's tracking domains, and declare the data types it collects.
    The SDK ships its own manifest that Xcode merges into the privacy report,
    but yours must be honest about your own use.

@@ -26,7 +26,7 @@ public struct Cosmetic: Identifiable, Hashable, Sendable, Codable {
         case stars(Int)
         /// A one-off App Store purchase, owned forever.
         case purchase(StoreProductID)
-        /// Included with an active Prism Flow Pro subscription.
+        /// Included with an active Line Flow SW Pro subscription.
         case proSubscription
     }
 

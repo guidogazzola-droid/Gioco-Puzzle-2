@@ -295,7 +295,7 @@ struct SeededRandomTests {
     func stringHashIsStable() {
         // A literal, not a recomputation: `Hasher` is seeded per process, so a
         // regression here would silently reshuffle every daily board.
-        #expect(SeededRandom.hash("prismflow") == SeededRandom.hash("prismflow"))
+        #expect(SeededRandom.hash("lineflow") == SeededRandom.hash("lineflow"))
         #expect(SeededRandom.hash("a") != SeededRandom.hash("b"))
         #expect(SeededRandom.hash("") == 0xCBF2_9CE4_8422_2325)
     }

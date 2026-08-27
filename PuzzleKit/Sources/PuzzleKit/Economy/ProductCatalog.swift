@@ -8,20 +8,20 @@ import Foundation
 public enum StoreProductID: String, CaseIterable, Codable, Sendable, Identifiable {
 
     /// One-off purchase that removes every ad, forever.
-    case removeAds = "com.prismflow.game.removeads"
+    case removeAds = "com.sabettalineflow.app.removeads"
 
     /// Soft-currency packs. Gems only ever buy cosmetics and hints.
-    case gemsPouch = "com.prismflow.game.gems.pouch"
-    case gemsChest = "com.prismflow.game.gems.chest"
-    case gemsVault = "com.prismflow.game.gems.vault"
+    case gemsPouch = "com.sabettalineflow.app.gems.pouch"
+    case gemsChest = "com.sabettalineflow.app.gems.chest"
+    case gemsVault = "com.sabettalineflow.app.gems.vault"
 
     /// One-off cosmetic bundles, owned forever.
-    case stylePackOrchid = "com.prismflow.game.style.orchid"
-    case stylePackNeon = "com.prismflow.game.style.neon"
+    case stylePackOrchid = "com.sabettalineflow.app.style.orchid"
+    case stylePackNeon = "com.sabettalineflow.app.style.neon"
 
-    /// Prism Flow Pro, the monthly and yearly subscription.
-    case proMonthly = "com.prismflow.game.pro.monthly"
-    case proYearly = "com.prismflow.game.pro.yearly"
+    /// Line Flow SW Pro, the monthly and yearly subscription.
+    case proMonthly = "com.sabettalineflow.app.pro.monthly"
+    case proYearly = "com.sabettalineflow.app.pro.yearly"
 
     public var id: String { rawValue }
 }
@@ -109,7 +109,7 @@ public enum ProductCatalog {
     /// Must match the subscription group configured in App Store Connect and
     /// in `Configuration/Products.storekit`.
     public static let subscriptionGroupID = "21495732"
-    public static let subscriptionGroupName = "Prism Flow Pro"
+    public static let subscriptionGroupName = "Line Flow SW Pro"
 
     public static let allIdentifiers: [String] = StoreProductID.allCases.map(\.rawValue)
 

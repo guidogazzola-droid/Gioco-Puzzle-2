@@ -17,11 +17,11 @@ import xml.dom.minidom
 
 WORKFLOWS = sorted(pathlib.Path(".github/workflows").glob("*.yml")) if \
     pathlib.Path(".github/workflows").is_dir() else []
-PROJECT = pathlib.Path("PrismFlow.xcodeproj/project.pbxproj")
-SCHEME = pathlib.Path("PrismFlow.xcodeproj/xcshareddata/xcschemes/PrismFlow.xcscheme")
+PROJECT = pathlib.Path("LineFlow.xcodeproj/project.pbxproj")
+SCHEME = pathlib.Path("LineFlow.xcodeproj/xcshareddata/xcschemes/LineFlow.xcscheme")
 PLISTS = [
-    pathlib.Path("PrismFlow/Info.plist"),
-    pathlib.Path("PrismFlow/PrivacyInfo.xcprivacy"),
+    pathlib.Path("LineFlow/Info.plist"),
+    pathlib.Path("LineFlow/PrivacyInfo.xcprivacy"),
 ]
 STOREKIT_IN_SCHEME = "../../../Configuration/Products.storekit"
 
@@ -73,13 +73,13 @@ def check_plists(failures):
         except Exception as error:
             failures.append(f"{path} does not parse: {error}")
 
-    info = plistlib.loads(pathlib.Path("PrismFlow/Info.plist").read_bytes())
+    info = plistlib.loads(pathlib.Path("LineFlow/Info.plist").read_bytes())
     for key in ("CFBundleIdentifier", "CFBundleShortVersionString", "CFBundleVersion",
                 "UILaunchScreen", "ITSAppUsesNonExemptEncryption"):
         if key not in info:
             failures.append(f"Info.plist is missing {key}")
 
-    icon = pathlib.Path("PrismFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
+    icon = pathlib.Path("LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
     if not icon.exists():
         failures.append("the app icon is missing")
     else:

@@ -4,7 +4,7 @@
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│ PrismFlow (app target)                               │
+│ LineFlow (app target)                               │
 │   SwiftUI views · StoreKit · ads · persistence        │
 ├──────────────────────────────────────────────────────┤
 │ PuzzleKit (Swift package)                            │
@@ -92,7 +92,7 @@ copy of that player's progress.
 | Suite | Runs with | Covers |
 |---|---|---|
 | `PuzzleKitTests` | `swift test`, anywhere | generation, engine rules, scoring, entitlements, ad pacing, save migration |
-| `PrismFlowTests` | Xcode / `xcodebuild test` | persistence on disk, board geometry, service wiring, theme resolution |
+| `LineFlowTests` | Xcode / `xcodebuild test` | persistence on disk, board geometry, service wiring, theme resolution |
 | `tools/verify.py` | Python, anywhere | the generation algorithm as an executable spec, palettes, localisation, product wiring, project file |
 
 The Python harnesses are not a substitute for the Swift tests; they cover what

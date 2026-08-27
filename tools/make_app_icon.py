@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draws the Prism Flow app icon from the game's own visual language.
+"""Draws the Line Flow SW app icon from the game's own visual language.
 
 The icon is three flows finishing a knot on a dark board: the same round caps,
 the same endpoint nodes and the same aurora palette the game draws with, so the
@@ -18,7 +18,7 @@ import sys
 import zlib
 
 SIZE = 1024
-OUTPUT = pathlib.Path("PrismFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
+OUTPUT = pathlib.Path("LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
 
 BACKGROUND_TOP = (0x1A, 0x22, 0x33)
 BACKGROUND_BOTTOM = (0x0A, 0x0E, 0x18)

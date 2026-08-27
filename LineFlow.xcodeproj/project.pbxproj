@@ -17,39 +17,39 @@
 			containerPortal = AA00000000000000000000A1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AA00000000000000000000A4;
-			remoteInfo = PrismFlow;
+			remoteInfo = LineFlow;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AA00000000000000000000A6 /* PrismFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrismFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA00000000000000000000A7 /* PrismFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrismFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA00000000000000000000A6 /* LineFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA00000000000000000000A7 /* LineFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA00000000000000000000F4 /* Products.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Products.storekit; sourceTree = "<group>"; };
 		AA00000000000000000000F5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AA00000000000000000000B0 /* Exceptions for "PrismFlow" folder in "PrismFlow" target */ = {
+		AA00000000000000000000B0 /* Exceptions for "LineFlow" folder in "LineFlow" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = AA00000000000000000000A4 /* PrismFlow */;
+			target = AA00000000000000000000A4 /* LineFlow */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		AA00000000000000000000A8 /* PrismFlow */ = {
+		AA00000000000000000000A8 /* LineFlow */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				AA00000000000000000000B0 /* Exceptions for "PrismFlow" folder in "PrismFlow" target */,
+				AA00000000000000000000B0 /* Exceptions for "LineFlow" folder in "LineFlow" target */,
 			);
-			path = PrismFlow;
+			path = LineFlow;
 			sourceTree = "<group>";
 		};
-		AA00000000000000000000A9 /* PrismFlowTests */ = {
+		AA00000000000000000000A9 /* LineFlowTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PrismFlowTests;
+			path = LineFlowTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -78,8 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				AA00000000000000000000F5 /* README.md */,
-				AA00000000000000000000A8 /* PrismFlow */,
-				AA00000000000000000000A9 /* PrismFlowTests */,
+				AA00000000000000000000A8 /* LineFlow */,
+				AA00000000000000000000A9 /* LineFlowTests */,
 				AA00000000000000000000F3 /* Configuration */,
 				AA00000000000000000000A3 /* Products */,
 			);
@@ -88,8 +88,8 @@
 		AA00000000000000000000A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA00000000000000000000A6 /* PrismFlow.app */,
-				AA00000000000000000000A7 /* PrismFlowTests.xctest */,
+				AA00000000000000000000A6 /* LineFlow.app */,
+				AA00000000000000000000A7 /* LineFlowTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,9 +105,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA00000000000000000000A4 /* PrismFlow */ = {
+		AA00000000000000000000A4 /* LineFlow */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA00000000000000000000C2 /* Build configuration list for PBXNativeTarget "PrismFlow" */;
+			buildConfigurationList = AA00000000000000000000C2 /* Build configuration list for PBXNativeTarget "LineFlow" */;
 			buildPhases = (
 				AA00000000000000000000B1 /* Sources */,
 				AA00000000000000000000B2 /* Frameworks */,
@@ -118,19 +118,19 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				AA00000000000000000000A8 /* PrismFlow */,
+				AA00000000000000000000A8 /* LineFlow */,
 			);
-			name = PrismFlow;
+			name = LineFlow;
 			packageProductDependencies = (
 				AA00000000000000000000E2 /* PuzzleKit */,
 			);
-			productName = PrismFlow;
-			productReference = AA00000000000000000000A6 /* PrismFlow.app */;
+			productName = LineFlow;
+			productReference = AA00000000000000000000A6 /* LineFlow.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AA00000000000000000000A5 /* PrismFlowTests */ = {
+		AA00000000000000000000A5 /* LineFlowTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA00000000000000000000C3 /* Build configuration list for PBXNativeTarget "PrismFlowTests" */;
+			buildConfigurationList = AA00000000000000000000C3 /* Build configuration list for PBXNativeTarget "LineFlowTests" */;
 			buildPhases = (
 				AA00000000000000000000B4 /* Sources */,
 				AA00000000000000000000B5 /* Frameworks */,
@@ -142,14 +142,14 @@
 				AA00000000000000000000F1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				AA00000000000000000000A9 /* PrismFlowTests */,
+				AA00000000000000000000A9 /* LineFlowTests */,
 			);
-			name = PrismFlowTests;
+			name = LineFlowTests;
 			packageProductDependencies = (
 				AA00000000000000000000E4 /* PuzzleKit */,
 			);
-			productName = PrismFlowTests;
-			productReference = AA00000000000000000000A7 /* PrismFlowTests.xctest */;
+			productName = LineFlowTests;
+			productReference = AA00000000000000000000A7 /* LineFlowTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -171,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AA00000000000000000000C1 /* Build configuration list for PBXProject "PrismFlow" */;
+			buildConfigurationList = AA00000000000000000000C1 /* Build configuration list for PBXProject "LineFlow" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -189,8 +189,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA00000000000000000000A4 /* PrismFlow */,
-				AA00000000000000000000A5 /* PrismFlowTests */,
+				AA00000000000000000000A4 /* LineFlow */,
+				AA00000000000000000000A5 /* LineFlowTests */,
 			);
 		};
 /* End PBXProject section */
@@ -232,7 +232,7 @@
 /* Begin PBXTargetDependency section */
 		AA00000000000000000000F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AA00000000000000000000A4 /* PrismFlow */;
+			target = AA00000000000000000000A4 /* LineFlow */;
 			targetProxy = AA00000000000000000000F2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -329,13 +329,13 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = PrismFlow/Info.plist;
+				INFOPLIST_FILE = LineFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prismflow.game;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sabettalineflow.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -353,13 +353,13 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = PrismFlow/Info.plist;
+				INFOPLIST_FILE = LineFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prismflow.game;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sabettalineflow.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -375,12 +375,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prismflow.game.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sabettalineflow.app.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrismFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PrismFlow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LineFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LineFlow";
 			};
 			name = Debug;
 		};
@@ -392,19 +392,19 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prismflow.game.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sabettalineflow.app.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrismFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PrismFlow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LineFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LineFlow";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA00000000000000000000C1 /* Build configuration list for PBXProject "PrismFlow" */ = {
+		AA00000000000000000000C1 /* Build configuration list for PBXProject "LineFlow" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA00000000000000000000D1 /* Debug */,
@@ -413,7 +413,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA00000000000000000000C2 /* Build configuration list for PBXNativeTarget "PrismFlow" */ = {
+		AA00000000000000000000C2 /* Build configuration list for PBXNativeTarget "LineFlow" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA00000000000000000000D3 /* Debug */,
@@ -422,7 +422,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA00000000000000000000C3 /* Build configuration list for PBXNativeTarget "PrismFlowTests" */ = {
+		AA00000000000000000000C3 /* Build configuration list for PBXNativeTarget "LineFlowTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA00000000000000000000D5 /* Debug */,
