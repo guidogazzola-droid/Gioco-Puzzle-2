@@ -246,6 +246,8 @@
 "ad.sponsorTag" = "AD";
 "ad.countdown" = "%ld s";
 "ad.claim" = "Claim reward";
+"ad.mute" = "Mute";
+"ad.unmute" = "Unmute";
 "ad.vidivadi.title" = "VidiVadi Planner";
 "ad.vidivadi.body" = "Plan the whole trip in one place: stops, hotels, ferries and restaurants.";
 "ad.vidivadi.cta" = "See VidiVadi";

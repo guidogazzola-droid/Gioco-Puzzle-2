@@ -31,8 +31,12 @@ struct HouseAd: Identifiable, Equatable {
     }
 
     let id: String
-    /// SF Symbol. Bundled artwork would be better and is a drop-in change;
-    /// a symbol ships today and never renders as a missing image.
+    /// A video creative, bundled with the app. Named without its extension;
+    /// the file is `<name>.mp4` in the app's resources.
+    let video: String?
+    /// SF Symbol, drawn when there is no video. Also the fallback if the video
+    /// is ever missing from the bundle, so the slot degrades to a card rather
+    /// than to black.
     let icon: String
     let tint: Color
     let titleKey: String
@@ -45,6 +49,7 @@ enum HouseAdCatalogue {
 
     static let vidivadi = HouseAd(
         id: "vidivadi",
+        video: "vidivadi-spot",
         icon: "airplane.departure",
         tint: Color(hex: "#4FC3F7"),
         titleKey: "ad.vidivadi.title",
@@ -55,6 +60,7 @@ enum HouseAdCatalogue {
 
     static let pro = HouseAd(
         id: "pro",
+        video: nil,
         icon: "crown.fill",
         tint: Color(hex: "#B478FF"),
         titleKey: "ad.pro.title",

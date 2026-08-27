@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 import SafariServices
 import PuzzleKit
 
@@ -21,6 +22,8 @@ struct HouseAdView: View {
 
     @State private var remaining: TimeInterval
     @State private var web: URL?
+    @State private var video: LoopingVideo?
+    @State private var isMuted = true
 
     init(
         presentation: AdPresentation,
@@ -36,6 +39,14 @@ struct HouseAdView: View {
     private var ad: HouseAd { presentation.ad }
     private var canClose: Bool { remaining <= 0 }
 
+    /// The bundled creative, or nil if this advertisement is a card. Resolved
+    /// once here so a missing file falls back to the card rather than to a
+    /// black rectangle.
+    private var videoURL: URL? {
+        guard let name = ad.video else { return nil }
+        return Bundle.main.url(forResource: name, withExtension: "mp4")
+    }
+
     private var dismissKey: LocalizedStringKey {
         presentation.isRewarded ? "ad.claim" : "common.close"
     }
@@ -49,6 +60,16 @@ struct HouseAdView: View {
             )
             .ignoresSafeArea()
 
+            if let video {
+                VideoLayer(player: video.player)
+                    .ignoresSafeArea()
+                    .onTapGesture { act() }
+                    .accessibilityLabel(Text(LocalizedStringKey(ad.titleKey)))
+                    .accessibilityHint(Text(LocalizedStringKey(ad.ctaKey)))
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityAction { act() }
+            }
+
             VStack(spacing: 18) {
                 Text("ad.sponsorTag")
                     .font(.caption.weight(.bold))
@@ -57,20 +78,26 @@ struct HouseAdView: View {
                     .background(Capsule().fill(.white.opacity(0.12)))
                     .foregroundStyle(Ink.secondary)
 
-                Image(systemName: ad.icon)
-                    .font(.system(size: 54))
-                    .foregroundStyle(ad.tint)
+                Spacer(minLength: 0)
 
-                Text(LocalizedStringKey(ad.titleKey))
-                    .font(.title2.weight(.bold))
-                    .foregroundStyle(Ink.primary)
-                    .multilineTextAlignment(.center)
+                if video == nil {
+                    Image(systemName: ad.icon)
+                        .font(.system(size: 54))
+                        .foregroundStyle(ad.tint)
 
-                Text(LocalizedStringKey(ad.bodyKey))
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(Ink.secondary)
-                    .padding(.horizontal, 36)
+                    Text(LocalizedStringKey(ad.titleKey))
+                        .font(.title2.weight(.bold))
+                        .foregroundStyle(Ink.primary)
+                        .multilineTextAlignment(.center)
+
+                    Text(LocalizedStringKey(ad.bodyKey))
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(Ink.secondary)
+                        .padding(.horizontal, 36)
+                }
+
+                Spacer(minLength: 0)
 
                 Button { act() } label: {
                     Text(LocalizedStringKey(ad.ctaKey))
@@ -96,6 +123,22 @@ struct HouseAdView: View {
                 }
             }
         }
+        .overlay(alignment: .topLeading) {
+            if video != nil {
+                Button {
+                    isMuted.toggle()
+                    video?.player.isMuted = isMuted
+                } label: {
+                    Image(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                        .font(.subheadline.weight(.bold))
+                        .foregroundStyle(Ink.primary)
+                        .frame(width: 34, height: 34)
+                        .background(Circle().fill(.black.opacity(0.35)))
+                }
+                .padding(20)
+                .accessibilityLabel(Text(LocalizedStringKey(isMuted ? "ad.unmute" : "ad.mute")))
+            }
+        }
         .overlay(alignment: .topTrailing) {
             if canClose || presentation.isRewarded {
                 Button {
@@ -116,6 +159,16 @@ struct HouseAdView: View {
         // a tap on a real interstitial does too.
         .sheet(item: $web) { SafariSheet(url: $0).ignoresSafeArea() }
         .task(id: presentation.id) {
+            if let videoURL {
+                // Ambient, so an advertisement never stops the music the
+                // player already had going and always obeys the silent switch.
+                try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
+                try? AVAudioSession.sharedInstance().setActive(true)
+                let looping = LoopingVideo(url: videoURL)
+                looping.player.isMuted = isMuted
+                video = looping
+                looping.player.play()
+            }
             while remaining > 0 {
                 try? await Task.sleep(for: .milliseconds(100))
                 if Task.isCancelled { return }
@@ -143,9 +196,61 @@ struct HouseAdView: View {
     }
 }
 
+/// A video that plays until the advertisement is dismissed.
+///
+/// `AVPlayerLooper` rather than seeking on the end notification: the loop is
+/// gapless, and the looper owning the queue means nothing here has to be
+/// unwound by hand when the view goes away.
+@MainActor
+@Observable
+final class LoopingVideo {
+    let player: AVQueuePlayer
+    private let looper: AVPlayerLooper
+
+    init(url: URL) {
+        let item = AVPlayerItem(url: url)
+        player = AVQueuePlayer()
+        looper = AVPlayerLooper(player: player, templateItem: item)
+    }
+}
+
 /// `URL` is not `Identifiable`, and `sheet(item:)` needs it to be.
 extension URL: @retroactive Identifiable {
     public var id: String { absoluteString }
+}
+
+/// Hosts an `AVPlayerLayer`. `VideoPlayer` would bring transport controls
+/// that have no business on an advertisement.
+private struct VideoLayer: UIViewRepresentable {
+    let player: AVPlayer
+
+    func makeUIView(context: Context) -> PlayerHostView {
+        PlayerHostView(player: player)
+    }
+
+    func updateUIView(_ view: PlayerHostView, context: Context) {
+        view.playerLayer.player = player
+    }
+}
+
+final class PlayerHostView: UIView {
+    override class var layerClass: AnyClass { AVPlayerLayer.self }
+
+    var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+
+    init(player: AVPlayer) {
+        super.init(frame: .zero)
+        playerLayer.player = player
+        // Fit, never fill: the spot is 9:16 and a taller screen would crop it,
+        // and cropping a brand film is how titles lose their last word.
+        playerLayer.videoGravity = .resizeAspect
+        backgroundColor = .clear
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("PlayerHostView is only created in code")
+    }
 }
 
 private struct SafariSheet: UIViewControllerRepresentable {

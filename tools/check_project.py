@@ -112,6 +112,22 @@ def check_workflows(failures):
             failures.append(f"{path} has no jobs")
 
 
+def check_house_ad_videos(failures):
+    """Every video a house advertisement names must be in the resources.
+
+    A missing file is not a build error - the view falls back to its card - but
+    the fallback exists for a corrupt install, not for a typo committed here.
+    """
+    path = pathlib.Path("LineFlow/Services/HouseAds.swift")
+    if not path.exists():
+        failures.append("HouseAds.swift is missing")
+        return
+    for name in re.findall(r'video:\s*"([^"]+)"', path.read_text()):
+        video = pathlib.Path("LineFlow/Resources") / f"{name}.mp4"
+        if not video.exists():
+            failures.append(f"house ad names {name}.mp4, which is not in LineFlow/Resources")
+
+
 def check_legal_links(failures):
     """A placeholder privacy or terms URL is a guaranteed rejection, and it is
     invisible until a reviewer taps it. The links are literals in one file, so
@@ -135,6 +151,7 @@ def main():
     check_plists(failures)
     check_workflows(failures)
     check_legal_links(failures)
+    check_house_ad_videos(failures)
 
     print(f"targets: {sorted(name for _, name in targets)}")
     print(f"workflows: {[p.name for p in WORKFLOWS]}")

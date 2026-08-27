@@ -246,6 +246,8 @@
 "ad.sponsorTag" = "PUBBLICITÀ";
 "ad.countdown" = "%ld s";
 "ad.claim" = "Ritira la ricompensa";
+"ad.mute" = "Disattiva l'audio";
+"ad.unmute" = "Attiva l'audio";
 "ad.vidivadi.title" = "VidiVadi Planner";
 "ad.vidivadi.body" = "Pianifica tutto il viaggio in un posto solo: tappe, hotel, traghetti e ristoranti.";
 "ad.vidivadi.cta" = "Scopri VidiVadi";

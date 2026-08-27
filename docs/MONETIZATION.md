@@ -76,10 +76,10 @@ none of that pays for itself.
 
 So the slot is inventory we own, and it carries two creatives that alternate:
 
-| Creative | Destination | What it is for |
-|---|---|---|
-| VidiVadi Planner | www.vidivadi.com, in a Safari sheet over the game | Cross-promotion to another Sabetta Works product |
-| Line Flow SW Pro | The paywall | Selling the thing that removes the slot |
+| Creative | Form | Destination | What it is for |
+|---|---|---|---|
+| VidiVadi Planner | 15 s video spot | www.vidivadi.com, in a Safari sheet over the game | Cross-promotion to another Sabetta Works product |
+| Line Flow SW Pro | Card | The paywall | Selling the thing that removes the slot |
 
 The second one is the point. A player who has just been interrupted is the most
 receptive audience the subscription will ever have, and no third-party
@@ -89,9 +89,47 @@ Two rules the code keeps:
 
 - **Creatives are bundled, never fetched.** That is what lets the privacy
   policy say the game makes no network request of its own. The cost is that
-  changing an advertisement needs an app update.
+  changing an advertisement needs an app update, and that a video creative is
+  weight in the download.
 - **A subscriber is never shown the Pro creative.** `AppServices` suppresses it
   by id before every presentation.
+
+### The video creative
+
+`vidivadi-spot.mp4` is 1080x1920, 15 seconds, and **3.6 MB**. The master was
+14.6 MB at ~8 Mbps, which is a delivery bitrate for a film, not for an
+advertisement inside a puzzle game: it would have tripled the download size of
+the whole app.
+
+Re-encoded with a 1800 kbps ceiling it measures **SSIM 0.981** against the
+master. For reference, the ceilings either side came out at 5.10 MB / 0.986 and
+2.47 MB / 0.973 - so 1800k is where the curve stops paying: a quarter of the
+weight for two per cent of the measurement, and above the threshold where a
+difference is visible at all.
+
+```
+ffmpeg -i master.mp4 -c:v libx264 -preset slow -crf 23 \
+       -maxrate 1800k -bufsize 3600k -profile:v high -level 4.0 \
+       -pix_fmt yuv420p -c:a aac -b:a 128k -ac 2 -ar 44100 \
+       -movflags +faststart -map_metadata -1 vidivadi-spot.mp4
+```
+
+Two things the player notices, and both are deliberate:
+
+- **It starts muted**, with a speaker button. An advertisement that opens with
+  sound over a quiet puzzle game is the fastest way to be closed and resented.
+  The audio session is `.ambient`, so it mixes with whatever the player already
+  had playing and obeys the silent switch instead of stopping their music.
+- **It is fitted, never filled.** A 9:16 spot on a 19.5:9 phone would lose a
+  strip top and bottom to a fill, and cropping a brand film is how a title
+  loses its last word.
+
+**The first five seconds carry the whole message.** That is the interstitial
+window, and most players will close on it - the remaining ten seconds are for
+the ones who don't.
+
+`check_project.py` fails if a creative names a video the resources do not
+carry: the card fallback exists for a corrupt install, not for a typo.
 
 `HouseAdCatalogue.next(after:excluding:)` rotates round-robin rather than
 randomly: with two creatives, random means a visible repeat often enough to
