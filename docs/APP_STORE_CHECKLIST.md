@@ -116,16 +116,25 @@ Three ways to get this silently wrong:
 
 - [ ] Create all four with the settings above.
 - [ ] For the recurring daily board: duration **1 day**, repeating **every 1
-      day**, starting **00:00 UTC**. Know what that does and does not
-      guarantee. The puzzle is keyed to the *calendar date* through
-      `Calendar.current`, so everyone playing on the 28th gets the identical
-      board wherever they are — that part is sound. But the leaderboard period
-      turns over at one fixed instant, so at the timezone margins a period can
-      hold times from two different boards. Nothing breaks and nobody sees an
-      error; the ranking is briefly comparing two puzzles. Moving the daily seed
-      to UTC would align them exactly, at the cost of the board changing at an
-      odd local hour for most of the world — worth deciding only if the daily
-      turns out to matter competitively.
+      day**, starting at **00:00 Italian time** on a date in the future.
+
+      The start time is a real choice, not a formality. The puzzle is keyed to
+      the *calendar date* through `Calendar.current`, so everyone playing on the
+      28th gets the identical board wherever they are — that part is sound. But
+      the leaderboard period turns over at **one fixed instant** for the whole
+      world, so wherever local midnight and that instant disagree, a period can
+      briefly hold times from two different boards.
+
+      That mismatch cannot be removed, only aimed. Point it at the audience: at
+      00:00 Rome, Italian players get the board and the leaderboard turning over
+      together, and everyone else drifts. UTC midnight would be the right answer
+      for a UK-first launch and is the wrong one here.
+
+      The alternative is to seed the daily from UTC instead of the local
+      calendar, which aligns every player exactly at the cost of the board
+      changing mid-evening in the Americas and mid-morning in Asia. Worth doing
+      only if the daily board turns out to matter competitively — and it is a
+      code change, not a setting.
 - [ ] Give each a localised name in English and Italian. Use exactly the names
       the app already shows, or the same board reads as two different things
       depending on where a player is looking:
