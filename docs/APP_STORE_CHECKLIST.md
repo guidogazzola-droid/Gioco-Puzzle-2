@@ -197,19 +197,17 @@ Specific pixel sizes, per device class, per language. These sell the app.
 
 The fastest route for review screenshots is the simulator: run the app, get to
 the screen, `⌘S` saves a correctly-sized PNG to the Desktop. The simulator
-device you pick determines the pixel size, so run the largest iPad for the
+device you pick determines the pixel size, so run the largest iPhone for the
 listing shots.
 
-The target ships iPad only (`TARGETED_DEVICE_FAMILY = "2"`), so iPad is the
-only class the listing needs. Check the required sizes in App Store Connect
-itself rather than trusting a list — Apple changes them. At the time of writing
-the 13" iPad size covers every iPad, with Apple scaling down for the smaller
-ones.
+The target ships iPhone only (`TARGETED_DEVICE_FAMILY = "1"`), so iPhone is the
+only class the listing needs — no iPad screenshots, and none of the iPad layout
+work that showing them honestly would require. Check the required sizes in App
+Store Connect itself rather than trusting a list — Apple changes them. At the
+time of writing the 6.9" iPhone size covers every iPhone, with Apple scaling
+down for the smaller ones.
 
-Both orientations are supported, and App Store Connect will take landscape
-screenshots for an iPad listing. Landscape is the better choice here: it is how
-most people hold an iPad, and it gives the board room to breathe next to the
-level information.
+The app is portrait-only, so the screenshots are portrait.
 
 ### What to show, in order
 
