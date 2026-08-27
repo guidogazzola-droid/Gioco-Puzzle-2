@@ -252,14 +252,16 @@ Neither field blocks submission.
 - [ ] Replace the generated app icon with final art if you have a designer.
       The committed icon is real, opaque and 1024×1024, so it will pass
       validation as-is — regenerate with `python3 tools/make_app_icon.py`.
-- [ ] Archive with the Release configuration, validate, upload.
-- [ ] Read the bundle identifier in the Organizer before uploading: it must be
+- [x] Archive with the Release configuration, validate, upload. Build 2 is
+      up; the first attempt was refused because build 1 had already been
+      taken, which is the failure this checklist now warns about above.
+- [x] Read the bundle identifier in the Organizer before uploading: it must be
       `com.sabettaworks.LineFlowSW`, matching the App Store Connect record.
       Xcode reports a mismatch as `IDEDistribution.DistributionAppRecordProviderError
       error 0`, which is an unhelpful way of saying "no app on this account has
       that identifier". Archiving an out-of-date checkout is the usual cause -
       the identifier changed once already, from `com.prismflow.game`.
-- [ ] Confirm `ITSAppUsesNonExemptEncryption` is `false` in `Info.plist` so the
+- [x] Confirm `ITSAppUsesNonExemptEncryption` is `false` in `Info.plist` so the
       export-compliance questionnaire is skipped on every upload.
 
 ## 7. Testing before submission
