@@ -167,10 +167,53 @@ just never appears.
 ## 8. Store listing
 
 - [ ] Screenshots for every required device size, in every language you ship.
-      Show the board first — a puzzle game sells on the board.
+      See section 8b — these are a different thing from the review screenshots
+      in sections 2a and 2b, and people mix them up.
 - [ ] App preview video (optional, converts well for puzzle games).
 - [ ] Description, keywords, promotional text — in English and Italian.
 - [ ] Set the primary category to Games → Puzzle.
+
+## 8b. The two kinds of screenshot
+
+They are not interchangeable and App Store Connect asks for them in different
+places.
+
+**Review screenshots** (sections 2a and 2b). One per product. Nobody but App
+Review ever sees them; their only job is to show the reviewer *where in the app
+the purchase appears*, so they can find it. Any resolution, no marketing
+polish. One image of the paywall serves both subscriptions; one of the shop
+serves the gem packs and the style packs.
+
+**Listing screenshots** (this section). What customers see on the product page.
+Specific pixel sizes, per device class, per language. These sell the app.
+
+### Capturing them
+
+The fastest route for review screenshots is the simulator: run the app, get to
+the screen, `⌘S` saves a correctly-sized PNG to the Desktop. The simulator
+device you pick determines the pixel size, so run the largest iPhone for the
+listing shots.
+
+Check the required sizes in App Store Connect itself rather than trusting a
+list — Apple changes them. At the time of writing one iPhone size (6.9") and,
+if you ship iPad, one iPad size (13") cover everything, with Apple scaling down
+for smaller classes.
+
+### What to show, in order
+
+The first two are what appear in search results, so they carry the whole
+listing:
+
+1. **A board mid-solve.** A puzzle game sells on the puzzle. Pick a board with
+   six or seven colours - busy enough to look interesting, clear enough to read
+   at thumbnail size.
+2. **A Pro board.** Bigger grid, walls, more colours: this is what the
+   subscription buys, and it reads instantly.
+3. **Level complete, three stars.** Shows the scoring loop.
+4. **The style shop.** Shows there is something to collect.
+5. **Leaderboards.** Shows there are other people.
+
+Skip the settings and the onboarding: nobody installs an app because of them.
 
 ## 9. After launch
 
