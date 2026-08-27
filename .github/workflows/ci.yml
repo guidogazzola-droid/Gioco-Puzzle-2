@@ -47,26 +47,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Show toolchain
         run: xcodebuild -version
-      # Pin to whatever iPhone simulator the runner actually has. Naming a
-      # model directly breaks every time the runner image moves on.
+      # Naming a simulator model breaks every time the runner image moves on,
+      # so take whichever iPhone the runner actually has.
       - name: Pick a simulator
         id: simulator
         run: |
-          udid=$(xcrun simctl list devices available --json | python3 -c '
-import json, sys
-devices = json.load(sys.stdin)["devices"]
-for runtime in sorted(devices):
-    if "iOS" not in runtime:
-        continue
-    for device in devices[runtime]:
-        if device.get("isAvailable") and device["name"].startswith("iPhone"):
-            print(device["udid"])
-            raise SystemExit
-raise SystemExit("no available iPhone simulator")
-')
+          line=$(xcrun simctl list devices available | grep -m1 -E '^ +iPhone')
+          echo "using: $line"
+          udid=$(echo "$line" | grep -oE '[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}')
+          test -n "$udid" || { echo "no available iPhone simulator"; exit 1; }
           echo "udid=$udid" >> "$GITHUB_OUTPUT"
-          xcrun simctl list devices available | grep -m1 -A0 "$udid" || true
-
       - name: Build and test
         run: |
           xcodebuild test \
