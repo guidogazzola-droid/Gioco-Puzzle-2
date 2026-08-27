@@ -96,16 +96,20 @@ Two rules the code keeps:
 
 ### The video creative
 
-`vidivadi-spot.mp4` is 1080x1920, 15 seconds, and **3.6 MB**. The master was
-14.6 MB at ~8 Mbps, which is a delivery bitrate for a film, not for an
-advertisement inside a puzzle game: it would have tripled the download size of
-the whole app.
+`vidivadi-spot.mp4` is 1080x1920, 18 seconds, and **3.8 MB**. Masters arrive at
+6-8 Mbps, which is a delivery bitrate for a film, not for an advertisement
+inside a puzzle game: shipped as-is it would roughly triple the download size
+of the whole app for one asset.
 
-Re-encoded with a 1800 kbps ceiling it measures **SSIM 0.981** against the
-master. For reference, the ceilings either side came out at 5.10 MB / 0.986 and
-2.47 MB / 0.973 - so 1800k is where the curve stops paying: a quarter of the
-weight for two per cent of the measurement, and above the threshold where a
-difference is visible at all.
+Re-encoded with a 1800 kbps ceiling the current cut measures **SSIM 0.985**
+against its master, at a quarter of the weight.
+
+That ceiling was chosen by measuring, on the first cut, what the ones either
+side cost: 2600k gave 5.10 MB at 0.986, and 1200k gave 2.47 MB at 0.973, with
+1800k landing at 3.60 MB and 0.981. 1800k is where the curve stops paying -
+still above the threshold where a difference is visible at all, and half the
+weight of the ceiling above it. Re-measure if a future spot is visibly busier;
+this one is water and motion, which is close to the worst case already.
 
 ```
 ffmpeg -i master.mp4 -c:v libx264 -preset slow -crf 23 \
@@ -125,8 +129,11 @@ Two things the player notices, and both are deliberate:
   loses its last word.
 
 **The first five seconds carry the whole message.** That is the interstitial
-window, and most players will close on it - the remaining ten seconds are for
-the ones who don't.
+window, and most players will close on it. The current cut is built for that:
+it names VidiVadi at the top as well as at the end, so the brand lands inside
+the window rather than only after it. The remaining thirteen seconds are for
+the players who let it run, and for the rewarded slot, where they are watching
+on purpose.
 
 `check_project.py` fails if a creative names a video the resources do not
 carry: the card fallback exists for a corrupt install, not for a typo.
