@@ -73,7 +73,8 @@ struct LevelGeneratorTests {
             #expect(LevelGenerator.generate(level: level, track: .free).blocked.isEmpty)
         }
         let lateProLevels = (60...120).map { LevelGenerator.generate(level: $0, track: .pro) }
-        #expect(lateProLevels.contains { !$0.blocked.isEmpty })
+        let someHaveWalls = lateProLevels.contains { !$0.blocked.isEmpty }
+        #expect(someHaveWalls)
     }
 
     @Test("walls never strand part of the board")

@@ -32,14 +32,11 @@ struct CosmeticCatalogTests {
         for category in Cosmetic.Category.allCases {
             let items = CosmeticCatalog.items(in: category)
             #expect(items.count >= 4, "\(category.rawValue) is too thin to feel like a collection")
-            #expect(
-                items.contains(where: { $0.unlock == .proSubscription }),
-                "\(category.rawValue) gives subscribers nothing"
-            )
-            #expect(
-                items.contains(where: isEarnable),
-                "\(category.rawValue) cannot be progressed toward by playing"
-            )
+            let hasProItem = items.contains { $0.unlock == .proSubscription }
+            #expect(hasProItem, "\(category.rawValue) gives subscribers nothing")
+
+            let hasEarnableItem = items.contains(where: isEarnable)
+            #expect(hasEarnableItem, "\(category.rawValue) cannot be progressed toward by playing")
         }
     }
 
@@ -125,9 +122,12 @@ struct ProductCatalogTests {
 
     @Test("each product kind holds exactly the products it should")
     func kindsArePartitioned() {
-        #expect(ProductCatalog.subscriptions.allSatisfy { $0.kind == .autoRenewable })
-        #expect(ProductCatalog.consumables.allSatisfy { $0.kind == .consumable })
-        #expect(ProductCatalog.oneOffUnlocks.allSatisfy { $0.kind == .nonConsumable })
+        let subscriptionsOnly = ProductCatalog.subscriptions.allSatisfy { $0.kind == .autoRenewable }
+        let consumablesOnly = ProductCatalog.consumables.allSatisfy { $0.kind == .consumable }
+        let unlocksOnly = ProductCatalog.oneOffUnlocks.allSatisfy { $0.kind == .nonConsumable }
+        #expect(subscriptionsOnly)
+        #expect(consumablesOnly)
+        #expect(unlocksOnly)
         let total = ProductCatalog.subscriptions.count
             + ProductCatalog.consumables.count
             + ProductCatalog.oneOffUnlocks.count
@@ -141,13 +141,15 @@ struct ProductCatalogTests {
         }
         let grants = ProductCatalog.consumables.map(\.gemGrant)
         #expect(grants == grants.sorted())
-        #expect(grants.allSatisfy { $0 > 0 })
+        let allPositive = grants.allSatisfy { $0 > 0 }
+        #expect(allPositive)
     }
 
     @Test("everything that should remove ads does")
     func adRemovalIsConsistent() {
         #expect(StoreProductID.removeAds.removesAds)
-        #expect(ProductCatalog.subscriptions.allSatisfy(\.removesAds))
+        let subscriptionsRemoveAds = ProductCatalog.subscriptions.allSatisfy(\.removesAds)
+        #expect(subscriptionsRemoveAds)
         #expect(!StoreProductID.gemsPouch.removesAds)
         #expect(!StoreProductID.stylePackNeon.removesAds)
     }
