@@ -106,13 +106,25 @@ just never appears.
 
 ## 3. Legal (guideline 3.1.2 — the most common subscription rejection)
 
-- [ ] Host a real privacy policy and replace `LegalLinks.privacyPolicy` in
-      `LineFlow/Services/LegalLinks.swift`. The placeholder domain is not real.
-- [ ] Host a support page and replace `LegalLinks.support`.
-- [ ] Enter the same privacy policy URL in App Store Connect.
-- [ ] Terms of Use: the repo links Apple's standard EULA, which is acceptable.
-      If you write your own, replace `LegalLinks.termsOfUse` **and** paste the
-      text into App Store Connect.
+- [x] The three pages are written, in both languages, in `docs/legal/`.
+      `LegalLinks.swift` points at them and serves the Italian page to a player
+      whose app is in Italian. `check_project.py` fails the build if a
+      placeholder domain ever comes back.
+- [ ] Fill in `[LEGAL ENTITY NAME]` and `[REGISTERED ADDRESS]` in the privacy
+      and terms pages. The GDPR requires the data controller to be
+      identifiable, so a trading name alone is not enough unless it is
+      registered.
+- [ ] Publish all six pages under `https://www.sabettaworks.com/games/lineflow/`
+      and open each URL yourself. A link that 404s is the rejection; a link that
+      redirects to a homepage is the same rejection with extra steps.
+- [ ] Make `support@sabettaworks.com` a mailbox somebody reads. App Review
+      writes to it.
+- [ ] Enter the privacy policy URL and the support URL in App Store Connect.
+      They are separate fields from anything in the app.
+- [ ] Terms of Use: the page incorporates Apple's standard EULA by reference and
+      adds the game-specific terms. That is acceptable as-is. If you ever
+      replace the EULA rather than reference it, the full text also has to go
+      into the EULA field in App Store Connect.
 - [ ] Verify on-device that the paywall shows, without scrolling: the plan name,
       the length of the period, the price per period, and working links to both
       documents. `SubscriptionStoreView` renders these from StoreKit — check it
@@ -123,7 +135,10 @@ just never appears.
 ## 4. Privacy
 
 - [ ] `LineFlow/PrivacyInfo.xcprivacy` as committed declares no tracking and no
-      data collection, which is true of the app **as shipped in this repo**.
+      data collection, which is true of the app **as shipped in this repo**:
+      no networking of its own, no analytics, no ad SDK, one local save file.
+      `docs/legal/README.md` lists the four changes that would make the privacy
+      policy false the day they ship.
 - [ ] If you link an ad or analytics SDK, update it: set `NSPrivacyTracking` to
       true, list the tracking domains, declare the collected data types. See
       `docs/MONETIZATION.md`.

@@ -112,12 +112,29 @@ def check_workflows(failures):
             failures.append(f"{path} has no jobs")
 
 
+def check_legal_links(failures):
+    """A placeholder privacy or terms URL is a guaranteed rejection, and it is
+    invisible until a reviewer taps it. The links are literals in one file, so
+    the check is cheap and the failure is unambiguous."""
+    path = pathlib.Path("LineFlow/Services/LegalLinks.swift")
+    if not path.exists():
+        failures.append("LegalLinks.swift is missing")
+        return
+    text = path.read_text()
+    for placeholder in ("example.com", "example.org", "TODO", "REPLACE"):
+        if placeholder in text:
+            failures.append(f"LegalLinks.swift still contains a placeholder: {placeholder}")
+    if "https://" not in text:
+        failures.append("LegalLinks.swift has no https URL")
+
+
 def main():
     failures = []
     targets = check_pbxproj(failures)
     check_scheme(failures, {t[0] for t in targets})
     check_plists(failures)
     check_workflows(failures)
+    check_legal_links(failures)
 
     print(f"targets: {sorted(name for _, name in targets)}")
     print(f"workflows: {[p.name for p in WORKFLOWS]}")
