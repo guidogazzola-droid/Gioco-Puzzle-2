@@ -9,6 +9,11 @@ import Foundation
 public struct AdPolicy: Sendable, Hashable, Codable {
 
     /// Completed levels between two interstitials.
+    ///
+    /// Four rather than three since the advertisements became our own: the
+    /// number used to be a compromise between revenue and retention, and with
+    /// no third-party network there is no revenue side to the trade any more.
+    /// It is chosen purely for how the game feels.
     public var levelsBetweenInterstitials: Int
     /// No interstitial at all until the player has finished this many levels.
     /// The first session has to sell the game, not the ad inventory.
@@ -20,7 +25,7 @@ public struct AdPolicy: Sendable, Hashable, Codable {
     public var showsOnlyAfterSuccess: Bool
 
     public init(
-        levelsBetweenInterstitials: Int = 3,
+        levelsBetweenInterstitials: Int = 4,
         newPlayerGraceLevels: Int = 5,
         minimumSecondsBetween: TimeInterval = 90,
         showsOnlyAfterSuccess: Bool = true

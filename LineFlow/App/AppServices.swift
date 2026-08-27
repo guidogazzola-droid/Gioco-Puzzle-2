@@ -13,7 +13,7 @@ final class AppServices {
 
     let profileStore: ProfileStore
     let store: StoreManager
-    let ads: SimulatedAdService
+    let ads: HouseAdService
     let haptics: HapticsService
     let gameCenter: GameCenterService
     let adPolicy: AdPolicy
@@ -35,14 +35,14 @@ final class AppServices {
     init(
         profileStore: ProfileStore? = nil,
         store: StoreManager? = nil,
-        ads: SimulatedAdService? = nil,
+        ads: HouseAdService? = nil,
         haptics: HapticsService? = nil,
         gameCenter: GameCenterService? = nil,
         adPolicy: AdPolicy = .standard
     ) {
         self.profileStore = profileStore ?? ProfileStore()
         self.store = store ?? StoreManager()
-        self.ads = ads ?? SimulatedAdService()
+        self.ads = ads ?? HouseAdService()
         self.haptics = haptics ?? HapticsService()
         self.gameCenter = gameCenter ?? GameCenterService()
         self.adPolicy = adPolicy
@@ -173,6 +173,13 @@ final class AppServices {
 
     // MARK: - Ads
 
+    /// House advertisements this player should not be shown. Selling the
+    /// subscription to somebody who already pays for it reads as an app that
+    /// is not keeping track.
+    private var suppressedAdIDs: Set<String> {
+        entitlements.isPro ? [HouseAdCatalogue.pro.id] : []
+    }
+
     /// Shows an interstitial if the pacing rules allow one. Returns whether it
     /// was shown, so the caller can wait before pushing the next screen.
     @discardableResult
@@ -184,6 +191,7 @@ final class AppServices {
             afterSuccess: afterSuccess
         ) else { return false }
 
+        ads.suppressedAdIDs = suppressedAdIDs
         await ads.showInterstitial()
         profileStore.update { $0.ads = adPolicy.consumed($0.ads) }
         return true
@@ -192,6 +200,7 @@ final class AppServices {
     /// Plays a rewarded video and grants the reward only if it completed.
     @discardableResult
     func watchRewarded(_ placement: RewardedPlacement) async -> Bool {
+        ads.suppressedAdIDs = suppressedAdIDs
         guard await ads.showRewarded(placement) else { return false }
         profileStore.update { profile in
             profile.hints += placement.hintReward

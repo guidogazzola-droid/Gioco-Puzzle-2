@@ -356,3 +356,75 @@ struct SplashFlowTests {
         #expect(degenerate == 0)
     }
 }
+
+/// The house advertisement rotation.
+///
+/// Small surface, but every failure mode here is one a player would notice and
+/// nobody would file: the same creative twice running, an empty slot, or the
+/// subscription advertised to a subscriber.
+struct HouseAdCatalogueTests {
+
+    @Test("the catalogue has no duplicate identifiers")
+    func identifiersAreUnique() {
+        let ids = Set(HouseAdCatalogue.all.map(\.id))
+        #expect(ids.count == HouseAdCatalogue.all.count)
+        #expect(!HouseAdCatalogue.all.isEmpty)
+    }
+
+    @Test("the first advertisement of a session is the head of the catalogue")
+    func startsAtTheTop() {
+        let first = HouseAdCatalogue.next(after: nil)
+        #expect(first.id == HouseAdCatalogue.all[0].id)
+    }
+
+    @Test("no creative is ever shown twice running")
+    func rotates() {
+        var previous: String?
+        var repeats = 0
+        for _ in 0..<20 {
+            let ad = HouseAdCatalogue.next(after: previous)
+            if ad.id == previous { repeats += 1 }
+            previous = ad.id
+        }
+        #expect(repeats == 0)
+    }
+
+    @Test("rotation covers every creative")
+    func coversTheCatalogue() {
+        var seen: Set<String> = []
+        var previous: String?
+        for _ in 0..<(HouseAdCatalogue.all.count * 3) {
+            let ad = HouseAdCatalogue.next(after: previous)
+            seen.insert(ad.id)
+            previous = ad.id
+        }
+        #expect(seen.count == HouseAdCatalogue.all.count)
+    }
+
+    @Test("a suppressed creative is never returned")
+    func honoursSuppression() {
+        let suppressed = HouseAdCatalogue.pro.id
+        var previous: String?
+        var leaks = 0
+        for _ in 0..<20 {
+            let ad = HouseAdCatalogue.next(after: previous, excluding: [suppressed])
+            if ad.id == suppressed { leaks += 1 }
+            previous = ad.id
+        }
+        #expect(leaks == 0)
+    }
+
+    @Test("suppressing everything still yields an advertisement rather than a blank screen")
+    func neverLeavesTheSlotEmpty() {
+        let everything = Set(HouseAdCatalogue.all.map(\.id))
+        let ad = HouseAdCatalogue.next(after: nil, excluding: everything)
+        let known = everything.contains(ad.id)
+        #expect(known)
+    }
+
+    @Test("the subscription is the creative suppressed for subscribers")
+    func proIsSuppressible() {
+        #expect(HouseAdCatalogue.pro.destination == .paywall)
+        #expect(HouseAdCatalogue.vidivadi.destination != .paywall)
+    }
+}

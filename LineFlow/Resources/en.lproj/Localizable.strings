@@ -243,9 +243,12 @@
 "onboarding.skip" = "Skip";
 
 /* MARK: - Ads */
-"ad.placeholderTag" = "AD";
-"ad.interstitialTitle" = "A quick break";
-"ad.rewardedTitle" = "Watch for a reward";
-"ad.placeholderBody" = "This is a placeholder ad unit. Wire a real network behind AdService before release.";
+"ad.sponsorTag" = "AD";
 "ad.countdown" = "%ld s";
 "ad.claim" = "Claim reward";
+"ad.vidivadi.title" = "VidiVadi Planner";
+"ad.vidivadi.body" = "Plan the whole trip in one place: stops, hotels, ferries and restaurants.";
+"ad.vidivadi.cta" = "See VidiVadi";
+"ad.pro.title" = "Line Flow SW Pro";
+"ad.pro.body" = "No more interruptions like this one - plus the Pro track, every style and unlimited hints.";
+"ad.pro.cta" = "Try a week free";

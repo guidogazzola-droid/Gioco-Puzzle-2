@@ -62,6 +62,41 @@ editing the two lines. Setting `_locale` to `en_US` while leaving `_storefront`
 as `ITA` gives English copy at euro prices, which is the combination worth
 looking at before shipping: it is what an English-speaking player in Italy sees.
 
+## The advertisements are ours
+
+No third-party ad network ships in this game, and that is a decision rather
+than an unfinished job.
+
+A network brings more than an SDK: an ATT prompt at first launch, a GDPR
+consent flow required across the EU *even for non-personalised ads*, tracking
+domains in the privacy manifest, and an App Store privacy label that stops
+saying "Data Not Collected". Measured against what it would earn at this
+game's likely volumes - tens of euros a month at a few hundred daily players -
+none of that pays for itself.
+
+So the slot is inventory we own, and it carries two creatives that alternate:
+
+| Creative | Destination | What it is for |
+|---|---|---|
+| VidiVadi Planner | www.vidivadi.com, in a Safari sheet over the game | Cross-promotion to another Sabetta Works product |
+| Line Flow SW Pro | The paywall | Selling the thing that removes the slot |
+
+The second one is the point. A player who has just been interrupted is the most
+receptive audience the subscription will ever have, and no third-party
+impression would pay anything close to one conversion.
+
+Two rules the code keeps:
+
+- **Creatives are bundled, never fetched.** That is what lets the privacy
+  policy say the game makes no network request of its own. The cost is that
+  changing an advertisement needs an app update.
+- **A subscriber is never shown the Pro creative.** `AppServices` suppresses it
+  by id before every presentation.
+
+`HouseAdCatalogue.next(after:excluding:)` rotates round-robin rather than
+randomly: with two creatives, random means a visible repeat often enough to
+notice, and rotation is the only reason a second creative exists.
+
 ## The entitlement rules
 
 `Entitlements` is the single source of truth. Every gate in the game reads from
@@ -115,6 +150,11 @@ Pacing counters live in the save file, so they survive a relaunch. Restarting
 the app is not a way to skip an ad.
 
 ## Wiring a real ad network
+
+Everything above is why this is not urgent. When traffic makes it worth doing,
+the swap is one conformance - `AdService` is four methods - plus the consent,
+manifest and privacy-policy work that the network drags in with it.
+
 
 The game talks to the `AdService` protocol and never to a network SDK, so the
 vendor is a swap of one file. What ships is `SimulatedAdService`, which renders

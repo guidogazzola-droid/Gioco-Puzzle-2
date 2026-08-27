@@ -5,8 +5,9 @@
 ## The short version
 
 Line Flow SW does not collect anything about you. There is no account, no
-sign-up, no analytics, and no advertising network. The app makes no network
-requests of its own.
+sign-up, no analytics, and no advertising network. The game itself makes no
+network request of any kind; the only time an address is fetched is when you
+tap an advertisement, and then it is a browser doing it, at your instruction.
 
 That is not a statement of intent, it is a description of how the app is
 built — and you can check part of it yourself: switch on Airplane Mode and the
@@ -46,13 +47,22 @@ Apple's Privacy Policy: https://www.apple.com/legal/privacy/
 
 ## Advertising
 
-Version 1.0 contains no third-party advertising and no advertising SDK. The
-screens shown between levels are drawn by the app itself: no network request,
-no third party, nothing sent anywhere.
+The advertisements in Line Flow SW are our own. One of them is for VidiVadi
+Planner, our trip planner; the other offers this game's Pro subscription. There
+is no third-party advertising network, no advertising SDK, and no advertising
+identifier anywhere in the app.
 
-If a real advertising network is ever added, this page and the app's App Store
-privacy label will be updated in the same release that introduces it, and that
-network's data practices will be named here.
+Both are drawn from artwork and text inside the app, so showing you one makes
+no network request and sends nothing anywhere. Nothing about you is used to
+choose which one you see: they simply alternate.
+
+Tapping one opens a website in a browser view inside the game. From that point
+the site's own privacy policy applies - www.vidivadi.com has its own - exactly
+as if you had typed the address yourself.
+
+If a third-party advertising network is ever added, this page and the app's App
+Store privacy label will be updated in the same release that introduces it, and
+that network's data practices will be named here.
 
 ## Tracking
 

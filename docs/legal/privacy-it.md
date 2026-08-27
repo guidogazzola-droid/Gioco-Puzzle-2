@@ -5,8 +5,10 @@
 ## In breve
 
 Line Flow SW non raccoglie nulla su di te. Non c'è alcun account, alcuna
-registrazione, alcun sistema di analytics e alcun circuito pubblicitario.
-L'app non effettua richieste di rete proprie.
+registrazione, alcun sistema di analytics e alcun circuito pubblicitario. Il
+gioco in sé non effettua alcuna richiesta di rete; l'unico momento in cui viene
+scaricato un indirizzo è quando tocchi un annuncio, e in quel caso lo fa un
+browser, su tua richiesta.
 
 Non è una dichiarazione di intenti, è una descrizione di come l'app è fatta — e
 una parte puoi verificarla da solo: attiva la modalità aereo e il gioco funziona
@@ -49,14 +51,23 @@ Informativa privacy di Apple: https://www.apple.com/legal/privacy/
 
 ## Pubblicità
 
-La versione 1.0 non contiene pubblicità di terze parti né alcun SDK
-pubblicitario. Le schermate mostrate fra un livello e l'altro sono disegnate
-dall'app stessa: nessuna richiesta di rete, nessuna terza parte, nulla che venga
-inviato altrove.
+Gli annunci in Line Flow SW sono nostri. Uno riguarda VidiVadi Planner, il
+nostro pianificatore di viaggi; l'altro propone l'abbonamento Pro di questo
+gioco. Non c'è alcun circuito pubblicitario di terze parti, alcun SDK
+pubblicitario, né alcun identificatore pubblicitario da nessuna parte nell'app.
 
-Se in futuro verrà integrato un vero circuito pubblicitario, questa pagina e
-l'etichetta privacy dell'app sull'App Store saranno aggiornate nella stessa
-versione che lo introduce, e le pratiche di quel circuito saranno indicate qui.
+Entrambi sono disegnati con grafica e testi contenuti nell'app: mostrarteli non
+comporta alcuna richiesta di rete e non invia nulla a nessuno. Nessuna
+informazione su di te viene usata per decidere quale vedi: si alternano e basta.
+
+Toccandone uno si apre un sito in una vista browser dentro il gioco. Da quel
+momento vale l'informativa privacy di quel sito - www.vidivadi.com ha la sua -
+esattamente come se avessi digitato tu l'indirizzo.
+
+Se in futuro verrà integrato un circuito pubblicitario di terze parti, questa
+pagina e l'etichetta privacy dell'app sull'App Store saranno aggiornate nella
+stessa versione che lo introduce, e le pratiche di quel circuito saranno
+indicate qui.
 
 ## Tracciamento
 

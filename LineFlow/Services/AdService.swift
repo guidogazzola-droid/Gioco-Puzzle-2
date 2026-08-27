@@ -6,7 +6,7 @@ import PuzzleKit
 ///
 /// Every ad call the game makes goes through these four methods, so swapping
 /// the vendor means writing one conformance and changing the type of
-/// `AppServices.ads`. `SimulatedAdService` is what ships in the repository: it
+/// `AppServices.ads`. `HouseAdService` is what ships in the repository: it
 /// renders an in-app placeholder, which keeps the project buildable with no
 /// third-party dependency and lets the pacing rules be exercised in the
 /// simulator. `AppServices` holds it by its concrete type for one reason -
@@ -31,7 +31,7 @@ protocol AdService: AnyObject {
     func showRewarded(_ placement: RewardedPlacement) async -> Bool
 }
 
-/// What the placeholder ad UI is currently showing.
+/// What the ad UI is currently showing.
 struct AdPresentation: Identifiable, Equatable {
     enum Kind: Equatable {
         case interstitial
@@ -41,6 +41,9 @@ struct AdPresentation: Identifiable, Equatable {
     let id = UUID()
     let kind: Kind
     let duration: TimeInterval
+    /// The creative to render. Carried on the presentation rather than looked
+    /// up by the view, so the rotation is decided once, by the service.
+    let ad: HouseAd
 
     var isRewarded: Bool {
         if case .rewarded = kind { return true }
@@ -48,18 +51,27 @@ struct AdPresentation: Identifiable, Equatable {
     }
 }
 
-/// In-app stand-in for a real ad network.
+/// Serves the game's own advertisements.
 ///
-/// It behaves like one where it matters: a fixed non-skippable window, a
-/// rewarded video that only pays out if watched to the end, and an async call
-/// that does not return until the unit is dismissed.
+/// It behaves the way a network's unit does where it matters: a fixed
+/// non-skippable window, a rewarded unit that only pays out if watched to the
+/// end, and an async call that does not return until it is dismissed. Which
+/// means swapping in a real network later changes what fills the window, not
+/// how the game asks for it.
 @MainActor
 @Observable
-final class SimulatedAdService: AdService {
+final class HouseAdService: AdService {
 
-    /// Observed by the root view, which presents the placeholder over the game.
+    /// Observed by the root view, which presents the unit over the game.
     private(set) var presentation: AdPresentation?
     private(set) var allowsPersonalisedAds = false
+
+    /// Creatives this player must not be shown. `AppServices` sets it before
+    /// each presentation: advertising the subscription to a subscriber is the
+    /// kind of thing that makes an app feel like it is not paying attention.
+    var suppressedAdIDs: Set<String> = []
+
+    private var lastShownID: String?
 
     var isInterstitialReady: Bool { presentation == nil }
     var isRewardedReady: Bool { presentation == nil }
@@ -73,11 +85,17 @@ final class SimulatedAdService: AdService {
     func preload() {}
 
     func showInterstitial() async {
-        _ = await present(AdPresentation(kind: .interstitial, duration: 5))
+        _ = await present(AdPresentation(kind: .interstitial, duration: 5, ad: nextAd()))
     }
 
     func showRewarded(_ placement: RewardedPlacement) async -> Bool {
-        await present(AdPresentation(kind: .rewarded(placement), duration: 8))
+        await present(AdPresentation(kind: .rewarded(placement), duration: 8, ad: nextAd()))
+    }
+
+    private func nextAd() -> HouseAd {
+        let ad = HouseAdCatalogue.next(after: lastShownID, excluding: suppressedAdIDs)
+        lastShownID = ad.id
+        return ad
     }
 
     /// Called by the placeholder UI when the player dismisses it.

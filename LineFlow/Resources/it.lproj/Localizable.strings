@@ -243,9 +243,12 @@
 "onboarding.skip" = "Salta";
 
 /* MARK: - Pubblicità */
-"ad.placeholderTag" = "PUBBLICITÀ";
-"ad.interstitialTitle" = "Una breve pausa";
-"ad.rewardedTitle" = "Guarda per una ricompensa";
-"ad.placeholderBody" = "Questo è un segnaposto pubblicitario. Collega una rete reale dietro AdService prima della pubblicazione.";
+"ad.sponsorTag" = "PUBBLICITÀ";
 "ad.countdown" = "%ld s";
 "ad.claim" = "Ritira la ricompensa";
+"ad.vidivadi.title" = "VidiVadi Planner";
+"ad.vidivadi.body" = "Pianifica tutto il viaggio in un posto solo: tappe, hotel, traghetti e ristoranti.";
+"ad.vidivadi.cta" = "Scopri VidiVadi";
+"ad.pro.title" = "Line Flow SW Pro";
+"ad.pro.body" = "Niente più interruzioni come questa - e in più il percorso Pro, tutti gli stili e aiuti illimitati.";
+"ad.pro.cta" = "Prova una settimana gratis";
