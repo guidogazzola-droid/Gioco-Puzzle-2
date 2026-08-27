@@ -15,6 +15,10 @@ xcuserdata/
 *.xcodeproj/xcuserdata/
 *.xcworkspace/xcuserdata/
 
+# Xcode regenerates this the first time it opens the project. Committing it
+# adds an untracked directory to everyone's git status and settles nothing.
+*.xcodeproj/project.xcworkspace/
+
 # Swift Package Manager
 .build/
 .swiftpm/
