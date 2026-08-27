@@ -1,7 +1,7 @@
 /* Line Flow SW - Italiano
 
    I segnaposto usano argomenti posizionali (%1$ld) per poterli riordinare
-   liberamente, e %ld invece di %d perche' i valori sono Int di Swift.
+   liberamente, e %ld invece di %d perché i valori sono Int di Swift.
    tools/check_localization.py verifica questo file rispetto al codice. */
 
 /* MARK: - Comune */
@@ -14,7 +14,7 @@
 "legal.terms" = "Condizioni d'uso";
 "legal.privacy" = "Informativa sulla privacy";
 
-/* MARK: - Accessibilita' */
+/* MARK: - Accessibilità */
 "a11y.stars" = "%ld stelle su 3";
 "a11y.board" = "Griglia di gioco, %1$ld per %2$ld. %3$ld colori collegati su %4$ld.";
 "a11y.level" = "Livello %1$ld, %2$ld stelle";
@@ -32,12 +32,26 @@
 "home.daily.play" = "Gioca";
 "home.daily.replay" = "Rigioca";
 "home.pro.title" = "Percorso Pro";
-"home.pro.subtitle" = "Griglie piu' grandi, piu' colori e caselle muro. Incluso in Line Flow SW Pro.";
-"home.pro.subtitleActive" = "Griglie piu' grandi, piu' colori e caselle muro. Il tuo abbonamento e' attivo.";
+"home.pro.subtitle" = "Griglie più grandi, più colori e caselle muro. Incluso in Line Flow SW Pro.";
+"home.pro.subtitleActive" = "Griglie più grandi, più colori e caselle muro. Il tuo abbonamento è attivo.";
 "home.pro.play" = "Gioca il percorso Pro";
 "home.pro.unlock" = "Scopri Line Flow SW Pro";
 "home.shop" = "Stili";
-"home.removeAds" = "Togli la pubblicita'";
+"home.removeAds" = "Togli la pubblicità";
+"home.leaderboards" = "Classifiche";
+
+/* MARK: - Game Center */
+"gamecenter.signIn" = "Accedi a Game Center";
+"gamecenter.signedOut.title" = "Le classifiche passano da Game Center";
+"gamecenter.signedOut.body" = "Accedere è facoltativo: il gioco funziona identico in ogni caso. Cambia solo se i tuoi punteggi compaiono nelle classifiche qui sotto.";
+"leaderboard.stars.title" = "Stelle raccolte";
+"leaderboard.stars.detail" = "Tutte le stelle guadagnate, su entrambi i percorsi";
+"leaderboard.free.title" = "Livello più lontano";
+"leaderboard.free.detail" = "Quanto sei andato avanti nella campagna principale";
+"leaderboard.pro.title" = "Livello Pro più lontano";
+"leaderboard.pro.detail" = "Lo stesso, sul percorso Pro più difficile";
+"leaderboard.daily.title" = "Puzzle del giorno";
+"leaderboard.daily.detail" = "La board di oggi è identica per tutti. Gli aiuti non contano.";
 
 /* MARK: - Mappa */
 "map.title.free" = "Livelli";
@@ -72,7 +86,7 @@
 "complete.replay" = "Rigioca";
 "complete.exit" = "Menu";
 "complete.hintUsed" = "Hai usato un aiuto: questa partita vale al massimo due stelle.";
-"complete.dailyAlreadyClaimed" = "La ricompensa di oggi e' gia' stata ritirata.";
+"complete.dailyAlreadyClaimed" = "La ricompensa di oggi è già stata ritirata.";
 
 /* MARK: - Aiuti */
 "hint.title" = "Aiuti esauriti";
@@ -85,13 +99,13 @@
 "shop.title" = "Stili ed extra";
 "shop.category" = "Categoria";
 "shop.section.gems" = "Gemme";
-"shop.section.gemsCaption" = "Le gemme comprano stili e aiuti. Non rendono mai un puzzle piu' facile.";
+"shop.section.gemsCaption" = "Le gemme comprano stili e aiuti. Non rendono mai un puzzle più facile.";
 "shop.section.unlocks" = "Sblocchi";
 "shop.gemsAmount" = "%ld gemme";
 "shop.watchForGems" = "Guarda un video";
 "shop.free" = "Gratis";
 "shop.owned" = "Acquistato";
-"shop.proCaption" = "Tutto quello che vedi qui sotto, piu' il percorso Pro.";
+"shop.proCaption" = "Tutto quello che vedi qui sotto, più il percorso Pro.";
 "shop.restore" = "Ripristina acquisti";
 "shop.legal" = "Il pagamento viene addebitato sull'Account Apple alla conferma. Gli abbonamenti si rinnovano automaticamente se non vengono disdetti almeno 24 ore prima della fine del periodo in corso. Puoi gestirli o disdirli nelle impostazioni del tuo Account Apple.";
 
@@ -127,8 +141,8 @@
 "cosmetic.node.bloom" = "Fiore";
 
 /* MARK: - Prodotti */
-"product.removeads.name" = "Togli la pubblicita'";
-"product.removeads.description" = "Mai piu' pubblicita'. Un solo pagamento, per sempre.";
+"product.removeads.name" = "Togli la pubblicità";
+"product.removeads.description" = "Mai più pubblicità. Un solo pagamento, per sempre.";
 "product.gems.pouch.name" = "Sacchetto di gemme";
 "product.gems.pouch.description" = "Una manciata di gemme per stili e aiuti.";
 "product.gems.chest.name" = "Scrigno di gemme";
@@ -140,44 +154,44 @@
 "product.style.neon.name" = "Pacchetto stile Neon";
 "product.style.neon.description" = "Traccia Cometa e sfondo Campo stellare, tuoi per sempre.";
 "product.pro.monthly.name" = "Line Flow SW Pro";
-"product.pro.monthly.description" = "Abbonamento mensile. Livelli Pro, zero pubblicita', tutti gli stili.";
+"product.pro.monthly.description" = "Abbonamento mensile. Livelli Pro, zero pubblicità, tutti gli stili.";
 "product.pro.yearly.name" = "Line Flow SW Pro (annuale)";
-"product.pro.yearly.description" = "Dodici mesi di Pro a un costo mensile piu' basso.";
+"product.pro.yearly.description" = "Dodici mesi di Pro a un costo mensile più basso.";
 "period.day" = "giorno";
 "period.week" = "settimana";
 "period.month" = "mese";
 "period.year" = "anno";
 
 /* MARK: - Messaggi del negozio */
-"store.error.unavailable" = "Questo articolo non e' disponibile al momento.";
-"store.error.unverified" = "Non e' stato possibile verificare l'acquisto.";
-"store.error.generic" = "Qualcosa e' andato storto. Riprova.";
-"store.banner.purchased" = "Grazie! Il tuo acquisto e' attivo.";
+"store.error.unavailable" = "Questo articolo non è disponibile al momento.";
+"store.error.unverified" = "Non è stato possibile verificare l'acquisto.";
+"store.error.generic" = "Qualcosa è andato storto. Riprova.";
+"store.banner.purchased" = "Grazie! Il tuo acquisto è attivo.";
 "store.banner.pending" = "In attesa di approvazione.";
-"store.banner.failed" = "L'acquisto non e' andato a buon fine.";
+"store.banner.failed" = "L'acquisto non è andato a buon fine.";
 "store.banner.restored" = "Acquisti ripristinati.";
 "store.banner.restoreFailed" = "Nessun acquisto da ripristinare su questo Account Apple.";
 
 /* MARK: - Paywall */
 "paywall.title" = "Line Flow SW Pro";
-"paywall.headline.general" = "Tutto sbloccato, e zero pubblicita'.";
-"paywall.headline.proTrack" = "Il percorso Pro e' una seconda campagna intera: griglie piu' grandi, piu' colori, caselle muro.";
-"paywall.headline.removeAds" = "Pro toglie ogni pubblicita' — e sblocca anche tutto il resto del gioco.";
+"paywall.headline.general" = "Tutto sbloccato, e zero pubblicità.";
+"paywall.headline.proTrack" = "Il percorso Pro è una seconda campagna intera: griglie più grandi, più colori, caselle muro.";
+"paywall.headline.removeAds" = "Pro toglie ogni pubblicità — e sblocca anche tutto il resto del gioco.";
 "paywall.headline.hints" = "Con Pro gli aiuti sono illimitati.";
 "paywall.headline.cosmetic" = "Questo stile fa parte di Pro, insieme a tutti gli altri.";
-"paywall.benefit.proTrack" = "Il percorso Pro — griglie piu' difficili, muri, infinito";
-"paywall.benefit.noAds" = "Nessuna pubblicita', di nessun tipo";
+"paywall.benefit.proTrack" = "Il percorso Pro — griglie più difficili, muri, infinito";
+"paywall.benefit.noAds" = "Nessuna pubblicità, di nessun tipo";
 "paywall.benefit.skins" = "Tutti i set di colori, tracce, sfondi e nodi";
 "paywall.benefit.drops" = "Un nuovo stile esclusivo ogni mese";
 "paywall.benefit.hints" = "Aiuti illimitati";
 "paywall.benefit.gems" = "Gemme doppie a ogni livello";
-"paywall.orJustRemoveAds" = "Vuoi solo togliere la pubblicita'?";
+"paywall.orJustRemoveAds" = "Vuoi solo togliere la pubblicità?";
 
 /* MARK: - Impostazioni */
 "settings.title" = "Impostazioni";
 "settings.section.subscription" = "Abbonamento";
 "settings.section.gameplay" = "Gioco";
-"settings.section.accessibility" = "Accessibilita'";
+"settings.section.accessibility" = "Accessibilità";
 "settings.section.purchases" = "Acquisti";
 "settings.section.about" = "Informazioni";
 "settings.pro.status" = "Line Flow SW Pro";
@@ -198,31 +212,31 @@
 "settings.haptics" = "Vibrazione";
 "settings.colorBlind" = "Assistenza daltonismo";
 "settings.reduceMotion" = "Riduci il movimento";
-"settings.accessibilityFooter" = "L'assistenza daltonismo mette una lettera diversa su ogni coppia di estremi, cosi' il colore non e' mai l'unico modo per distinguerle.";
-"settings.restoreFooter" = "Ripristina tutto cio' che e' stato acquistato con questo Account Apple, anche su un nuovo dispositivo.";
+"settings.accessibilityFooter" = "L'assistenza daltonismo mette una lettera diversa su ogni coppia di estremi, così il colore non è mai l'unico modo per distinguerle.";
+"settings.restoreFooter" = "Ripristina tutto ciò che è stato acquistato con questo Account Apple, anche su un nuovo dispositivo.";
 "settings.support" = "Assistenza";
 "settings.version" = "Versione";
 "settings.reset" = "Azzera i progressi";
 "settings.resetFooter" = "L'azzeramento cancella livelli, stelle e gemme. Acquisti e abbonamenti non vengono mai toccati.";
 "settings.reset.confirmTitle" = "Azzerare tutti i progressi?";
-"settings.reset.confirmMessage" = "Livelli, stelle e gemme verranno cancellati. Tutto cio' che hai acquistato resta tuo.";
+"settings.reset.confirmMessage" = "Livelli, stelle e gemme verranno cancellati. Tutto ciò che hai acquistato resta tuo.";
 "settings.reset.confirm" = "Azzera";
 
 /* MARK: - Introduzione */
 "onboarding.1.title" = "Collega le coppie";
 "onboarding.1.body" = "Trascina da un punto al suo gemello. Stesso colore, una linea sola.";
 "onboarding.2.title" = "Riempi ogni casella";
-"onboarding.2.body" = "La griglia e' risolta quando tutte le coppie sono unite e non resta nessuna casella vuota.";
+"onboarding.2.body" = "La griglia è risolta quando tutte le coppie sono unite e non resta nessuna casella vuota.";
 "onboarding.3.title" = "Non finisce mai";
-"onboarding.3.body" = "Ogni livello viene creato al momento sul tuo dispositivo: ce n'e' sempre un altro.";
+"onboarding.3.body" = "Ogni livello viene creato al momento sul tuo dispositivo: ce n'è sempre un altro.";
 "onboarding.next" = "Avanti";
 "onboarding.start" = "Inizia a giocare";
 "onboarding.skip" = "Salta";
 
-/* MARK: - Pubblicita' */
-"ad.placeholderTag" = "PUBBLICITA'";
+/* MARK: - Pubblicità */
+"ad.placeholderTag" = "PUBBLICITÀ";
 "ad.interstitialTitle" = "Una breve pausa";
 "ad.rewardedTitle" = "Guarda per una ricompensa";
-"ad.placeholderBody" = "Questo e' un segnaposto pubblicitario. Collega una rete reale dietro AdService prima della pubblicazione.";
+"ad.placeholderBody" = "Questo è un segnaposto pubblicitario. Collega una rete reale dietro AdService prima della pubblicazione.";
 "ad.countdown" = "%ld s";
 "ad.claim" = "Ritira la ricompensa";

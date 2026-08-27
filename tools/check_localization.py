@@ -25,6 +25,7 @@ DYNAMIC_PREFIXES = (
     "cosmetic.node.",
     "product.",
     "period.",
+    "leaderboard.",
 )
 
 KEY_PATTERN = re.compile(r'"([a-z][A-Za-z0-9]*(?:\.[A-Za-z0-9]+)+)"')
@@ -82,6 +83,11 @@ def dynamic_keys():
         keys.add(f"product.{short}.description")
     for unit in ("day", "week", "month", "year"):
         keys.add(f"period.{unit}")
+
+    boards = pathlib.Path("PuzzleKit/Sources/PuzzleKit/Social/Leaderboards.swift").read_text()
+    for short in re.findall(r'^\s*case \.\w+: "(\w+)"$', boards, re.M):
+        keys.add(f"leaderboard.{short}.title")
+        keys.add(f"leaderboard.{short}.detail")
     return keys
 
 

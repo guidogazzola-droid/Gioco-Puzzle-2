@@ -15,7 +15,11 @@ each step unblocks the next.
       Then run `python3 tools/check_products.py` — it will tell you if you
       missed one.
 - [ ] Set `DEVELOPMENT_TEAM` in the project (Signing & Capabilities → Team).
-- [ ] Register the App ID with **In-App Purchase** enabled.
+- [ ] Register the App ID with **In-App Purchase** *and* **Game Center**
+      enabled. Game Center has to be on the App ID before you build: the app
+      ships `LineFlow/LineFlow.entitlements` declaring it, and a provisioning
+      profile that does not match the entitlement fails signing with a message
+      that does not mention Game Center at all.
 - [ ] Check the name "Line Flow SW" is free on the App Store, and reserve it.
 
 ## 2. Products in App Store Connect
@@ -38,6 +42,31 @@ A mismatch shows up as a product that silently never loads.
       review notes. Missing these is a common rejection.
 - [ ] Fill in the subscription **App Store promotion** artwork if you want the
       plans to appear outside the app.
+
+## 2b. Game Center leaderboards
+
+App Store Connect → your app → **Game Center** → Leaderboards. The identifiers
+must match `PuzzleKit/Sources/PuzzleKit/Social/Leaderboards.swift` exactly: a
+wrong id fails **silently** at submission — no crash, no warning, the score
+just never appears.
+
+| Leaderboard ID | Format | Sort | Reset |
+|---|---|---|---|
+| `com.sabettalineflow.app.leaderboard.stars` | Integer | High to low | Never |
+| `com.sabettalineflow.app.leaderboard.free` | Integer | High to low | Never |
+| `com.sabettalineflow.app.leaderboard.pro` | Integer | High to low | Never |
+| `com.sabettalineflow.app.leaderboard.daily` | Elapsed Time (seconds) | **Low to high** | **Every day** |
+
+- [ ] Create all four with the settings above. The daily one is a **recurring**
+      leaderboard — that is what makes it a fresh race each day, matching the
+      generated board everyone gets.
+- [ ] Give each a localised name in English and Italian. The strings the app
+      already uses are `leaderboard.*.title` in both `.strings` files.
+- [ ] Test on a real device signed into Game Center. The simulator can
+      authenticate but is unreliable for score submission.
+- [ ] Check the game still plays normally with Game Center **off** (sign out, or
+      restrict it in Screen Time). Leaderboards are optional by design and
+      nothing in the game loop waits on them.
 
 ## 3. Legal (guideline 3.1.2 — the most common subscription rejection)
 

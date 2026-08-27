@@ -38,6 +38,7 @@ targets:
       - path: LineFlow
         excludes:
           - "Info.plist"
+          - "LineFlow.entitlements"
     dependencies:
       - package: PuzzleKit
         product: PuzzleKit
@@ -48,6 +49,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.sabettalineflow.app
         INFOPLIST_FILE: LineFlow/Info.plist
         GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: LineFlow/LineFlow.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1,2"

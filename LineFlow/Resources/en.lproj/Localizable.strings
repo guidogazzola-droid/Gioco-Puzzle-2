@@ -38,6 +38,20 @@
 "home.pro.unlock" = "See Line Flow SW Pro";
 "home.shop" = "Styles";
 "home.removeAds" = "Remove ads";
+"home.leaderboards" = "Leaderboards";
+
+/* MARK: - Game Center */
+"gamecenter.signIn" = "Sign in to Game Center";
+"gamecenter.signedOut.title" = "Leaderboards need Game Center";
+"gamecenter.signedOut.body" = "Signing in is optional — the whole game plays the same either way. It only decides whether your scores appear on the boards below.";
+"leaderboard.stars.title" = "Stars collected";
+"leaderboard.stars.detail" = "Every star you have earned, on both tracks";
+"leaderboard.free.title" = "Furthest level";
+"leaderboard.free.detail" = "How deep you have gone into the main campaign";
+"leaderboard.pro.title" = "Furthest Pro level";
+"leaderboard.pro.detail" = "The same, on the harder Pro track";
+"leaderboard.daily.title" = "Daily puzzle";
+"leaderboard.daily.detail" = "Today’s board is identical for everyone. Hints do not count.";
 
 /* MARK: - Map */
 "map.title.free" = "Levels";

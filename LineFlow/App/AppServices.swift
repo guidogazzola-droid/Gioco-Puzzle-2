@@ -15,6 +15,7 @@ final class AppServices {
     let store: StoreManager
     let ads: SimulatedAdService
     let haptics: HapticsService
+    let gameCenter: GameCenterService
     let adPolicy: AdPolicy
 
     /// Set when a purchase or restore needs to say something to the player.
@@ -36,12 +37,14 @@ final class AppServices {
         store: StoreManager? = nil,
         ads: SimulatedAdService? = nil,
         haptics: HapticsService? = nil,
+        gameCenter: GameCenterService? = nil,
         adPolicy: AdPolicy = .standard
     ) {
         self.profileStore = profileStore ?? ProfileStore()
         self.store = store ?? StoreManager()
         self.ads = ads ?? SimulatedAdService()
         self.haptics = haptics ?? HapticsService()
+        self.gameCenter = gameCenter ?? GameCenterService()
         self.adPolicy = adPolicy
     }
 
@@ -57,6 +60,14 @@ final class AppServices {
             self?.grantUnlock(product)
         }
         store.start()
+
+        // Re-post standings once the player signs in: a score lost to a dead
+        // connection is recovered here rather than being gone for good.
+        gameCenter.onAuthenticated = { [weak self] in
+            guard let self else { return }
+            gameCenter.submit(LeaderboardRules.standings(for: profile))
+        }
+        gameCenter.authenticate()
     }
 
     // MARK: - Derived state
@@ -109,6 +120,7 @@ final class AppServices {
         )
         profileStore.update { $0.apply(outcome, on: DayKey.key(for: Date())) }
         haptics.play(.win)
+        gameCenter.submit(LeaderboardRules.afterCampaignLevel(profile: profile))
         return outcome
     }
 
@@ -131,6 +143,7 @@ final class AppServices {
         let bonus = DailyChallenge.bonusGems(stars: outcome.stars, streak: profile.stats.currentStreak)
         profileStore.update { $0.applyDaily(outcome, on: day, bonusGems: bonus) }
         haptics.play(.win)
+        gameCenter.submit(LeaderboardRules.afterDaily(outcome: outcome, profile: profile))
         return (outcome, bonus)
     }
 

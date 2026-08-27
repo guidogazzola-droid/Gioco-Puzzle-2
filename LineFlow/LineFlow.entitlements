@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Game Center: leaderboards. The same capability has to be enabled on
+	     the App ID in the developer portal, or signing fails with a profile
+	     that does not match this entitlement. -->
+	<key>com.apple.developer.game-center</key>
+	<true/>
+</dict>
+</plist>

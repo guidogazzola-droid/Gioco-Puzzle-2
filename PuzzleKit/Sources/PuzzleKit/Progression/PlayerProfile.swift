@@ -43,6 +43,10 @@ public struct TrackProgress: Codable, Sendable, Hashable {
 
     public var clearedLevels: Int { records.count }
 
+    /// The furthest level ever finished. `highestUnlocked` runs one ahead of
+    /// it, because clearing a level unlocks the next one.
+    public var highestCleared: Int { max(0, highestUnlocked - 1) }
+
     /// Records a clear, keeping the player's best result for that level.
     public mutating func register(_ outcome: LevelOutcome) {
         let key = String(outcome.level)

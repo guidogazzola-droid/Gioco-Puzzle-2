@@ -8,6 +8,7 @@ struct HomeView: View {
 
     @State private var route: Route? = nil
     @State private var isShowingShop = false
+    @State private var isShowingLeaderboards = false
     @State private var isShowingSettings = false
     @State private var isShowingPaywall = false
     @State private var paywallContext = PaywallView.Context.general
@@ -42,6 +43,7 @@ struct HomeView: View {
                 destination(for: route)
             }
             .sheet(isPresented: $isShowingShop) { ShopView() }
+            .sheet(isPresented: $isShowingLeaderboards) { LeaderboardsView() }
             .sheet(isPresented: $isShowingSettings) { SettingsView() }
             .sheet(isPresented: $isShowingPaywall) { PaywallView(context: paywallContext) }
         }
@@ -210,9 +212,13 @@ struct HomeView: View {
     }
 
     private var shopRow: some View {
-        HStack(spacing: 14) {
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)],
+                  spacing: 14) {
             tile(icon: "paintpalette.fill", titleKey: "home.shop", tint: Ink.accent) {
                 isShowingShop = true
+            }
+            tile(icon: "trophy.fill", titleKey: "home.leaderboards", tint: Ink.gold) {
+                isShowingLeaderboards = true
             }
             if services.showsAds {
                 tile(icon: "nosign", titleKey: "home.removeAds", tint: Ink.gold) {

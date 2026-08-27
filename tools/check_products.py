@@ -18,6 +18,7 @@ import re
 import sys
 
 CATALOG = pathlib.Path("PuzzleKit/Sources/PuzzleKit/Economy/ProductCatalog.swift")
+LEADERBOARDS = pathlib.Path("PuzzleKit/Sources/PuzzleKit/Social/Leaderboards.swift")
 STOREKIT = pathlib.Path("Configuration/Products.storekit")
 STRINGS = sorted(pathlib.Path(".").glob("LineFlow/Resources/*.lproj/Localizable.strings"))
 
@@ -37,6 +38,25 @@ def storekit_products():
         groups[group["id"]] = {s["productID"] for s in group["subscriptions"]}
         ids |= groups[group["id"]]
     return ids, groups, config
+
+
+def common_namespace(identifiers):
+    """The dotted prefix every identifier shares - the bundle id."""
+    if not identifiers:
+        return ""
+    segments = [identifier.split(".") for identifier in identifiers]
+    shared = []
+    for column in zip(*segments):
+        if len(set(column)) != 1:
+            break
+        shared.append(column[0])
+    return ".".join(shared)
+
+
+def leaderboard_ids():
+    if not LEADERBOARDS.exists():
+        return set()
+    return set(re.findall(r'= "([\w.]+\.leaderboard\.[\w.]+)"', LEADERBOARDS.read_text()))
 
 
 def main():
@@ -73,8 +93,16 @@ def main():
                 if key not in keys:
                     failures.append(f"{path.parent.name}: missing {key}")
 
+    # Leaderboard identifiers are configured by hand in App Store Connect and
+    # fail silently when they drift, so they get the same treatment.
+    boards = leaderboard_ids()
+    bundle = common_namespace(declared)
+    for board in sorted(boards):
+        if not board.startswith(bundle + "."):
+            failures.append(f"leaderboard {board} is not namespaced under {bundle}")
+
     print(f"app products: {len(declared)}   storekit products: {len(served)}   "
-          f"subscription group: {group_id}")
+          f"subscription group: {group_id}   leaderboards: {len(boards)}")
     for failure in failures:
         print(f"  FAIL  {failure}")
     print("products consistent" if not failures else f"{len(failures)} problems")

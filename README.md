@@ -43,6 +43,10 @@ tracks, zero invalid boards, worst colour-length imbalance 1.9x**.
 | Hints | earned or bought | earned or bought | ✅ unlimited |
 | Gem earn rate | 1x | 1x | 2x |
 
+Game Center adds four leaderboards on top: total stars, furthest level on each
+track, and a daily board where everyone races the identical generated puzzle.
+Signing in is optional and the game plays the same without it.
+
 Cosmetics bought with money, gems or stars are **owned forever**. The
 subscription grants *access* to the rest while it is active; when it lapses,
 only what it granted goes away. `docs/MONETIZATION.md` has the full model, the
