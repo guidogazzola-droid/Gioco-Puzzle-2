@@ -53,6 +53,16 @@ def common_namespace(identifiers):
     return ".".join(shared)
 
 
+def app_languages():
+    """The languages the app ships, taken from its .lproj directories."""
+    return {path.parent.name.removesuffix(".lproj") for path in STRINGS}
+
+
+def localized_languages(entry):
+    """The languages an entry in Products.storekit carries copy for."""
+    return {loc["locale"].split("_")[0] for loc in entry.get("localizations", [])}
+
+
 def leaderboard_ids():
     if not LEADERBOARDS.exists():
         return set()
@@ -93,6 +103,20 @@ def main():
                 if key not in keys:
                     failures.append(f"{path.parent.name}: missing {key}")
 
+    # StoreKit serves the product name and description itself: the app's
+    # .strings files never reach Apple's subscription control, which renders
+    # whatever the store hands it. So every language the app ships needs copy
+    # here too, and in App Store Connect. Missing one is silent - the store
+    # falls back to another language and the paywall reads half translated.
+    languages = app_languages()
+    entries = [(product["productID"], product) for product in config["products"]]
+    for group in config["subscriptionGroups"]:
+        entries.append((f"subscription group {group['id']}", group))
+        entries += [(s["productID"], s) for s in group["subscriptions"]]
+    for name, entry in entries:
+        for missing in sorted(languages - localized_languages(entry)):
+            failures.append(f"{name}: no {missing} localization in Products.storekit")
+
     # Leaderboard identifiers are configured by hand in App Store Connect and
     # fail silently when they drift, so they get the same treatment.
     boards = leaderboard_ids()
@@ -102,7 +126,8 @@ def main():
             failures.append(f"leaderboard {board} is not namespaced under {bundle}")
 
     print(f"app products: {len(declared)}   storekit products: {len(served)}   "
-          f"subscription group: {group_id}   leaderboards: {len(boards)}")
+          f"subscription group: {group_id}   leaderboards: {len(boards)}   "
+          f"languages: {','.join(sorted(languages))}")
     for failure in failures:
         print(f"  FAIL  {failure}")
     print("products consistent" if not failures else f"{len(failures)} problems")

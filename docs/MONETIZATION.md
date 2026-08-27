@@ -26,6 +26,42 @@ Subscription group `22339558` ("Line Flow SW Pro"), both plans family-shareable.
 Prices are a starting point; App Store pricing is per storefront and the app
 never hard-codes a price — every price shown comes from StoreKit.
 
+## Who writes the words on the paywall
+
+Two different sources, and they are easy to confuse:
+
+- The **shop screen** reads the app's own `.strings` files, so it follows the
+  language of the device.
+- The **paywall's plan picker** is Apple's `SubscriptionStoreView`. It renders
+  whatever StoreKit hands it, and StoreKit's copy comes from App Store Connect
+  (or from `Products.storekit` when testing). The app's `.strings` never reach
+  it.
+
+So a product missing a language shows up as a half-translated paywall: the
+surrounding screen in English, the plans in Italian. Nothing errors.
+`tools/check_products.py` now fails when any product or the subscription group
+is missing copy for a language the app ships, which catches the local half of
+it; the App Store Connect half is section 2 of the release checklist.
+
+### Testing in another language
+
+`Configuration/Products.storekit` pins the test store's language and country:
+
+```json
+"_locale" : "it_IT",
+"_storefront" : "ITA",
+```
+
+These are testing-only settings and are not read on a real device. `_locale`
+picks which localisation StoreKit serves back, **regardless of the device
+language** - which is why the simulator can show an English app with Italian
+plan names. `_storefront` picks the currency.
+
+Change them in Xcode by opening the file and using the Editor menu, or by
+editing the two lines. Setting `_locale` to `en_US` while leaving `_storefront`
+as `ITA` gives English copy at euro prices, which is the combination worth
+looking at before shipping: it is what an English-speaking player in Italy sees.
+
 ## The entitlement rules
 
 `Entitlements` is the single source of truth. Every gate in the game reads from

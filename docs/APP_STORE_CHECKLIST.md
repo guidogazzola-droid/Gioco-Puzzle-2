@@ -64,7 +64,11 @@ lets a player move between plans without paying twice.
       different levels would make it an upgrade that refunds and rebills
       immediately, which is not what either of you wants.
 - [ ] Add a **1-week free trial** introductory offer to each.
-- [ ] Localise the display name and description of each plan.
+- [ ] Localise the display name and description of each plan, in **every**
+      language the app ships. This is the copy Apple's own paywall control
+      renders - the app's `.strings` files do not reach it - so a plan missing
+      a language shows a paywall in English around plan names in Italian. It
+      fails silently, with no error anywhere.
 - [ ] Upload a **subscription review screenshot** for each plan and fill in the
       review notes. Missing these is a common rejection.
 - [x] The group id is set: `22339558`, in `ProductCatalog.subscriptionGroupID`
