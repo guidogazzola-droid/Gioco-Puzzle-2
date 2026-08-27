@@ -12,8 +12,12 @@ import PuzzleKit
 ///
 /// The control is only shown once the subscription group has actually loaded.
 /// Handed an empty group it draws its own untranslated "Subscription
-/// Unavailable" placeholder, complete with a second dismiss button next to
-/// ours - so the empty case gets a state of our own instead.
+/// Unavailable" placeholder - so the empty case gets a state of our own
+/// instead.
+///
+/// It also brings its own dismiss control, in both states, so ours is added
+/// only when we are the ones drawing the screen. Two crosses stacked down the
+/// corner is what shipped before a review screenshot caught it.
 struct PaywallView: View {
 
     enum Context: Hashable {
@@ -43,9 +47,16 @@ struct PaywallView: View {
         NavigationStack {
             content
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button { dismiss() } label: { Image(systemName: "xmark") }
-                            .accessibilityLabel(Text("common.close"))
+                    // Only when we are drawing the screen ourselves.
+                    // SubscriptionStoreView brings its own dismiss control, and
+                    // adding a second one stacks two crosses down the corner -
+                    // which is exactly what shipped until a review screenshot
+                    // caught it.
+                    if !services.store.hasSubscriptionProducts {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button { dismiss() } label: { Image(systemName: "xmark") }
+                                .accessibilityLabel(Text("common.close"))
+                        }
                     }
                 }
                 .safeAreaInset(edge: .bottom) { alternativesFooter }
