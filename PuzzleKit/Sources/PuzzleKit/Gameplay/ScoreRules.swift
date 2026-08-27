@@ -28,10 +28,10 @@ public enum ScoreRules {
     public static func stars(moves: Int, par: Int, hintsUsed: Int) -> Int {
         // A hint hands the player a whole colour, so it caps the award at two.
         if hintsUsed > 0 {
-            return moves <= par + twoStarBudget(par) + hintsUsed ? 2 : 1
+            return moves <= par + twoStarBudget(par: par) + hintsUsed ? 2 : 1
         }
         if moves <= par { return 3 }
-        if moves <= par + twoStarBudget(par) { return 2 }
+        if moves <= par + twoStarBudget(par: par) { return 2 }
         return 1
     }
 
