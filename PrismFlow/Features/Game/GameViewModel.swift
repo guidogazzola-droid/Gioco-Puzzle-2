@@ -24,12 +24,13 @@ final class GameViewModel {
     let mode: Mode
     private(set) var engine: PuzzleEngine
     /// Set once the board is solved and the result has been booked.
-    private(set) var result: Result?
+    private(set) var completion: Completion?
     private(set) var isShowingCompletion = false
     /// Raised when a hint is wanted but none is available.
     var isShowingHintOptions = false
 
-    struct Result: Equatable {
+    /// What the player walked away with, once the board is booked.
+    struct Completion: Equatable {
         let outcome: LevelOutcome
         let dailyBonus: Int
         /// `false` when the daily had already been claimed today.
@@ -97,12 +98,12 @@ final class GameViewModel {
     // MARK: - Input
 
     func begin(at cell: Coordinate) -> Bool {
-        guard result == nil else { return false }
+        guard completion == nil else { return false }
         return engine.beginDrag(at: cell)
     }
 
     func extend(to cell: Coordinate) -> Bool {
-        guard result == nil else { return false }
+        guard completion == nil else { return false }
         let moved = engine.extendDrag(to: cell)
         if moved {
             services.haptics.play(.snap)
@@ -111,7 +112,7 @@ final class GameViewModel {
     }
 
     func endDrag() {
-        guard result == nil else { return }
+        guard completion == nil else { return }
         let connectedBefore = engine.connectedColors
         engine.endDrag()
         if engine.connectedColors > connectedBefore {
@@ -123,7 +124,7 @@ final class GameViewModel {
     // MARK: - Board actions
 
     func reset() {
-        guard result == nil else { return }
+        guard completion == nil else { return }
         engine.reset()
         startedAt = Date()
         pausedFor = 0
@@ -133,7 +134,7 @@ final class GameViewModel {
     /// Spends a hint if the player has one, otherwise raises the options sheet
     /// offering a rewarded video or gems.
     func requestHint() {
-        guard result == nil else { return }
+        guard completion == nil else { return }
         guard services.hasFreeHint else {
             isShowingHintOptions = true
             return
@@ -146,7 +147,7 @@ final class GameViewModel {
     }
 
     func applyHint() {
-        guard result == nil, engine.revealHint() != nil else { return }
+        guard completion == nil, engine.revealHint() != nil else { return }
         services.haptics.play(.connect)
         if engine.isSolved { bookResult() }
     }
@@ -168,17 +169,17 @@ final class GameViewModel {
     // MARK: - Completion
 
     private func bookResult() {
-        guard result == nil else { return }
+        guard completion == nil else { return }
         let seconds = elapsedSeconds
         pauseClock()
 
         switch mode {
         case .campaign(let track):
             let outcome = services.finish(engine: engine, seconds: seconds, track: track)
-            result = Result(outcome: outcome, dailyBonus: 0, wasCounted: true)
+            completion = Completion(outcome: outcome, dailyBonus: 0, wasCounted: true)
         case .daily:
             if let daily = services.finishDaily(engine: engine, seconds: seconds) {
-                result = Result(outcome: daily.outcome, dailyBonus: daily.bonus, wasCounted: true)
+                completion = Completion(outcome: daily.outcome, dailyBonus: daily.bonus, wasCounted: true)
             } else {
                 // Already claimed today - still celebrate, just do not pay twice.
                 let parameters = DifficultyCurve.parameters(level: level, track: .free)
@@ -187,7 +188,7 @@ final class GameViewModel {
                     moves: engine.moves, par: engine.parMoves, seconds: seconds,
                     hintsUsed: engine.hintsUsed, isFirstClear: false, gemMultiplier: 1
                 )
-                result = Result(outcome: outcome, dailyBonus: 0, wasCounted: false)
+                completion = Completion(outcome: outcome, dailyBonus: 0, wasCounted: false)
             }
         }
         isShowingCompletion = true
@@ -206,7 +207,7 @@ final class GameViewModel {
 
     func load(level: Int) {
         engine = PuzzleEngine(blueprint: Self.blueprint(mode: mode, level: level))
-        result = nil
+        completion = nil
         isShowingCompletion = false
         startedAt = Date()
         pausedFor = 0

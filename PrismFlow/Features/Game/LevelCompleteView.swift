@@ -4,7 +4,7 @@ import PuzzleKit
 /// The win overlay: what you scored, what you earned, where to go next.
 struct LevelCompleteView: View {
 
-    let result: GameViewModel.Result
+    let completion: GameViewModel.Completion
     let isDaily: Bool
     let hasNextLevel: Bool
     let onNext: () -> Void
@@ -13,7 +13,7 @@ struct LevelCompleteView: View {
 
     @State private var hasAppeared = false
 
-    private var outcome: LevelOutcome { result.outcome }
+    private var outcome: LevelOutcome { completion.outcome }
 
     var body: some View {
         ZStack {
@@ -39,13 +39,13 @@ struct LevelCompleteView: View {
                         captionKey: "complete.time"
                     )
                     statTile(
-                        valueText: "+\(outcome.gems + result.dailyBonus)",
+                        valueText: "+\(outcome.gems + completion.dailyBonus)",
                         captionKey: "complete.gems",
                         tint: Ink.gold
                     )
                 }
 
-                if isDaily && !result.wasCounted {
+                if isDaily && !completion.wasCounted {
                     Text("complete.dailyAlreadyClaimed")
                         .font(.footnote)
                         .multilineTextAlignment(.center)

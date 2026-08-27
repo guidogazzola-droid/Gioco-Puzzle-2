@@ -34,9 +34,9 @@ struct GameView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
 
-            if model.isShowingCompletion, let result = model.result {
+            if model.isShowingCompletion, let completion = model.completion {
                 LevelCompleteView(
-                    result: result,
+                    completion: completion,
                     isDaily: model.mode.isDaily,
                     hasNextLevel: model.nextLevel != nil,
                     onNext: { Task { await model.advance() } },
@@ -125,7 +125,7 @@ struct GameView: View {
             engine: model.engine,
             theme: theme,
             colorBlindAssist: services.profile.settings.colorBlindAssist,
-            isInteractive: model.result == nil,
+            isInteractive: model.completion == nil,
             onBegin: { model.begin(at: $0) },
             onExtend: { model.extend(to: $0) },
             onEnd: { model.endDrag() }
