@@ -243,7 +243,12 @@ Neither field blocks submission.
 
 ## 6. Build
 
-- [ ] Bump `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION`.
+- [ ] Bump `CURRENT_PROJECT_VERSION` **before every single upload**, including
+      a re-upload of the same version. App Store Connect refuses a build whose
+      number it has already seen, and the message names the build rather than
+      the cause, so it reads like a signing or network problem. There are four
+      copies of it in the project file — change them together.
+      `MARKETING_VERSION` only moves when the version people see does.
 - [ ] Replace the generated app icon with final art if you have a designer.
       The committed icon is real, opaque and 1024×1024, so it will pass
       validation as-is — regenerate with `python3 tools/make_app_icon.py`.
