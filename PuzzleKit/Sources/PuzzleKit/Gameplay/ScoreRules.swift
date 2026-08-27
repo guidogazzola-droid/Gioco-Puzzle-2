@@ -61,7 +61,7 @@ public enum ScoreRules {
         isFirstClear: Bool,
         gemMultiplier: Int
     ) -> LevelOutcome {
-        let stars = stars(moves: moves, par: par, hintsUsed: hintsUsed)
+        let awarded = stars(moves: moves, par: par, hintsUsed: hintsUsed)
         return LevelOutcome(
             level: level,
             track: track,
@@ -69,9 +69,9 @@ public enum ScoreRules {
             par: par,
             seconds: seconds,
             hintsUsed: hintsUsed,
-            stars: stars,
+            stars: awarded,
             gems: gems(
-                stars: stars,
+                stars: awarded,
                 parameters: parameters,
                 isFirstClear: isFirstClear,
                 multiplier: gemMultiplier

@@ -22,14 +22,24 @@ struct CosmeticCatalogTests {
 
     @Test("every category has something to sell and something to earn")
     func everyCategoryHasAProgressionLadder() {
+        func isEarnable(_ cosmetic: Cosmetic) -> Bool {
+            switch cosmetic.unlock {
+            case .gems, .stars: true
+            case .free, .purchase, .proSubscription: false
+            }
+        }
+
         for category in Cosmetic.Category.allCases {
             let items = CosmeticCatalog.items(in: category)
             #expect(items.count >= 4, "\(category.rawValue) is too thin to feel like a collection")
-            #expect(items.contains { $0.unlock == .proSubscription },
-                    "\(category.rawValue) gives subscribers nothing")
-            #expect(items.contains { if case .gems = $0.unlock { return true } else { return false } }
-                    || items.contains { if case .stars = $0.unlock { return true } else { return false } },
-                    "\(category.rawValue) cannot be progressed toward by playing")
+            #expect(
+                items.contains(where: { $0.unlock == .proSubscription }),
+                "\(category.rawValue) gives subscribers nothing"
+            )
+            #expect(
+                items.contains(where: isEarnable),
+                "\(category.rawValue) cannot be progressed toward by playing"
+            )
         }
     }
 

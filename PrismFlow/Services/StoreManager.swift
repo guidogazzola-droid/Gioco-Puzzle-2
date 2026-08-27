@@ -92,16 +92,6 @@ final class StoreManager {
         return "\(product.displayPrice) / \(Self.periodName(period))"
     }
 
-    /// The introductory offer attached to a subscription, if the shopper is
-    /// eligible. Apple requires the trial terms to be stated on the paywall.
-    func introductoryOffer(for id: StoreProductID) async -> Product.SubscriptionOffer? {
-        guard let subscription = product(for: id)?.subscription,
-              let offer = subscription.introductoryOffer
-        else { return nil }
-        let eligible = await subscription.isEligibleForIntroOffer
-        return eligible ? offer : nil
-    }
-
     static func periodName(_ period: Product.SubscriptionPeriod) -> String {
         let key: String
         switch period.unit {

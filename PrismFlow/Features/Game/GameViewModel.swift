@@ -177,8 +177,8 @@ final class GameViewModel {
             let outcome = services.finish(engine: engine, seconds: seconds, track: track)
             result = Result(outcome: outcome, dailyBonus: 0, wasCounted: true)
         case .daily:
-            if let (outcome, bonus) = services.finishDaily(engine: engine, seconds: seconds) {
-                result = Result(outcome: outcome, dailyBonus: bonus, wasCounted: true)
+            if let daily = services.finishDaily(engine: engine, seconds: seconds) {
+                result = Result(outcome: daily.outcome, dailyBonus: daily.bonus, wasCounted: true)
             } else {
                 // Already claimed today - still celebrate, just do not pay twice.
                 let parameters = DifficultyCurve.parameters(level: level, track: .free)

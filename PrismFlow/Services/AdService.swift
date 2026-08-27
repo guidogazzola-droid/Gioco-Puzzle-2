@@ -4,12 +4,15 @@ import PuzzleKit
 
 /// What an ad network has to provide for the game to work.
 ///
-/// The game talks to this protocol and never to a network SDK directly, so the
-/// ad vendor is a swap of one file. `SimulatedAdService` is what ships in the
-/// repository: it renders an in-app placeholder, which keeps the project
-/// buildable with no third-party dependency and makes the pacing rules
-/// testable in the simulator. See `docs/MONETIZATION.md` for wiring a real
-/// network (AdMob / AppLovin) behind the same protocol.
+/// Every ad call the game makes goes through these four methods, so swapping
+/// the vendor means writing one conformance and changing the type of
+/// `AppServices.ads`. `SimulatedAdService` is what ships in the repository: it
+/// renders an in-app placeholder, which keeps the project buildable with no
+/// third-party dependency and lets the pacing rules be exercised in the
+/// simulator. `AppServices` holds it by its concrete type for one reason -
+/// the root view needs `presentation` to know when to draw the placeholder -
+/// and that overlay is the other half of what a real network replaces.
+/// `docs/MONETIZATION.md` walks through wiring AdMob behind this protocol.
 @MainActor
 protocol AdService: AnyObject {
     /// Whether an interstitial can be shown right now.

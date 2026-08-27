@@ -36,8 +36,10 @@ public enum LevelGenerator {
         var found = 0
 
         for attempt in 0..<maximumAttempts {
-            let seed = seed(level: level, track: track, salt: salt, attempt: attempt)
-            guard let candidate = build(level: level, track: track, parameters: parameters, seed: seed) else {
+            let attemptSeed = seed(level: level, track: track, salt: salt, attempt: attempt)
+            guard let candidate = build(
+                level: level, track: track, parameters: parameters, seed: attemptSeed
+            ) else {
                 continue
             }
             found += 1

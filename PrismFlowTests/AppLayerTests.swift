@@ -140,7 +140,7 @@ struct BoardGeometryTests {
 @MainActor
 struct AppServicesTests {
 
-    private func services() -> AppServices {
+    private func makeServices() -> AppServices {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("prismflow-services-\(UUID().uuidString)", isDirectory: true)
             .appendingPathComponent("profile.json")
@@ -149,7 +149,7 @@ struct AppServicesTests {
 
     @Test("entitlements merge App Store facts with save-file facts")
     func entitlementsMergeBothSources() {
-        let services = services()
+        let services = makeServices()
         services.profileStore.update { profile in
             profile.ownedCosmetics = ["ember"]
             profile.free.register(LevelOutcome(
@@ -164,7 +164,7 @@ struct AppServicesTests {
 
     @Test("a cosmetic can only be bought with gems the player has")
     func gemPurchasesAreGuarded() {
-        let services = services()
+        let services = makeServices()
         let ember = CosmeticCatalog.cosmetic(id: "ember")!
 
         #expect(!services.buyWithGems(ember), "should not be affordable at zero gems")
@@ -179,7 +179,7 @@ struct AppServicesTests {
 
     @Test("a locked cosmetic cannot be equipped by a stale view")
     func equippingRespectsEntitlements() {
-        let services = services()
+        let services = makeServices()
         let glacier = CosmeticCatalog.cosmetic(id: "glacier")!
         services.equip(glacier)
         #expect(services.profile.equipped.palette == CosmeticCatalog.defaultPalette)
@@ -187,7 +187,7 @@ struct AppServicesTests {
 
     @Test("hints are spent, and never go negative")
     func hintSpending() {
-        let services = services()
+        let services = makeServices()
         services.profileStore.update { $0.hints = 1 }
         #expect(services.hasFreeHint)
         #expect(services.consumeHint())
@@ -203,7 +203,7 @@ struct AppServicesTests {
 
     @Test("finishing a level records it and pays out once")
     func finishingALevel() {
-        let services = services()
+        let services = makeServices()
         var engine = PuzzleEngine(blueprint: LevelGenerator.generate(level: 1, track: .free))
         for path in engine.blueprint.solution {
             engine.beginDrag(at: path[0])
@@ -224,7 +224,7 @@ struct AppServicesTests {
 
     @Test("resetting progress never touches what the player paid for")
     func resetKeepsPurchases() {
-        let services = services()
+        let services = makeServices()
         services.profileStore.update { profile in
             profile.gems = 900
             profile.ownedCosmetics = ["ember", "glow"]
@@ -241,7 +241,7 @@ struct AppServicesTests {
 
     @Test("the theme falls back when a skin is no longer entitled")
     func themeIsAlwaysDrawable() {
-        let services = services()
+        let services = makeServices()
         services.profileStore.update { $0.equipped.palette = "nebula" }  // Pro only
         #expect(services.theme.paletteID == CosmeticCatalog.defaultPalette)
         #expect(services.theme.colors.count >= 14)

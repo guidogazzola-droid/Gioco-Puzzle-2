@@ -159,9 +159,9 @@ public enum CosmeticCatalog {
     /// The colour a given flow is drawn in, wrapping if a board somehow has
     /// more colours than the palette defines.
     public static func color(forPalette id: String, colorIndex: Int) -> String {
-        let colors = colors(forPalette: id)
-        guard !colors.isEmpty else { return "#FFFFFF" }
-        return colors[((colorIndex % colors.count) + colors.count) % colors.count]
+        let palette = colors(forPalette: id)
+        guard !palette.isEmpty else { return "#FFFFFF" }
+        return palette[((colorIndex % palette.count) + palette.count) % palette.count]
     }
 
     /// Cosmetics unlocked purely by playing, given a star total. Used to show

@@ -100,9 +100,6 @@ public struct Entitlements: Sendable, Hashable, Codable {
     /// Pro doubles the soft-currency earn rate.
     public var gemMultiplier: Int { isPro ? 2 : 1 }
 
-    /// Pro members get the monthly cosmetic drop as soon as it lands.
-    public var unlocksExclusiveDrops: Bool { isPro }
-
     // MARK: - Cosmetics
 
     /// Owned outright, independent of any subscription.

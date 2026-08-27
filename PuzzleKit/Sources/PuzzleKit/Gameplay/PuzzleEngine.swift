@@ -48,8 +48,6 @@ public struct PuzzleEngine: Sendable {
 
     public func endpointColor(at cell: Coordinate) -> Int? { endpointOwners[cell] }
 
-    public func isEndpoint(_ cell: Coordinate) -> Bool { endpointOwners[cell] != nil }
-
     /// A colour is connected once its path runs endpoint to endpoint.
     public func isConnected(color: Int) -> Bool {
         let path = paths[color]

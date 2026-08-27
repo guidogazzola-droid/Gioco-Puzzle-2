@@ -188,6 +188,7 @@
 "settings.pro.expired" = "Scaduto";
 "settings.pro.revoked" = "Rimborsato";
 "settings.pro.inactive" = "Nessun abbonamento";
+"settings.pro.includedStyles" = "Stili inclusi";
 "settings.pro.manage" = "Gestisci abbonamento";
 "settings.pro.renewsOn" = "Si rinnova il";
 "settings.pro.endsOn" = "Termina il";

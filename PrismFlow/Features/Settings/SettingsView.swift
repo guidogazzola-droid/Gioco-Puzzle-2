@@ -63,6 +63,11 @@ struct SettingsView: View {
                         Text(renewalLabelKey)
                     }
                 }
+                LabeledContent {
+                    Text(services.entitlements.cosmeticsGrantedByPro.count.formatted())
+                } label: {
+                    Text("settings.pro.includedStyles")
+                }
                 Button {
                     isShowingManageSubscriptions = true
                 } label: {

@@ -7,9 +7,11 @@ struct PuzzleEngineTests {
     @discardableResult
     private func draw(_ engine: inout PuzzleEngine, _ path: [Coordinate]) -> Bool {
         guard engine.beginDrag(at: path[0]) else { return false }
-        for cell in path.dropFirst() where !engine.extendDrag(to: cell) {
-            engine.endDrag()
-            return false
+        for cell in path.dropFirst() {
+            guard engine.extendDrag(to: cell) else {
+                engine.endDrag()
+                return false
+            }
         }
         engine.endDrag()
         return true

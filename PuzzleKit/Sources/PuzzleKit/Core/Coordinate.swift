@@ -37,36 +37,3 @@ public struct Coordinate: Hashable, Codable, Sendable, Comparable, CustomStringC
 
     public var description: String { "(\(x),\(y))" }
 }
-
-/// The four orthogonal directions, used for drawing pipe joints.
-public enum Direction: Int, CaseIterable, Sendable, Codable {
-    case up, left, right, down
-
-    public var delta: Coordinate {
-        switch self {
-        case .up:    Coordinate(0, -1)
-        case .left:  Coordinate(-1, 0)
-        case .right: Coordinate(1, 0)
-        case .down:  Coordinate(0, 1)
-        }
-    }
-
-    public var opposite: Direction {
-        switch self {
-        case .up: .down
-        case .down: .up
-        case .left: .right
-        case .right: .left
-        }
-    }
-
-    public static func between(_ from: Coordinate, _ to: Coordinate) -> Direction? {
-        switch (to.x - from.x, to.y - from.y) {
-        case (0, -1): .up
-        case (0, 1):  .down
-        case (-1, 0): .left
-        case (1, 0):  .right
-        default:      nil
-        }
-    }
-}

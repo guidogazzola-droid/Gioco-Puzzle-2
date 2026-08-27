@@ -108,9 +108,11 @@ final class AppServices {
         return outcome
     }
 
-    /// Books the daily board. Returns the bonus gems awarded, or `nil` if it
-    /// had already been claimed today.
-    func finishDaily(engine: PuzzleEngine, seconds: Int) -> (LevelOutcome, Int)? {
+    /// Books the daily board, or returns `nil` if it was already claimed today.
+    func finishDaily(
+        engine: PuzzleEngine,
+        seconds: Int
+    ) -> (outcome: LevelOutcome, bonus: Int)? {
         let day = todayKey
         guard !profile.hasClearedDaily(on: day) else { return nil }
 
