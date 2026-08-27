@@ -22,28 +22,59 @@ each step unblocks the next.
       that does not mention Game Center at all.
 - [ ] Check the name "Line Flow SW" is free on the App Store, and reserve it.
 
-## 2. Products in App Store Connect
+## 2a. In-app purchases
 
-Create every product with **exactly** the identifiers in `ProductCatalog.swift`.
-A mismatch shows up as a product that silently never loads.
+App Store Connect → your app → **Monetization → In-App Purchases** (older
+layouts put this under *Features*).
 
-- [ ] `…​.removeads` — non-consumable
-- [ ] `…​.style.orchid`, `…​.style.neon` — non-consumable
-- [ ] `…​.gems.pouch` / `.chest` / `.vault` — consumable
-- [ ] Subscription group "Line Flow SW Pro" containing `…​.pro.monthly` and
-      `…​.pro.yearly`, both with a **1-week free trial** introductory offer
-- [ ] Replace `ProductCatalog.subscriptionGroupID` with the real group id that
-      App Store Connect assigns. The value in the repo matches the local
-      StoreKit file, not your account.
-- [ ] Localise every product's display name and description for each language
-      you ship (English and Italian are already written in the `.strings` files
-      — reuse that copy).
-- [ ] Upload a **subscription review screenshot** for each plan, and fill in the
+**Only six of the eight products go here.** Auto-renewable subscriptions are
+*not* in-app purchases in App Store Connect's model and live in their own
+section — see 2b. This trips everyone up once.
+
+Create each with **exactly** the identifier in `ProductCatalog.swift`. A
+mismatch shows up as a product that silently never loads: no crash, no error,
+the shop row just shows a dash.
+
+- [ ] `…​.removeads` — Non-Consumable
+- [ ] `…​.style.orchid` — Non-Consumable
+- [ ] `…​.style.neon` — Non-Consumable
+- [ ] `…​.gems.pouch` — Consumable
+- [ ] `…​.gems.chest` — Consumable
+- [ ] `…​.gems.vault` — Consumable
+- [ ] Localise each one's display name and description for every language you
+      ship. English and Italian are already written: reuse the `product.*.name`
+      and `product.*.description` values from the `.strings` files so the store
+      listing and the app never drift apart.
+- [ ] Upload a review screenshot for each and fill in the review notes.
+
+## 2b. Subscriptions
+
+A different section: **Monetization → Subscriptions**. You cannot create a
+subscription on its own — the **group comes first**, because the group is what
+lets a player move between plans without paying twice.
+
+- [ ] Create the subscription group. Give it a localised **display name**
+      ("Line Flow SW Pro") — this is what the player sees in their Apple Account
+      subscription settings, not the plan name.
+- [ ] Inside the group, create `…​.pro.monthly` — duration **1 month**.
+- [ ] Inside the group, create `…​.pro.yearly` — duration **1 year**.
+- [ ] Give both the **same level** in the group. Level is the service tier, and
+      these two are the same tier bought at different cadences. Same level makes
+      monthly → yearly a crossgrade that takes effect at the next renewal;
+      different levels would make it an upgrade that refunds and rebills
+      immediately, which is not what either of you wants.
+- [ ] Add a **1-week free trial** introductory offer to each.
+- [ ] Localise the display name and description of each plan.
+- [ ] Upload a **subscription review screenshot** for each plan and fill in the
       review notes. Missing these is a common rejection.
-- [ ] Fill in the subscription **App Store promotion** artwork if you want the
-      plans to appear outside the app.
+- [ ] Copy the group's real ID and replace `ProductCatalog.subscriptionGroupID`.
+      The value in the repo (`21495732`) belongs to the local StoreKit test
+      file, not to your account — with the wrong one the app cannot read the
+      subscription's status and every subscriber looks unsubscribed.
+- [ ] Optional: fill in the **App Store promotion** artwork if you want the
+      plans to be promotable outside the app.
 
-## 2b. Game Center leaderboards
+## 2c. Game Center leaderboards
 
 App Store Connect → your app → **Game Center** → Leaderboards. The identifiers
 must match `PuzzleKit/Sources/PuzzleKit/Social/Leaderboards.swift` exactly: a
