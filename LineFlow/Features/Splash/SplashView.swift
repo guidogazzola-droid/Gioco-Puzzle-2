@@ -70,6 +70,13 @@ struct SplashView: View {
     @State private var start = Date.now
     @State private var isFinished = false
 
+    /// Spelled out rather than left to the memberwise initialiser, matching
+    /// AdPlaceholderView: the private wrappers above would otherwise decide
+    /// what the callers' initialiser looks like.
+    init(onFinish: @escaping () -> Void) {
+        self.onFinish = onFinish
+    }
+
     private var isStill: Bool {
         systemReduceMotion || services.profile.settings.reduceMotion
     }
