@@ -325,10 +325,27 @@ listing shots.
 
 The target ships iPhone only (`TARGETED_DEVICE_FAMILY = "1"`), so iPhone is the
 only class the listing needs — no iPad screenshots, and none of the iPad layout
-work that showing them honestly would require. Check the required sizes in App
-Store Connect itself rather than trusting a list — Apple changes them. At the
-time of writing the 6.9" iPhone size covers every iPhone, with Apple scaling
-down for the smaller ones.
+work that showing them honestly would require.
+
+**One size covers the whole listing.** Apple requires the 6.9" class for any
+app that runs on iPhone, and scales it down for every smaller class that has no
+screenshots of its own. So capture 6.9" and stop.
+
+Accepted portrait sizes, from Apple's screenshot specifications page:
+
+| Class | Accepted pixel sizes | |
+|---|---|---|
+| **6.9"** | 1320 × 2868 · 1290 × 2796 · 1260 × 2736 | **required** |
+| 6.5" | 1284 × 2778 · 1242 × 2688 | optional |
+| 6.3" | 1206 × 2622 · 1179 × 2556 | optional |
+| 6.1" | 1170 × 2532 · 1125 × 2436 · 1080 × 2340 | optional |
+| 5.5" | 1242 × 2208 | optional |
+
+Anything not on that list is refused on upload, and this is the most common way
+a screenshot gets rejected: an image that went through Photos, AirDrop, Preview
+or a messaging app on its way to the Mac and was quietly resized. The pixel
+dimensions are the thing to check first — `sips -g pixelWidth -g pixelHeight
+shot.png` answers it in one line.
 
 The app is portrait-only, so the screenshots are portrait.
 
