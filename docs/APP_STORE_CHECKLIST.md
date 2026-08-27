@@ -114,8 +114,8 @@ Three ways to get this silently wrong:
 - **A leaderboard cannot be removed once it has shipped in any version.** The
   identifiers have to be right the first time.
 
-- [ ] Create all four with the settings above.
-- [ ] For the recurring daily board: duration **1 day**, repeating **every 1
+- [x] Create all four with the settings above.
+- [x] For the recurring daily board: duration **1 day**, repeating **every 1
       day**, starting at **00:00 Italian time** on a date in the future.
 
       The start time is a real choice, not a formality. The puzzle is keyed to
@@ -149,7 +149,7 @@ Three ways to get this silently wrong:
       The score-format suffix is "star / stars" and "stelle" for the first, and
       nothing for the level boards - a bare number reads better than "level 42
       levels". The daily board is a time and formats itself.
-- [ ] **Achievements: none.** Leave the section empty. Nothing in the code
+- [x] **Achievements: none.** Leave the section empty. Nothing in the code
       reports one, and an achievement cannot be removed once it has shipped in
       any version — so adding a speculative one now is a permanent decision
       made for no reason. The same goes for **Challenges**, which additionally
