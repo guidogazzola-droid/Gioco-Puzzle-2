@@ -293,12 +293,28 @@ places.
 
 **Review screenshots** (sections 2a and 2b). One per product. Nobody but App
 Review ever sees them; their only job is to show the reviewer *where in the app
-the purchase appears*, so they can find it. Any resolution, no marketing
-polish. One image of the paywall serves both subscriptions; one of the shop
-serves the gem packs and the style packs.
+the purchase appears*, so they can find it — no marketing polish needed.
+
+They are not free-form, though. Apple's wording is "upload a screenshot that
+meets **any of the screenshot specifications your app supports**", so the file
+still has to land on one of the standard listing sizes. A native capture from a
+device or the simulator already does; a crop or a resize does not. Do not scale
+them to fit some other requirement.
+
+Nothing says they must be distinct: one image of the paywall serves both
+subscriptions, one of the shop serves the gem packs, one scrolled to the
+unlocks serves the rest. And note that an uploaded review screenshot can be
+replaced but **never removed**.
 
 **Listing screenshots** (this section). What customers see on the product page.
-Specific pixel sizes, per device class, per language. These sell the app.
+Same size rules, but per device class and per language. These sell the app.
+
+**Promotional image** — a third thing, and the one that carries the
+"1024 x 1024, 72 dpi, RGB, flattened and no rounded corners" spec people find
+and mistake for the others. Square artwork, and required only if you want to
+promote the purchase on your App Store product page or set up win-back offers.
+Skip it for a first release: doing it properly means designing a square, not
+cropping a screenshot.
 
 ### Capturing them
 
