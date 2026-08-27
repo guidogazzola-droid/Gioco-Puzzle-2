@@ -181,7 +181,6 @@ struct PaywallView: View {
                 benefit("square.grid.3x3.fill", "paywall.benefit.proTrack")
                 benefit("nosign", "paywall.benefit.noAds")
                 benefit("paintpalette.fill", "paywall.benefit.skins")
-                benefit("sparkles", "paywall.benefit.drops")
                 benefit("lightbulb.fill", "paywall.benefit.hints")
                 benefit("diamond.fill", "paywall.benefit.gems")
             }
