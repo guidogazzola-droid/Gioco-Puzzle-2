@@ -11,19 +11,32 @@ import Foundation
 public enum LeaderboardID: String, CaseIterable, Sendable, Identifiable {
 
     /// All-time star total across both tracks. The headline board.
-    case totalStars = "com.sabettalineflow.app.leaderboard.stars"
+    case totalStars = "com.sabettaworks.LineFlowSW.leaderboard.stars"
     /// Furthest level cleared on the free track.
-    case freeTrack = "com.sabettalineflow.app.leaderboard.free"
+    case freeTrack = "com.sabettaworks.LineFlowSW.leaderboard.free"
     /// Furthest level cleared on the Pro track.
-    case proTrack = "com.sabettalineflow.app.leaderboard.pro"
+    case proTrack = "com.sabettaworks.LineFlowSW.leaderboard.pro"
     /// Time on today's daily board. Everyone plays the identical puzzle, which
     /// is what makes this the only leaderboard here that is a fair race.
-    case dailyTime = "com.sabettalineflow.app.leaderboard.daily"
+    case dailyTime = "com.sabettaworks.LineFlowSW.leaderboard.daily"
 
     public var id: String { rawValue }
 
     public var titleKey: String { "leaderboard.\(shortKey).title" }
     public var detailKey: String { "leaderboard.\(shortKey).detail" }
+    /// One word, for the compact standings row on the home screen.
+    public var shortTitleKey: String { "leaderboard.\(shortKey).short" }
+
+    /// Order in the standings row: the headline board, then the one that
+    /// changes every day, then raw progress.
+    public var displayOrder: Int {
+        switch self {
+        case .totalStars: 0
+        case .dailyTime: 1
+        case .freeTrack: 2
+        case .proTrack: 3
+        }
+    }
 
     private var shortKey: String {
         switch self {

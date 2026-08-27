@@ -11,7 +11,7 @@
 
 name: LineFlow
 options:
-  bundleIdPrefix: com.sabettalineflow
+  bundleIdPrefix: com.sabettaworks
   deploymentTarget:
     iOS: "18.0"
   developmentLanguage: en
@@ -46,7 +46,7 @@ targets:
       path: LineFlow/Info.plist
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.sabettalineflow.app
+        PRODUCT_BUNDLE_IDENTIFIER: com.sabettaworks.LineFlowSW
         INFOPLIST_FILE: LineFlow/Info.plist
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_ENTITLEMENTS: LineFlow/LineFlow.entitlements
@@ -72,5 +72,5 @@ targets:
         product: PuzzleKit
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.sabettalineflow.app.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.sabettaworks.LineFlowSW.tests
         GENERATE_INFOPLIST_FILE: YES

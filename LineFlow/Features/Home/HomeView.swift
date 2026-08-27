@@ -32,6 +32,7 @@ struct HomeView: View {
                         header
                         continueCard
                         dailyCard
+                        standingsCard
                         proCard
                         shopRow
                     }
@@ -42,6 +43,7 @@ struct HomeView: View {
             .navigationDestination(item: $route) { route in
                 destination(for: route)
             }
+            .task { await services.refreshStandings() }
             .sheet(isPresented: $isShowingShop) { ShopView() }
             .sheet(isPresented: $isShowingLeaderboards) { LeaderboardsView() }
             .sheet(isPresented: $isShowingSettings) { SettingsView() }
@@ -174,6 +176,68 @@ struct HomeView: View {
             format: NSLocalizedString("home.daily.streak", comment: ""),
             services.profile.stats.currentStreak
         )
+    }
+
+    /// Where the player stands, right on the home screen. A leaderboard
+    /// nobody navigates to may as well not exist, so the ranks come to them.
+    /// The whole card is absent when there is nothing to show - signed out, or
+    /// not yet ranked anywhere.
+    @ViewBuilder
+    private var standingsCard: some View {
+        let standings = services.gameCenter.standings
+        if !standings.isEmpty {
+            Button {
+                isShowingLeaderboards = true
+            } label: {
+                Card {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            Label("home.standing.title", systemImage: "trophy.fill")
+                                .font(.headline)
+                                .foregroundStyle(Ink.primary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(Ink.secondary)
+                        }
+                        HStack(spacing: 10) {
+                            ForEach(standings.prefix(3)) { standing in
+                                VStack(spacing: 3) {
+                                    Text(Self.ordinal(standing.rank))
+                                        .font(.title3.weight(.bold))
+                                        .foregroundStyle(Ink.gold)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.6)
+                                    Text(LocalizedStringKey(standing.leaderboard.shortTitleKey))
+                                        .font(.caption2)
+                                        .foregroundStyle(Ink.secondary)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .fill(Ink.cardRaised)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    /// "412th" in English, "412º" in Italian - the ordinal suffix is a
+    /// language rule, so it is left to the formatter rather than a format
+    /// string per locale.
+    private static let ordinalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter
+    }()
+
+    private static func ordinal(_ value: Int) -> String {
+        ordinalFormatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
 
     private var proSubtitleKey: LocalizedStringKey {

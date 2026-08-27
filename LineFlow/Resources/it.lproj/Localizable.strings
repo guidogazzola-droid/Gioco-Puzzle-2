@@ -44,6 +44,11 @@
 "gamecenter.signIn" = "Accedi a Game Center";
 "gamecenter.signedOut.title" = "Le classifiche passano da Game Center";
 "gamecenter.signedOut.body" = "Accedere è facoltativo: il gioco funziona identico in ogni caso. Cambia solo se i tuoi punteggi compaiono nelle classifiche qui sotto.";
+"home.standing.title" = "La tua posizione";
+"leaderboard.stars.short" = "Stelle";
+"leaderboard.free.short" = "Livello";
+"leaderboard.pro.short" = "Pro";
+"leaderboard.daily.short" = "Oggi";
 "leaderboard.stars.title" = "Stelle raccolte";
 "leaderboard.stars.detail" = "Tutte le stelle guadagnate, su entrambi i percorsi";
 "leaderboard.free.title" = "Livello più lontano";

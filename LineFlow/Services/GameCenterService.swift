@@ -20,6 +20,21 @@ final class GameCenterService {
     private(set) var isUnavailable = false
     private(set) var lastError: String?
 
+    /// Where the player currently stands, for the home screen. Empty when
+    /// signed out, or when they are not yet ranked on any board.
+    private(set) var standings: [Standing] = []
+
+    /// One line of "you are Nth".
+    struct Standing: Identifiable, Equatable {
+        let leaderboard: LeaderboardID
+        let rank: Int
+        /// Game Center's own formatting, which already respects the board's
+        /// score format - a time renders as a time, not as a number.
+        let formattedScore: String
+
+        var id: String { leaderboard.rawValue }
+    }
+
     /// Called once the player signs in, so standings can be re-posted. A send
     /// that failed while offline heals here.
     var onAuthenticated: (() -> Void)?
@@ -87,6 +102,46 @@ final class GameCenterService {
                     lastError = error.localizedDescription
                 }
             }
+        }
+    }
+
+    // MARK: - Standings
+
+    /// Loads the player's own rank on each board.
+    ///
+    /// Showing this on the home screen is the point of the whole feature: a
+    /// leaderboard nobody navigates to may as well not exist.
+    func refreshStandings() async {
+        guard isAuthenticated else {
+            standings = []
+            return
+        }
+        do {
+            let boards = try await GKLeaderboard.loadLeaderboards(
+                IDs: LeaderboardID.allCases.map(\.rawValue)
+            )
+            var found: [Standing] = []
+            for board in boards {
+                guard let id = LeaderboardID(rawValue: board.baseLeaderboardID) else { continue }
+                // The first element is the local player's own entry; the
+                // second is the surrounding page, which we do not need.
+                let (mine, _) = try await board.loadEntries(
+                    for: [GKLocalPlayer.local],
+                    timeScope: .allTime
+                )
+                // Rank 0 means the player has no score on this board yet.
+                guard let mine, mine.rank > 0 else { continue }
+                found.append(Standing(
+                    leaderboard: id,
+                    rank: mine.rank,
+                    formattedScore: mine.formattedScore
+                ))
+            }
+            standings = found.sorted { $0.leaderboard.displayOrder < $1.leaderboard.displayOrder }
+        } catch {
+            // Offline is the common case. Keep whatever was shown last rather
+            // than blanking the card.
+            lastError = error.localizedDescription
         }
     }
 

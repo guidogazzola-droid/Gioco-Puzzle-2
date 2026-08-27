@@ -20,7 +20,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.removeads",
+      "productID" : "com.sabettaworks.LineFlowSW.removeads",
       "referenceName" : "Remove Ads",
       "type" : "NonConsumable"
     },
@@ -40,7 +40,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.style.orchid",
+      "productID" : "com.sabettaworks.LineFlowSW.style.orchid",
       "referenceName" : "Orchid Style Pack",
       "type" : "NonConsumable"
     },
@@ -60,7 +60,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.style.neon",
+      "productID" : "com.sabettaworks.LineFlowSW.style.neon",
       "referenceName" : "Neon Style Pack",
       "type" : "NonConsumable"
     },
@@ -80,7 +80,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.gems.pouch",
+      "productID" : "com.sabettaworks.LineFlowSW.gems.pouch",
       "referenceName" : "Gems Pouch (500)",
       "type" : "Consumable"
     },
@@ -100,7 +100,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.gems.chest",
+      "productID" : "com.sabettaworks.LineFlowSW.gems.chest",
       "referenceName" : "Gems Chest (1500)",
       "type" : "Consumable"
     },
@@ -120,7 +120,7 @@
           "locale" : "it_IT"
         }
       ],
-      "productID" : "com.sabettalineflow.app.gems.vault",
+      "productID" : "com.sabettaworks.LineFlowSW.gems.vault",
       "referenceName" : "Gems Vault (4000)",
       "type" : "Consumable"
     }
@@ -177,7 +177,7 @@
               "locale" : "it_IT"
             }
           ],
-          "productID" : "com.sabettalineflow.app.pro.monthly",
+          "productID" : "com.sabettaworks.LineFlowSW.pro.monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Line Flow SW Pro Monthly",
           "subscriptionGroupID" : "21495732",
@@ -211,7 +211,7 @@
               "locale" : "it_IT"
             }
           ],
-          "productID" : "com.sabettalineflow.app.pro.yearly",
+          "productID" : "com.sabettaworks.LineFlowSW.pro.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Line Flow SW Pro Yearly",
           "subscriptionGroupID" : "21495732",

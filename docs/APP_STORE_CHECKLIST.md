@@ -7,7 +7,7 @@ each step unblocks the next.
 
 - [ ] Enrol in the Apple Developer Program (€99/year; as an individual or a
       company — a company enrolment needs a D-U-N-S number and takes longer).
-- [ ] Pick a real bundle identifier and replace `com.sabettalineflow.app` in:
+- [ ] Pick a real bundle identifier and replace `com.sabettaworks.LineFlowSW` in:
       `LineFlow.xcodeproj` (both `PRODUCT_BUNDLE_IDENTIFIER` settings), the
       test target (`…​.tests`), and every product id in
       `PuzzleKit/Sources/PuzzleKit/Economy/ProductCatalog.swift` and
@@ -52,10 +52,10 @@ just never appears.
 
 | Leaderboard ID | Format | Sort | Reset |
 |---|---|---|---|
-| `com.sabettalineflow.app.leaderboard.stars` | Integer | High to low | Never |
-| `com.sabettalineflow.app.leaderboard.free` | Integer | High to low | Never |
-| `com.sabettalineflow.app.leaderboard.pro` | Integer | High to low | Never |
-| `com.sabettalineflow.app.leaderboard.daily` | Elapsed Time (seconds) | **Low to high** | **Every day** |
+| `com.sabettaworks.LineFlowSW.leaderboard.stars` | Integer | High to low | Never |
+| `com.sabettaworks.LineFlowSW.leaderboard.free` | Integer | High to low | Never |
+| `com.sabettaworks.LineFlowSW.leaderboard.pro` | Integer | High to low | Never |
+| `com.sabettaworks.LineFlowSW.leaderboard.daily` | Elapsed Time (seconds) | **Low to high** | **Every day** |
 
 - [ ] Create all four with the settings above. The daily one is a **recurring**
       leaderboard — that is what makes it a fresh race each day, matching the

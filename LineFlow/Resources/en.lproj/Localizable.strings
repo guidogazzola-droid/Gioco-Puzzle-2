@@ -44,6 +44,11 @@
 "gamecenter.signIn" = "Sign in to Game Center";
 "gamecenter.signedOut.title" = "Leaderboards need Game Center";
 "gamecenter.signedOut.body" = "Signing in is optional — the whole game plays the same either way. It only decides whether your scores appear on the boards below.";
+"home.standing.title" = "Where you stand";
+"leaderboard.stars.short" = "Stars";
+"leaderboard.free.short" = "Level";
+"leaderboard.pro.short" = "Pro";
+"leaderboard.daily.short" = "Today";
 "leaderboard.stars.title" = "Stars collected";
 "leaderboard.stars.detail" = "Every star you have earned, on both tracks";
 "leaderboard.free.title" = "Furthest level";

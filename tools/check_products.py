@@ -25,7 +25,7 @@ STRINGS = sorted(pathlib.Path(".").glob("LineFlow/Resources/*.lproj/Localizable.
 
 def swift_products():
     text = CATALOG.read_text()
-    ids = set(re.findall(r'= "(com\.sabettalineflow\.app\.[\w.]+)"', text))
+    ids = set(re.findall(r'= "(com\.sabettaworks\.LineFlowSW\.[\w.]+)"', text))
     group = re.search(r'subscriptionGroupID = "([^"]+)"', text)
     return ids, (group.group(1) if group else None)
 
@@ -87,7 +87,7 @@ def main():
     for path in STRINGS:
         keys = set(re.findall(r'^\s*"([^"]+)"\s*=', path.read_text(encoding="utf-8"), re.M))
         for identifier in sorted(declared):
-            short = identifier.removeprefix("com.sabettalineflow.app.")
+            short = identifier.removeprefix("com.sabettaworks.LineFlowSW.")
             for suffix in ("name", "description"):
                 key = f"product.{short}.{suffix}"
                 if key not in keys:

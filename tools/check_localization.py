@@ -88,6 +88,7 @@ def dynamic_keys():
     for short in re.findall(r'^\s*case \.\w+: "(\w+)"$', boards, re.M):
         keys.add(f"leaderboard.{short}.title")
         keys.add(f"leaderboard.{short}.detail")
+        keys.add(f"leaderboard.{short}.short")
     return keys
 
 

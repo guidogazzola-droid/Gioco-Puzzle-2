@@ -116,7 +116,7 @@ generation, economy and progression suites run anywhere Swift does.
 The repository is complete and runnable, but three things are placeholders that
 **must** be replaced — they are listed in full in the release checklist:
 
-1. Your team and bundle identifier (`com.sabettalineflow.app` is a placeholder).
+1. Your team and bundle identifier (`com.sabettaworks.LineFlowSW` is a placeholder).
 2. Your privacy policy and support URLs in `LineFlow/Services/LegalLinks.swift`.
 3. A real ad network behind `AdService`, if you want ad revenue. The shipped
    `SimulatedAdService` renders an in-app placeholder so the project builds and

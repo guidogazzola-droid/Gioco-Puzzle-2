@@ -13,14 +13,14 @@ silently break a purchase. `tools/check_products.py` checks them against
 
 | Identifier | Kind | Suggested price (IT) | Grants |
 |---|---|---|---|
-| `com.sabettalineflow.app.removeads` | Non-consumable | €3,99 | No ads, forever |
-| `com.sabettalineflow.app.style.orchid` | Non-consumable | €4,99 | Orchid palette |
-| `com.sabettalineflow.app.style.neon` | Non-consumable | €4,99 | Comet trail + Starfield backdrop |
-| `com.sabettalineflow.app.gems.pouch` | Consumable | €1,99 | 500 gems |
-| `com.sabettalineflow.app.gems.chest` | Consumable | €4,99 | 1 500 gems |
-| `com.sabettalineflow.app.gems.vault` | Consumable | €9,99 | 4 000 gems |
-| `com.sabettalineflow.app.pro.monthly` | Auto-renewable | €4,99/month | Everything, 1-week free trial |
-| `com.sabettalineflow.app.pro.yearly` | Auto-renewable | €39,99/year | Everything, 1-week free trial |
+| `com.sabettaworks.LineFlowSW.removeads` | Non-consumable | €3,99 | No ads, forever |
+| `com.sabettaworks.LineFlowSW.style.orchid` | Non-consumable | €4,99 | Orchid palette |
+| `com.sabettaworks.LineFlowSW.style.neon` | Non-consumable | €4,99 | Comet trail + Starfield backdrop |
+| `com.sabettaworks.LineFlowSW.gems.pouch` | Consumable | €1,99 | 500 gems |
+| `com.sabettaworks.LineFlowSW.gems.chest` | Consumable | €4,99 | 1 500 gems |
+| `com.sabettaworks.LineFlowSW.gems.vault` | Consumable | €9,99 | 4 000 gems |
+| `com.sabettaworks.LineFlowSW.pro.monthly` | Auto-renewable | €4,99/month | Everything, 1-week free trial |
+| `com.sabettaworks.LineFlowSW.pro.yearly` | Auto-renewable | €39,99/year | Everything, 1-week free trial |
 
 Subscription group `21495732` ("Line Flow SW Pro"), both plans family-shareable.
 Prices are a starting point; App Store pricing is per storefront and the app

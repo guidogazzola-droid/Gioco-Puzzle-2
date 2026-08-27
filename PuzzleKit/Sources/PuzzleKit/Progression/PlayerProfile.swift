@@ -211,6 +211,15 @@ public struct PlayerProfile: Codable, Sendable, Hashable {
 
     public static let currentVersion = 1
 
+    /// How many days of daily results to keep.
+    ///
+    /// The game only ever asks whether *today* has been claimed, so the stored
+    /// outcomes are history rather than state. Keeping them all made them ~80%
+    /// of the save file and would have pushed it past iCloud's 1 MB key-value
+    /// ceiling after about twenty years of play. Sixty days is plenty for a
+    /// history screen and keeps the file flat forever.
+    public static let dailyHistoryLimit = 60
+
     public var version: Int
     public var free: TrackProgress
     public var pro: TrackProgress
@@ -267,6 +276,9 @@ public struct PlayerProfile: Codable, Sendable, Hashable {
         ads = try container.decodeIfPresent(AdState.self, forKey: .ads) ?? AdState()
         dailyResults = try container.decodeIfPresent([String: LevelOutcome].self, forKey: .dailyResults) ?? [:]
         onboardingComplete = try container.decodeIfPresent(Bool.self, forKey: .onboardingComplete) ?? false
+        // Prune on load as well as on write, so a save written by a build that
+        // kept everything shrinks the first time it is opened.
+        pruneDailyResults()
     }
 
     // MARK: - Track access
@@ -315,6 +327,7 @@ public struct PlayerProfile: Codable, Sendable, Hashable {
     ) -> Bool {
         guard dailyResults[day] == nil else { return false }
         dailyResults[day] = outcome
+        pruneDailyResults()
         gems += outcome.gems + bonusGems
         stats.dailyClears += 1
         stats.registerPlay(on: day, calendar: calendar)
@@ -323,6 +336,17 @@ public struct PlayerProfile: Codable, Sendable, Hashable {
     }
 
     public func hasClearedDaily(on day: String) -> Bool { dailyResults[day] != nil }
+
+    /// Drops all but the most recent `dailyHistoryLimit` days.
+    ///
+    /// Day keys are `yyyy-MM-dd`, so sorting them as strings is already
+    /// chronological. Only today is ever queried, so dropping older days
+    /// cannot make a claimed day look unclaimed in practice.
+    mutating func pruneDailyResults() {
+        guard dailyResults.count > Self.dailyHistoryLimit else { return }
+        let keep = Set(dailyResults.keys.sorted().suffix(Self.dailyHistoryLimit))
+        dailyResults = dailyResults.filter { keep.contains($0.key) }
+    }
 
     @discardableResult
     public mutating func spendGems(_ amount: Int) -> Bool {

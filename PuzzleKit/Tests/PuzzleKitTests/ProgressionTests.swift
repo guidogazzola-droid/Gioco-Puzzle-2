@@ -100,6 +100,58 @@ struct PlayerProfileTests {
         #expect(profile.stats.dailyClears == 1)
     }
 
+    @Test("the daily history stops growing instead of filling the save file")
+    func dailyHistoryIsPruned() {
+        var profile = PlayerProfile()
+        let limit = PlayerProfile.dailyHistoryLimit
+
+        // Two hundred consecutive days of play.
+        for day in 1...200 {
+            let key = String(format: "2026-01-%03d", day)   // sorts chronologically
+            profile.applyDaily(outcome(level: 40), on: key, bonusGems: 0)
+        }
+
+        #expect(profile.dailyResults.count == limit)
+        #expect(profile.stats.dailyClears == 200, "the count of clears is not pruned")
+
+        // The newest days survive and the oldest are gone.
+        #expect(profile.hasClearedDaily(on: String(format: "2026-01-%03d", 200)))
+        #expect(profile.hasClearedDaily(on: String(format: "2026-01-%03d", 200 - limit + 1)))
+        #expect(!profile.hasClearedDaily(on: String(format: "2026-01-%03d", 200 - limit)))
+        #expect(!profile.hasClearedDaily(on: "2026-01-001"))
+    }
+
+    @Test("a bloated save written by an older build shrinks when it is opened")
+    func decodingPrunesAnOversizedHistory() throws {
+        var profile = PlayerProfile()
+        for day in 1...500 {
+            profile.dailyResults[String(format: "2026-01-%03d", day)] = outcome(level: 40)
+        }
+        #expect(profile.dailyResults.count == 500, "built oversized on purpose")
+
+        let data = try JSONEncoder().encode(profile)
+        let restored = try JSONDecoder().decode(PlayerProfile.self, from: data)
+        #expect(restored.dailyResults.count == PlayerProfile.dailyHistoryLimit)
+        #expect(restored.hasClearedDaily(on: String(format: "2026-01-%03d", 500)))
+    }
+
+    @Test("pruning leaves the day the game actually asks about alone")
+    func todayIsNeverPruned() {
+        var profile = PlayerProfile()
+        for day in 1...200 {
+            profile.applyDaily(outcome(level: 40), on: String(format: "2026-01-%03d", day), bonusGems: 0)
+        }
+        let today = String(format: "2026-01-%03d", 201)
+        #expect(!profile.hasClearedDaily(on: today))
+
+        let claimed = profile.applyDaily(outcome(level: 40), on: today, bonusGems: 5)
+        #expect(claimed)
+        #expect(profile.hasClearedDaily(on: today), "today survives its own prune")
+
+        let reclaimed = profile.applyDaily(outcome(level: 40), on: today, bonusGems: 5)
+        #expect(!reclaimed)
+    }
+
     @Test("gems cannot be overspent")
     func spendingIsGuarded() {
         var profile = PlayerProfile(gems: 100)

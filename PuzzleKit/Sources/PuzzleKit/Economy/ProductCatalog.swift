@@ -8,20 +8,20 @@ import Foundation
 public enum StoreProductID: String, CaseIterable, Codable, Sendable, Identifiable {
 
     /// One-off purchase that removes every ad, forever.
-    case removeAds = "com.sabettalineflow.app.removeads"
+    case removeAds = "com.sabettaworks.LineFlowSW.removeads"
 
     /// Soft-currency packs. Gems only ever buy cosmetics and hints.
-    case gemsPouch = "com.sabettalineflow.app.gems.pouch"
-    case gemsChest = "com.sabettalineflow.app.gems.chest"
-    case gemsVault = "com.sabettalineflow.app.gems.vault"
+    case gemsPouch = "com.sabettaworks.LineFlowSW.gems.pouch"
+    case gemsChest = "com.sabettaworks.LineFlowSW.gems.chest"
+    case gemsVault = "com.sabettaworks.LineFlowSW.gems.vault"
 
     /// One-off cosmetic bundles, owned forever.
-    case stylePackOrchid = "com.sabettalineflow.app.style.orchid"
-    case stylePackNeon = "com.sabettalineflow.app.style.neon"
+    case stylePackOrchid = "com.sabettaworks.LineFlowSW.style.orchid"
+    case stylePackNeon = "com.sabettaworks.LineFlowSW.style.neon"
 
     /// Line Flow SW Pro, the monthly and yearly subscription.
-    case proMonthly = "com.sabettalineflow.app.pro.monthly"
-    case proYearly = "com.sabettalineflow.app.pro.yearly"
+    case proMonthly = "com.sabettaworks.LineFlowSW.pro.monthly"
+    case proYearly = "com.sabettaworks.LineFlowSW.pro.yearly"
 
     public var id: String { rawValue }
 }

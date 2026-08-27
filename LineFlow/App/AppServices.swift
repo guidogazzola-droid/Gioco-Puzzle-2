@@ -66,6 +66,7 @@ final class AppServices {
         gameCenter.onAuthenticated = { [weak self] in
             guard let self else { return }
             gameCenter.submit(LeaderboardRules.standings(for: profile))
+            Task { await self.gameCenter.refreshStandings() }
         }
         gameCenter.authenticate()
     }
@@ -270,6 +271,11 @@ final class AppServices {
     }
 
     // MARK: - Settings
+
+    /// Reloads where the player stands. Cheap and safe to call on appear.
+    func refreshStandings() async {
+        await gameCenter.refreshStandings()
+    }
 
     func updateSettings(_ mutate: (inout GameSettings) -> Void) {
         profileStore.update { mutate(&$0.settings) }
