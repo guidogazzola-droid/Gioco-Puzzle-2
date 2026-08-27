@@ -141,6 +141,12 @@ just never appears.
       The committed icon is real, opaque and 1024×1024, so it will pass
       validation as-is — regenerate with `python3 tools/make_app_icon.py`.
 - [ ] Archive with the Release configuration, validate, upload.
+- [ ] Read the bundle identifier in the Organizer before uploading: it must be
+      `com.sabettaworks.LineFlowSW`, matching the App Store Connect record.
+      Xcode reports a mismatch as `IDEDistribution.DistributionAppRecordProviderError
+      error 0`, which is an unhelpful way of saying "no app on this account has
+      that identifier". Archiving an out-of-date checkout is the usual cause -
+      the identifier changed once already, from `com.prismflow.game`.
 - [ ] Confirm `ITSAppUsesNonExemptEncryption` is `false` in `Info.plist` so the
       export-compliance questionnaire is skipped on every upload.
 
@@ -191,13 +197,19 @@ Specific pixel sizes, per device class, per language. These sell the app.
 
 The fastest route for review screenshots is the simulator: run the app, get to
 the screen, `⌘S` saves a correctly-sized PNG to the Desktop. The simulator
-device you pick determines the pixel size, so run the largest iPhone for the
+device you pick determines the pixel size, so run the largest iPad for the
 listing shots.
 
-Check the required sizes in App Store Connect itself rather than trusting a
-list — Apple changes them. At the time of writing one iPhone size (6.9") and,
-if you ship iPad, one iPad size (13") cover everything, with Apple scaling down
-for smaller classes.
+The target ships iPad only (`TARGETED_DEVICE_FAMILY = "2"`), so iPad is the
+only class the listing needs. Check the required sizes in App Store Connect
+itself rather than trusting a list — Apple changes them. At the time of writing
+the 13" iPad size covers every iPad, with Apple scaling down for the smaller
+ones.
+
+Both orientations are supported, and App Store Connect will take landscape
+screenshots for an iPad listing. Landscape is the better choice here: it is how
+most people hold an iPad, and it gives the board room to breathe next to the
+level information.
 
 ### What to show, in order
 

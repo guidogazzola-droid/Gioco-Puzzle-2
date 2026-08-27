@@ -45,8 +45,12 @@
 		<string>arm64</string>
 	</array>
 
-	<!-- Portrait on iPhone: the board is square and a one-handed drag is the
-	     whole interaction. iPad gets every orientation. -->
+	<!-- Every orientation on iPad, which is what the target ships. An iPad is
+	     held whichever way up it happens to be picked up, and a square board
+	     costs nothing to lay out either way. The ~ipad list is kept separate
+	     from the default so that adding iPhone back needs no thought here: the
+	     phone would get portrait only, where a one-handed drag is the whole
+	     interaction. -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

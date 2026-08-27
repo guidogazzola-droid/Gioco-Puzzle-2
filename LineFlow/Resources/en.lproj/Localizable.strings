@@ -191,6 +191,9 @@
 "paywall.benefit.hints" = "Unlimited hints";
 "paywall.benefit.gems" = "Double gems from every level";
 "paywall.orJustRemoveAds" = "Only want the ads gone?";
+"paywall.unavailable.title" = "The store is not answering";
+"paywall.unavailable.body" = "Pro cannot be shown right now. Nothing has been charged and nothing has been lost - anything you already own is still yours.";
+"paywall.unavailable.retry" = "Try again";
 
 /* MARK: - Settings */
 "settings.title" = "Settings";

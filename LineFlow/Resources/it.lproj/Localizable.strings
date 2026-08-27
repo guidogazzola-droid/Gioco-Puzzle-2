@@ -191,6 +191,9 @@
 "paywall.benefit.hints" = "Aiuti illimitati";
 "paywall.benefit.gems" = "Gemme doppie a ogni livello";
 "paywall.orJustRemoveAds" = "Vuoi solo togliere la pubblicità?";
+"paywall.unavailable.title" = "Lo store non risponde";
+"paywall.unavailable.body" = "Al momento non è possibile mostrare Pro. Non è stato addebitato nulla e non hai perso niente: ciò che possiedi già resta tuo.";
+"paywall.unavailable.retry" = "Riprova";
 
 /* MARK: - Impostazioni */
 "settings.title" = "Impostazioni";

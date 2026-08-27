@@ -28,6 +28,9 @@ final class StoreManager {
     private(set) var purchasedProducts: Set<StoreProductID> = []
     private(set) var isLoadingProducts = false
     private(set) var productLoadFailed = false
+    /// False until the first load attempt has finished, so a caller can tell
+    /// "still asking" from "asked, and the store had nothing".
+    private(set) var hasLoadedCatalogue = false
     private(set) var isRestoring = false
 
     /// Called when a gem pack is bought, so the profile can be credited.
@@ -65,13 +68,57 @@ final class StoreManager {
 
     func loadProducts() async {
         isLoadingProducts = true
-        defer { isLoadingProducts = false }
+        defer {
+            isLoadingProducts = false
+            hasLoadedCatalogue = true
+        }
         do {
             products = try await Product.products(for: ProductCatalog.allIdentifiers)
             productLoadFailed = products.isEmpty
         } catch {
+            // Drop the old catalogue too: a stale price is worse than no price.
+            products = []
             productLoadFailed = true
         }
+        reportCatalogue()
+    }
+
+    /// Whether the subscription group has anything to sell.
+    ///
+    /// `SubscriptionStoreView` renders Apple's own "Subscription Unavailable"
+    /// placeholder when the group comes back empty, which tells the player
+    /// nothing and offers them nothing. The paywall checks this first and shows
+    /// its own state instead.
+    var hasSubscriptionProducts: Bool {
+        products.contains { StoreProductID(rawValue: $0.id)?.kind == .autoRenewable }
+    }
+
+    /// Identifiers the store did not return. Empty in a healthy build.
+    var missingIdentifiers: [String] {
+        let loaded = Set(products.map(\.id))
+        return ProductCatalog.allIdentifiers.filter { !loaded.contains($0) }
+    }
+
+    /// Says out loud what the store answered, because the failure a developer
+    /// actually sees - an empty paywall - names neither the cause nor the fix.
+    private func reportCatalogue() {
+#if DEBUG
+        let missing = missingIdentifiers
+        guard !missing.isEmpty else { return }
+        print("[StoreKit] \(products.count)/\(ProductCatalog.allIdentifiers.count) products loaded.")
+        print("[StoreKit] Missing: \(missing.joined(separator: ", "))")
+        if products.isEmpty {
+            print("""
+            [StoreKit] Nothing came back at all, which on a debug run almost \
+            always means the StoreKit configuration file is not active. Check \
+            Product > Scheme > Edit Scheme > Run > Options > StoreKit \
+            Configuration - it should be Configuration/Products.storekit. It \
+            only applies to launches Xcode starts: relaunching the app from \
+            the Home screen talks to the real App Store, where these products \
+            do not exist until they are approved.
+            """)
+        }
+#endif
     }
 
     func product(for id: StoreProductID) -> Product? {

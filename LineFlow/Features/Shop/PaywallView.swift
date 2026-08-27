@@ -9,6 +9,11 @@ import PuzzleKit
 /// getting any of those wrong by hand is a guideline 3.1.2 rejection. The
 /// one-off "remove ads" purchase sits underneath on purpose: a player who only
 /// wants the ads gone should not have to take a subscription to get there.
+///
+/// The control is only shown once the subscription group has actually loaded.
+/// Handed an empty group it draws its own untranslated "Subscription
+/// Unavailable" placeholder, complete with a second dismiss button next to
+/// ours - so the empty case gets a state of our own instead.
 struct PaywallView: View {
 
     enum Context: Hashable {
@@ -36,29 +41,121 @@ struct PaywallView: View {
 
     var body: some View {
         NavigationStack {
-            SubscriptionStoreView(groupID: ProductCatalog.subscriptionGroupID) {
-                marketingContent
-            }
-            .subscriptionStoreControlStyle(.prominentPicker)
-            .subscriptionStoreButtonLabel(.multiline)
-            .storeButton(.visible, for: .restorePurchases)
-            .storeButton(.visible, for: .redeemCode)
-            .subscriptionStorePolicyDestination(url: LegalLinks.termsOfUse, for: .termsOfService)
-            .subscriptionStorePolicyDestination(url: LegalLinks.privacyPolicy, for: .privacyPolicy)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { dismiss() } label: { Image(systemName: "xmark") }
-                        .accessibilityLabel(Text("common.close"))
+            content
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button { dismiss() } label: { Image(systemName: "xmark") }
+                            .accessibilityLabel(Text("common.close"))
+                    }
                 }
+                .safeAreaInset(edge: .bottom) { alternativesFooter }
+                .task {
+                    // The catalogue is normally loaded at launch; this covers
+                    // the paywall being reached before that finished, or after
+                    // it failed.
+                    let store = services.store
+                    if !store.hasLoadedCatalogue && !store.isLoadingProducts {
+                        await store.loadProducts()
+                    }
+                }
+                .onChange(of: services.entitlements.isPro) { _, isPro in
+                    // Close as soon as the purchase lands, and drop anything the
+                    // player is no longer entitled to if it went the other way.
+                    services.reconcileEquippedCosmetics()
+                    if isPro { dismiss() }
+                }
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if services.store.hasSubscriptionProducts {
+            subscriptionStore
+        } else if services.store.hasLoadedCatalogue && !services.store.isLoadingProducts {
+            unavailable
+        } else {
+            ProgressView()
+                .controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private var subscriptionStore: some View {
+        SubscriptionStoreView(groupID: ProductCatalog.subscriptionGroupID) {
+            marketingContent
+        }
+        .subscriptionStoreControlStyle(.prominentPicker)
+        .subscriptionStoreButtonLabel(.multiline)
+        .storeButton(.visible, for: .restorePurchases)
+        .storeButton(.visible, for: .redeemCode)
+        .subscriptionStorePolicyDestination(url: LegalLinks.termsOfUse, for: .termsOfService)
+        .subscriptionStorePolicyDestination(url: LegalLinks.privacyPolicy, for: .privacyPolicy)
+    }
+
+    // MARK: - Nothing to sell
+
+    /// Shown when the store answered without the subscription in it. Says the
+    /// one thing a player needs to hear - this is not your fault and you have
+    /// not lost anything - and offers the only useful action.
+    private var unavailable: some View {
+        VStack(spacing: 14) {
+            Image(systemName: "antenna.radiowaves.left.and.right.slash")
+                .font(.system(size: 40))
+                .foregroundStyle(.secondary)
+
+            Text("paywall.unavailable.title")
+                .font(.title3.weight(.semibold))
+                .multilineTextAlignment(.center)
+
+            Text("paywall.unavailable.body")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+
+            Button {
+                Task { await services.store.refresh() }
+            } label: {
+                Text("paywall.unavailable.retry")
+                    .padding(.horizontal, 8)
             }
-            .safeAreaInset(edge: .bottom) { alternativesFooter }
-            .onChange(of: services.entitlements.isPro) { _, isPro in
-                // Close as soon as the purchase lands, and drop anything the
-                // player is no longer entitled to if it went the other way.
-                services.reconcileEquippedCosmetics()
-                if isPro { dismiss() }
+            .buttonStyle(.borderedProminent)
+            .disabled(services.store.isLoadingProducts)
+            .padding(.top, 4)
+
+            Button {
+                Task { await services.restorePurchases() }
+            } label: {
+                Text("shop.restore")
+                    .font(.footnote)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
+
+            catalogueReport
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(24)
+    }
+
+    /// Debug builds only. "Subscription Unavailable" names neither the cause
+    /// nor the fix; the count and the group being asked for name both.
+    @ViewBuilder
+    private var catalogueReport: some View {
+        #if DEBUG
+        let loaded = services.store.products.count
+        let total = ProductCatalog.allIdentifiers.count
+        VStack(spacing: 4) {
+            Text(verbatim: "\(loaded)/\(total) products · group \(ProductCatalog.subscriptionGroupID)")
+            if loaded == 0 {
+                Text(verbatim: "Nothing loaded. Scheme ▸ Run ▸ Options ▸ StoreKit Configuration, and launch from Xcode.")
+                    .multilineTextAlignment(.center)
             }
         }
+        .font(.caption2.monospaced())
+        .foregroundStyle(.tertiary)
+        .padding(.top, 28)
+        #endif
     }
 
     // MARK: - Marketing
@@ -108,9 +205,14 @@ struct PaywallView: View {
 
     // MARK: - Alternatives
 
+    /// Absent unless the purchase is both relevant and buyable. Offering a row
+    /// with a dash where the price should be teaches the player that the shop
+    /// is broken.
     @ViewBuilder
     private var alternativesFooter: some View {
-        if !services.entitlements.hasRemoveAdsPurchase && !services.entitlements.isPro {
+        if !services.entitlements.hasRemoveAdsPurchase,
+           !services.entitlements.isPro,
+           let price = services.store.displayPrice(for: .removeAds) {
             VStack(spacing: 8) {
                 Divider()
                 Text("paywall.orJustRemoveAds")
@@ -123,7 +225,7 @@ struct PaywallView: View {
                     HStack {
                         Text("product.removeads.name")
                         Spacer()
-                        Text(services.store.displayPrice(for: .removeAds) ?? "—")
+                        Text(price)
                             .foregroundStyle(.secondary)
                     }
                     .font(.subheadline.weight(.medium))
@@ -135,7 +237,6 @@ struct PaywallView: View {
                     )
                 }
                 .buttonStyle(.plain)
-                .disabled(services.store.product(for: .removeAds) == nil)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 12)
             }
