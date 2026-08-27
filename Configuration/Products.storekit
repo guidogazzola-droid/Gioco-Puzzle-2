@@ -134,7 +134,7 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "21495732",
+      "id" : "22339558",
       "localizations" : [
         {
           "description" : "Pro levels, no ads, every style.",
@@ -180,7 +180,7 @@
           "productID" : "com.sabettaworks.LineFlowSW.pro.monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Line Flow SW Pro Monthly",
-          "subscriptionGroupID" : "21495732",
+          "subscriptionGroupID" : "22339558",
           "type" : "RecurringSubscription"
         },
         {
@@ -214,7 +214,7 @@
           "productID" : "com.sabettaworks.LineFlowSW.pro.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Line Flow SW Pro Yearly",
-          "subscriptionGroupID" : "21495732",
+          "subscriptionGroupID" : "22339558",
           "type" : "RecurringSubscription"
         }
       ]

@@ -67,10 +67,11 @@ lets a player move between plans without paying twice.
 - [ ] Localise the display name and description of each plan.
 - [ ] Upload a **subscription review screenshot** for each plan and fill in the
       review notes. Missing these is a common rejection.
-- [ ] Copy the group's real ID and replace `ProductCatalog.subscriptionGroupID`.
-      The value in the repo (`21495732`) belongs to the local StoreKit test
-      file, not to your account — with the wrong one the app cannot read the
-      subscription's status and every subscriber looks unsubscribed.
+- [x] The group id is set: `22339558`, in `ProductCatalog.subscriptionGroupID`
+      and in `Products.storekit`. It is account-specific — if the group is ever
+      recreated, both have to change together: a wrong id returns no
+      subscription status at all, so every subscriber would read as
+      unsubscribed.
 - [ ] Optional: fill in the **App Store promotion** artwork if you want the
       plans to be promotable outside the app.
 

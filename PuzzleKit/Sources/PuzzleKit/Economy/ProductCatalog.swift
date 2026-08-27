@@ -106,9 +106,13 @@ public extension StoreProductID {
 
 public enum ProductCatalog {
 
-    /// Must match the subscription group configured in App Store Connect and
-    /// in `Configuration/Products.storekit`.
-    public static let subscriptionGroupID = "21495732"
+    /// The subscription group assigned by App Store Connect.
+    ///
+    /// This is account-specific, not something to invent: `status(for:)` looks
+    /// the group up by this id, and a wrong one returns no status at all - so
+    /// every subscriber would read as unsubscribed. `Products.storekit` carries
+    /// the same value so the simulator answers the same question the same way.
+    public static let subscriptionGroupID = "22339558"
     public static let subscriptionGroupName = "Line Flow SW Pro"
 
     public static let allIdentifiers: [String] = StoreProductID.allCases.map(\.rawValue)
