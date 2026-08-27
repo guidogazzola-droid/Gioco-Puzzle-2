@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Everything that does not need a Mac. Runs first and fast: the generation
+  # algorithm, the palettes, both languages, the product wiring and the
+  # project file.
+  verify:
+    name: Verify (no Xcode required)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run every non-Xcode check
+        run: python3 tools/verify.py
+
+  # PuzzleKit is deliberately free of UIKit and SwiftUI so its whole test
+  # suite runs as a plain Swift package, without a simulator.
+  puzzlekit:
+    name: PuzzleKit tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show toolchain
+        run: swift --version
+      - name: Test
+        working-directory: PuzzleKit
+        run: swift test --parallel
+
+  # The app target needs Xcode 16 or newer: the project uses file-system
+  # synchronised groups (objectVersion 77).
+  app:
+    name: App build and tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show toolchain
+        run: xcodebuild -version
+      - name: Build and test
+        run: |
+          xcodebuild test \
+            -project PrismFlow.xcodeproj \
+            -scheme PrismFlow \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
