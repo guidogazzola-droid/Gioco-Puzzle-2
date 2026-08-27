@@ -27,17 +27,21 @@ final class AppServices {
         let style: Style
     }
 
+    /// Every service is injectable so tests can hand in a throwaway save
+    /// file. The defaults are `nil` rather than freshly built objects because
+    /// a default argument expression is evaluated outside the initialiser's
+    /// isolation, and these services are all main-actor bound.
     init(
-        profileStore: ProfileStore = ProfileStore(),
-        store: StoreManager = StoreManager(),
-        ads: SimulatedAdService = SimulatedAdService(),
-        haptics: HapticsService = HapticsService(),
+        profileStore: ProfileStore? = nil,
+        store: StoreManager? = nil,
+        ads: SimulatedAdService? = nil,
+        haptics: HapticsService? = nil,
         adPolicy: AdPolicy = .standard
     ) {
-        self.profileStore = profileStore
-        self.store = store
-        self.ads = ads
-        self.haptics = haptics
+        self.profileStore = profileStore ?? ProfileStore()
+        self.store = store ?? StoreManager()
+        self.ads = ads ?? SimulatedAdService()
+        self.haptics = haptics ?? HapticsService()
         self.adPolicy = adPolicy
     }
 
