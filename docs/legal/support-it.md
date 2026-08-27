@@ -2,7 +2,7 @@
 
 ## Contatti
 
-**support@sabettaworks.com** — rispondiamo in italiano o in inglese.
+**hello@sabettaworks.com** — rispondiamo in italiano o in inglese.
 
 Se scrivi per un acquisto, indica modello del dispositivo e versione di iOS. Non
 inviare mai la password del tuo Account Apple: nessuno qui te la chiederà.
@@ -46,5 +46,5 @@ schermata di apertura. L'app segue da sola anche l'impostazione di sistema
 
 ## Privacy e condizioni
 
-- Informativa privacy: https://www.sabettaworks.com/games/lineflow/privacy-it
-- Condizioni d'uso: https://www.sabettaworks.com/games/lineflow/terms-it
+- Informativa privacy: https://sabettaworks.com/games/lineflow/privacy-it
+- Condizioni d'uso: https://sabettaworks.com/games/lineflow/terms-it

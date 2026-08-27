@@ -13,7 +13,7 @@ conflict, Apple's agreement prevails.
 
 ## 1. The licence
 
-[LEGAL ENTITY NAME] grants you a personal, non-transferable licence to use Line
+SabettaWorks grants you a personal, non-transferable licence to use Line
 Flow SW on Apple devices that you own or control, on the terms of the App Store
 Terms of Service.
 
@@ -77,7 +77,7 @@ we are legally required to.
 ## 8. Warranty and liability
 
 The app is provided "as is". To the fullest extent permitted by law,
-[LEGAL ENTITY NAME] is not liable for indirect or consequential loss arising
+SabettaWorks is not liable for indirect or consequential loss arising
 from your use of it. Nothing in these terms limits or excludes rights you have
 as a consumer under Italian or EU law that cannot be limited or excluded by
 agreement.
@@ -90,4 +90,4 @@ live.
 
 ## 10. Contact
 
-[LEGAL ENTITY NAME], [REGISTERED ADDRESS] — support@sabettaworks.com
+SabettaWorks — hello@sabettaworks.com

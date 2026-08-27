@@ -96,6 +96,5 @@ dell'app che la determina — mai prima, mai dopo.
 
 ## Chi siamo e come contattarci
 
-[RAGIONE SOCIALE]
-[SEDE LEGALE]
-support@sabettaworks.com
+SabettaWorks
+hello@sabettaworks.com

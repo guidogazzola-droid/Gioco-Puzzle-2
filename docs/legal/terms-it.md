@@ -13,7 +13,7 @@ quel contratto. In caso di contrasto, prevale il contratto di Apple.
 
 ## 1. La licenza
 
-[RAGIONE SOCIALE] ti concede una licenza personale e non trasferibile per usare
+SabettaWorks ti concede una licenza personale e non trasferibile per usare
 Line Flow SW su dispositivi Apple di tua proprietà o sotto il tuo controllo,
 secondo i Termini e condizioni dell'App Store.
 
@@ -81,7 +81,7 @@ obbligo di legge.
 ## 8. Garanzie e responsabilità
 
 L'app è fornita "così com'è". Nei limiti massimi consentiti dalla legge,
-[RAGIONE SOCIALE] non risponde di danni indiretti o consequenziali derivanti
+SabettaWorks non risponde di danni indiretti o consequenziali derivanti
 dall'uso. Nulla in queste condizioni limita o esclude i diritti che ti spettano
 come consumatore ai sensi della legge italiana o dell'Unione Europea e che non
 sono limitabili o escludibili per accordo.
@@ -93,4 +93,4 @@ conservi la protezione delle norme imperative del Paese in cui risiedi.
 
 ## 10. Contatti
 
-[RAGIONE SOCIALE], [SEDE LEGALE] — support@sabettaworks.com
+SabettaWorks — hello@sabettaworks.com

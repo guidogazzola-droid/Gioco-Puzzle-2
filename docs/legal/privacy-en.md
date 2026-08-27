@@ -91,6 +91,5 @@ never before, never after.
 
 ## Who we are, and how to reach us
 
-[LEGAL ENTITY NAME]
-[REGISTERED ADDRESS]
-support@sabettaworks.com
+SabettaWorks
+hello@sabettaworks.com

@@ -13,7 +13,10 @@ import Foundation
 /// code does and the two have to move together.
 enum LegalLinks {
 
-    private static let base = "https://www.sabettaworks.com/games/lineflow"
+    // No www: the www host answers, but with a 301 to this one. A redirect is
+    // a round trip on every tap and a dependency on a DNS record staying
+    // configured, and a broken policy link cannot be fixed without a release.
+    private static let base = "https://sabettaworks.com/games/lineflow"
 
     /// Italian players get the Italian pages. The app's language, not the
     /// device's region: someone reading the game in Italian should not be

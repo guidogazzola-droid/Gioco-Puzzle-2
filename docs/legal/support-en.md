@@ -2,7 +2,7 @@
 
 ## Get in touch
 
-**support@sabettaworks.com** — we reply in English or Italian.
+**hello@sabettaworks.com** — we reply in English or Italian.
 
 If you are writing about a purchase, include your device model and iOS version.
 Never send your Apple Account password: nobody here will ever ask for it.
@@ -45,5 +45,5 @@ own.
 
 ## Privacy and terms
 
-- Privacy Policy: https://www.sabettaworks.com/games/lineflow/privacy
-- Terms of Use: https://www.sabettaworks.com/games/lineflow/terms
+- Privacy Policy: https://sabettaworks.com/games/lineflow/privacy
+- Terms of Use: https://sabettaworks.com/games/lineflow/terms
