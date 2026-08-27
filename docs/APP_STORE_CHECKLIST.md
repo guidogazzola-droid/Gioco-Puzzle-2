@@ -96,13 +96,56 @@ just never appears.
 - [ ] Create all four with the settings above. The daily one is a **recurring**
       leaderboard — that is what makes it a fresh race each day, matching the
       generated board everyone gets.
-- [ ] Give each a localised name in English and Italian. The strings the app
-      already uses are `leaderboard.*.title` in both `.strings` files.
+- [ ] Give each a localised name in English and Italian. Use exactly the names
+      the app already shows, or the same board reads as two different things
+      depending on where a player is looking:
+
+      | Leaderboard | English | Italiano |
+      |---|---|---|
+      | `…leaderboard.stars` | Stars collected | Stelle raccolte |
+      | `…leaderboard.free` | Furthest level | Livello più lontano |
+      | `…leaderboard.pro` | Furthest Pro level | Livello Pro più lontano |
+      | `…leaderboard.daily` | Daily puzzle | Puzzle del giorno |
+
+      The score-format suffix is "star / stars" and "stelle" for the first, and
+      nothing for the level boards - a bare number reads better than "level 42
+      levels". The daily board is a time and formats itself.
+- [ ] **Achievements: none.** Leave the section empty. Nothing in the code
+      reports one, and an achievement cannot be removed once it has shipped in
+      any version — so adding a speculative one now is a permanent decision
+      made for no reason. The same goes for **Challenges**, which additionally
+      need achievements or leaderboards already live to build on.
 - [ ] Test on a real device signed into Game Center. The simulator can
       authenticate but is unreliable for score submission.
 - [ ] Check the game still plays normally with Game Center **off** (sign out, or
       restrict it in Screen Time). Leaderboards are optional by design and
       nothing in the game loop waits on them.
+
+## 2d. What to leave empty
+
+Two sections of App Store Connect look like they are waiting for something and
+are not.
+
+**App Store Server Notifications** (production and sandbox URLs) — leave both
+unset. These are webhooks Apple sends to *your server* when a subscription
+renews, lapses, is refunded or hits a billing problem. This game has no server:
+`StoreManager` decides entitlement on the device from Apple-signed transactions
+(`Transaction.updates`, `Transaction.currentEntitlements`,
+`Product.SubscriptionInfo.status(for:)`), and re-derives it on every foreground.
+Nothing is waiting to be told.
+
+The one thing you give up is knowing about a cancellation or a refund *while
+the app is closed*. The app finds out the next time it opens, which for a game
+is soon enough — but it does mean there is no way to react to churn as it
+happens. Worth revisiting only if you ever add a backend.
+
+**App-specific shared secret** — do not generate one. It exists for the legacy
+`verifyReceipt` endpoint, which is server-side receipt validation. StoreKit 2
+verifies transactions on-device with JWS signatures; the app never sees a
+receipt and has nothing to send anywhere. An unused credential is a small
+liability, not a spare part.
+
+Neither field blocks submission.
 
 ## 3. Legal (guideline 3.1.2 — the most common subscription rejection)
 
