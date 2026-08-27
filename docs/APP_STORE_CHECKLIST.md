@@ -93,9 +93,39 @@ just never appears.
 | `com.sabettaworks.LineFlowSW.leaderboard.pro` | Integer | High to low | Never |
 | `com.sabettaworks.LineFlowSW.leaderboard.daily` | Elapsed Time (seconds) | **Low to high** | **Every day** |
 
-- [ ] Create all four with the settings above. The daily one is a **recurring**
-      leaderboard — that is what makes it a fresh race each day, matching the
-      generated board everyone gets.
+Every field the **Add Leaderboard** form asks for, per board:
+
+| Field | stars | free | pro | daily |
+|---|---|---|---|---|
+| Type | Classic | Classic | Classic | **Recurring** |
+| Reference name | Total stars | Furthest free level | Furthest Pro level | Daily puzzle time |
+| Score format | Integer | Integer | Integer | **Elapsed Time – to the Second** |
+| Submission type | Best Score | Best Score | Best Score | Best Score |
+| Sort order | High to Low | High to Low | High to Low | **Low to High** |
+| Score range | leave empty | leave empty | leave empty | leave empty |
+
+Three ways to get this silently wrong:
+
+- **The daily sorts Low to High.** A time is better when it is smaller. Set it
+  high-to-low and the slowest player tops the board, with no error anywhere.
+- **The daily must be "to the Second", not to a hundredth.** The app submits
+  `outcome.seconds`, a whole number of seconds. Pick a hundredths format and
+  every time renders a hundred times too small.
+- **A leaderboard cannot be removed once it has shipped in any version.** The
+  identifiers have to be right the first time.
+
+- [ ] Create all four with the settings above.
+- [ ] For the recurring daily board: duration **1 day**, repeating **every 1
+      day**, starting **00:00 UTC**. Know what that does and does not
+      guarantee. The puzzle is keyed to the *calendar date* through
+      `Calendar.current`, so everyone playing on the 28th gets the identical
+      board wherever they are — that part is sound. But the leaderboard period
+      turns over at one fixed instant, so at the timezone margins a period can
+      hold times from two different boards. Nothing breaks and nobody sees an
+      error; the ranking is briefly comparing two puzzles. Moving the daily seed
+      to UTC would align them exactly, at the cost of the board changing at an
+      odd local hour for most of the world — worth deciding only if the daily
+      turns out to matter competitively.
 - [ ] Give each a localised name in English and Italian. Use exactly the names
       the app already shows, or the same board reads as two different things
       depending on where a player is looking:
@@ -153,14 +183,20 @@ Neither field blocks submission.
       `LegalLinks.swift` points at them and serves the Italian page to a player
       whose app is in Italian. `check_project.py` fails the build if a
       placeholder domain ever comes back.
-- [ ] Fill in `[LEGAL ENTITY NAME]` and `[REGISTERED ADDRESS]` in the privacy
-      and terms pages. The GDPR requires the data controller to be
-      identifiable, so a trading name alone is not enough unless it is
-      registered.
-- [ ] Publish all six pages under `https://www.sabettaworks.com/games/lineflow/`
-      and open each URL yourself. A link that 404s is the rejection; a link that
-      redirects to a homepage is the same rejection with extra steps.
-- [ ] Make `support@sabettaworks.com` a mailbox somebody reads. App Review
+- [x] All six pages are published under `https://sabettaworks.com/games/lineflow/`
+      and every one answers 200 — checked with a request, not assumed. The `www`
+      host answers 301 to the bare one, which is why `LegalLinks.swift` uses the
+      bare form: a redirect is a round trip on every tap and a dependency on a
+      DNS record the app cannot be fixed without a release.
+- [ ] **Re-publish `privacy-en.md` and `privacy-it.md`.** The live pages are the
+      version from before the house advertisements: they do not say the
+      advertisements are ours, or that tapping one opens a website under that
+      site's own policy. The files in `docs/legal/` do.
+- [ ] Check whether **SabettaWorks** is a registered name. The pages name it as
+      the data controller with an email and no address; if it is only a trading
+      style, the GDPR's requirement that the controller be identifiable is not
+      comfortably met by a name and an inbox.
+- [ ] Make `hello@sabettaworks.com` a mailbox somebody reads. App Review
       writes to it.
 - [ ] Enter the privacy policy URL and the support URL in App Store Connect.
       They are separate fields from anything in the app.
@@ -294,6 +330,7 @@ Skip the settings and the onboarding: nobody installs an app because of them.
 - [ ] Watch trial-to-paid conversion per paywall entry point.
 - [ ] Watch the funnel from "first paywall view" to "purchase", split by which
       screen raised it.
-- [ ] Ship a cosmetic drop monthly. It is the promise the subscription makes,
-      and the cheapest content to produce — the palette generator builds a new
-      verified set in seconds.
+- [ ] Ship cosmetic drops when there is something worth shipping. They are the
+      cheapest content the game has — the palette generator builds a new
+      verified set in seconds — but nothing promises them on a schedule any
+      more, and a promise on the paywall is what a drop would have to keep.
