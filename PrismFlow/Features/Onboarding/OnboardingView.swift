@@ -1,0 +1,124 @@
+import SwiftUI
+import PuzzleKit
+
+/// First-launch tutorial.
+///
+/// Three screens, skippable, and no monetisation anywhere on them: the first
+/// session has to sell the game, not the store.
+struct OnboardingView: View {
+
+    @Environment(AppServices.self) private var services
+
+    @State private var page = 0
+
+    private let pages: [(icon: String, titleKey: LocalizedStringKey, bodyKey: LocalizedStringKey)] = [
+        ("hand.draw.fill", "onboarding.1.title", "onboarding.1.body"),
+        ("square.grid.3x3.fill", "onboarding.2.title", "onboarding.2.body"),
+        ("infinity", "onboarding.3.title", "onboarding.3.body")
+    ]
+
+    var body: some View {
+        ZStack {
+            BackdropView(style: .slate)
+
+            VStack(spacing: 24) {
+                Spacer(minLength: 12)
+
+                DemoBoardView()
+                    .frame(maxWidth: 300, maxHeight: 300)
+
+                TabView(selection: $page) {
+                    ForEach(pages.indices, id: \.self) { index in
+                        VStack(spacing: 12) {
+                            Image(systemName: pages[index].icon)
+                                .font(.system(size: 30))
+                                .foregroundStyle(Ink.accent)
+                            Text(pages[index].titleKey)
+                                .font(.title2.weight(.bold))
+                                .foregroundStyle(Ink.primary)
+                            Text(pages[index].bodyKey)
+                                .font(.subheadline)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(Ink.secondary)
+                                .padding(.horizontal, 32)
+                        }
+                        .tag(index)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                .frame(height: 190)
+
+                VStack(spacing: 10) {
+                    Button {
+                        if page < pages.count - 1 {
+                            withAnimation { page += 1 }
+                        } else {
+                            services.completeOnboarding()
+                        }
+                    } label: {
+                        Text(page < pages.count - 1 ? nextKey : startKey)
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+
+                    Button {
+                        services.completeOnboarding()
+                    } label: {
+                        Text("onboarding.skip")
+                            .font(.subheadline)
+                            .foregroundStyle(Ink.secondary)
+                    }
+                    .opacity(page < pages.count - 1 ? 1 : 0)
+                }
+                .padding(.horizontal, 28)
+                .padding(.bottom, 24)
+            }
+        }
+    }
+
+    private var nextKey: LocalizedStringKey { "onboarding.next" }
+    private var startKey: LocalizedStringKey { "onboarding.start" }
+}
+
+/// A small board that draws itself, used to show the mechanic rather than
+/// describe it.
+private struct DemoBoardView: View {
+
+    /// Generated once: the tutorial board never changes, and re-running the
+    /// generator on every layout pass would be waste.
+    private static let blueprint = LevelGenerator.generate(level: 1, track: .free)
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 1.0 / 20.0)) { timeline in
+            let phase = timeline.date.timeIntervalSinceReferenceDate
+            BoardView(
+                engine: engine(at: phase),
+                theme: .preview,
+                isInteractive: false
+            )
+        }
+    }
+
+    /// Replays the intended solution on a loop by feeding the engine the same
+    /// moves a player would make.
+    private func engine(at phase: TimeInterval) -> PuzzleEngine {
+        let blueprint = Self.blueprint
+        var engine = PuzzleEngine(blueprint: blueprint)
+        let totalCells = blueprint.solution.reduce(0) { $0 + $1.count }
+        let cycle = Double(totalCells) + 6
+        let progress = phase.truncatingRemainder(dividingBy: cycle * 0.35) / 0.35
+        var drawn = 0
+
+        for path in blueprint.solution {
+            guard drawn < Int(progress) else { break }
+            engine.beginDrag(at: path[0])
+            for cell in path.dropFirst() {
+                guard drawn < Int(progress) else { break }
+                engine.extendDrag(to: cell)
+                drawn += 1
+            }
+            engine.endDrag()
+            drawn += 1
+        }
+        return engine
+    }
+}

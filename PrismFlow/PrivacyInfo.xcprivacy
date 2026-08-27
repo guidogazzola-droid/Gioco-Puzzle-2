@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Prism Flow, as shipped in this repository, keeps everything on device:
+	     the save file is local JSON, levels are generated rather than fetched,
+	     and no analytics or advertising SDK is linked. That is what the empty
+	     arrays below declare.
+
+	     If you link an ad network, all three of these change, and the network
+	     ships its own PrivacyInfo.xcprivacy that Xcode merges into the app's
+	     privacy report. You must then set NSPrivacyTracking to true, list the
+	     network's tracking domains, and declare the data types it collects.
+	     docs/MONETIZATION.md walks through it. -->
+
+	<key>NSPrivacyTracking</key>
+	<false/>
+
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+
+	<!-- Required-reason APIs. The app calls none of them directly: it does not
+	     read file timestamps, system boot time, disk space, the active
+	     keyboard list, or UserDefaults. -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>

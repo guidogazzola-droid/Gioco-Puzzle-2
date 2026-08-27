@@ -1,0 +1,74 @@
+# XcodeGen spec.
+#
+# PrismFlow.xcodeproj is committed and is the project you open. This spec is the
+# regeneration path: if the project file is ever damaged by a bad merge, run
+#
+#     xcodegen generate
+#
+# to rebuild an equivalent project from the folder layout. The committed project
+# uses Xcode 16 file-system-synchronized groups (no per-file entries), which is
+# what keeps merge conflicts in the project file rare in the first place.
+
+name: PrismFlow
+options:
+  bundleIdPrefix: com.prismflow
+  deploymentTarget:
+    iOS: "18.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+packages:
+  PuzzleKit:
+    path: PuzzleKit
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: NO
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  PrismFlow:
+    type: application
+    platform: iOS
+    sources:
+      - path: PrismFlow
+        excludes:
+          - "Info.plist"
+    dependencies:
+      - package: PuzzleKit
+        product: PuzzleKit
+    info:
+      path: PrismFlow/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.prismflow.game
+        INFOPLIST_FILE: PrismFlow/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_EMIT_LOC_STRINGS: YES
+        ENABLE_PREVIEWS: YES
+    scheme:
+      testTargets:
+        - PrismFlowTests
+      gatherCoverageData: true
+      storeKitConfiguration: Configuration/Products.storekit
+
+  PrismFlowTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - PrismFlowTests
+    dependencies:
+      - target: PrismFlow
+      - package: PuzzleKit
+        product: PuzzleKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.prismflow.game.tests
+        GENERATE_INFOPLIST_FILE: YES

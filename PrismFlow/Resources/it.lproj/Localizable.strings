@@ -1,0 +1,227 @@
+/* Prism Flow - Italiano
+
+   I segnaposto usano argomenti posizionali (%1$ld) per poterli riordinare
+   liberamente, e %ld invece di %d perche' i valori sono Int di Swift.
+   tools/check_localization.py verifica questo file rispetto al codice. */
+
+/* MARK: - Comune */
+"app.name" = "Prism Flow";
+"common.back" = "Indietro";
+"common.close" = "Chiudi";
+"common.done" = "Fine";
+"common.cancel" = "Annulla";
+"badge.pro" = "PRO";
+"legal.terms" = "Condizioni d'uso";
+"legal.privacy" = "Informativa sulla privacy";
+
+/* MARK: - Accessibilita' */
+"a11y.stars" = "%ld stelle su 3";
+"a11y.board" = "Griglia di gioco, %1$ld per %2$ld. %3$ld colori collegati su %4$ld.";
+"a11y.level" = "Livello %1$ld, %2$ld stelle";
+"a11y.levelLocked" = "Livello %ld, bloccato";
+
+/* MARK: - Home */
+"home.starTotal" = "%ld stelle raccolte";
+"home.settings" = "Impostazioni";
+"home.continue.title" = "Riprendi";
+"home.continue.subtitle" = "Livello %1$ld — %2$@";
+"home.continue.action" = "Gioca";
+"home.levels" = "Tutti i livelli";
+"home.daily.title" = "Puzzle del giorno";
+"home.daily.streak" = "Serie di %ld giorni";
+"home.daily.play" = "Gioca";
+"home.daily.replay" = "Rigioca";
+"home.pro.title" = "Percorso Pro";
+"home.pro.subtitle" = "Griglie piu' grandi, piu' colori e caselle muro. Incluso in Prism Flow Pro.";
+"home.pro.subtitleActive" = "Griglie piu' grandi, piu' colori e caselle muro. Il tuo abbonamento e' attivo.";
+"home.pro.play" = "Gioca il percorso Pro";
+"home.pro.unlock" = "Scopri Prism Flow Pro";
+"home.shop" = "Stili";
+"home.removeAds" = "Togli la pubblicita'";
+
+/* MARK: - Mappa */
+"map.title.free" = "Livelli";
+"map.title.pro" = "Livelli Pro";
+"chapter.dawn" = "Prima Luce";
+"chapter.tide" = "Marea";
+"chapter.ember" = "Brace";
+"chapter.circuit" = "Circuito";
+"chapter.orchid" = "Serra delle Orchidee";
+"chapter.glacier" = "Ghiacciaio";
+"chapter.dusk" = "Lungo Crepuscolo";
+"chapter.nebula" = "Nebulosa";
+
+/* MARK: - Partita */
+"game.title.free" = "Livello %ld";
+"game.title.pro" = "Livello Pro %ld";
+"game.daily.title" = "Puzzle del giorno";
+"game.subtitle" = "%1$@ collegati · %2$ld / %3$ld mosse";
+"game.action.reset" = "Ricomincia";
+"game.action.hint" = "Aiuto";
+"game.action.goPro" = "Passa a Pro";
+
+/* MARK: - Livello completato */
+"complete.perfect" = "Perfetto!";
+"complete.good" = "Ben fatto";
+"complete.solved" = "Risolto";
+"complete.moves" = "Mosse";
+"complete.par" = "par %ld";
+"complete.time" = "Tempo";
+"complete.gems" = "Gemme";
+"complete.next" = "Livello successivo";
+"complete.replay" = "Rigioca";
+"complete.exit" = "Menu";
+"complete.hintUsed" = "Hai usato un aiuto: questa partita vale al massimo due stelle.";
+"complete.dailyAlreadyClaimed" = "La ricompensa di oggi e' gia' stata ritirata.";
+
+/* MARK: - Aiuti */
+"hint.title" = "Aiuti esauriti";
+"hint.body" = "Un aiuto risolve un colore al posto tuo e limita il livello a due stelle.";
+"hint.watchAd" = "Guarda un video per un aiuto";
+"hint.buyWithGems" = "Compra un aiuto — %ld gemme";
+"hint.goPro" = "Aiuti illimitati con Pro";
+
+/* MARK: - Negozio */
+"shop.title" = "Stili ed extra";
+"shop.category" = "Categoria";
+"shop.section.gems" = "Gemme";
+"shop.section.gemsCaption" = "Le gemme comprano stili e aiuti. Non rendono mai un puzzle piu' facile.";
+"shop.section.unlocks" = "Sblocchi";
+"shop.gemsAmount" = "%ld gemme";
+"shop.watchForGems" = "Guarda un video";
+"shop.free" = "Gratis";
+"shop.owned" = "Acquistato";
+"shop.proCaption" = "Tutto quello che vedi qui sotto, piu' il percorso Pro.";
+"shop.restore" = "Ripristina acquisti";
+"shop.legal" = "Il pagamento viene addebitato sull'Account Apple alla conferma. Gli abbonamenti si rinnovano automaticamente se non vengono disdetti almeno 24 ore prima della fine del periodo in corso. Puoi gestirli o disdirli nelle impostazioni del tuo Account Apple.";
+
+/* MARK: - Cosmetici */
+"cosmetic.category.palette" = "Colori";
+"cosmetic.category.trail" = "Tracce";
+"cosmetic.category.background" = "Sfondi";
+"cosmetic.category.nodeShape" = "Nodi";
+"cosmetic.equipped" = "Equipaggiato";
+"cosmetic.tapToEquip" = "Tocca per equipaggiare";
+"cosmetic.proOnly" = "Solo Pro";
+"cosmetic.palette.aurora" = "Aurora";
+"cosmetic.palette.tide" = "Marea";
+"cosmetic.palette.ember" = "Brace";
+"cosmetic.palette.circuit" = "Circuito";
+"cosmetic.palette.orchid" = "Orchidea";
+"cosmetic.palette.glacier" = "Ghiacciaio";
+"cosmetic.palette.dusk" = "Crepuscolo";
+"cosmetic.palette.nebula" = "Nebulosa";
+"cosmetic.trail.solid" = "Piena";
+"cosmetic.trail.glow" = "Bagliore";
+"cosmetic.trail.ribbon" = "Nastro";
+"cosmetic.trail.comet" = "Cometa";
+"cosmetic.trail.plasma" = "Plasma";
+"cosmetic.background.slate" = "Ardesia";
+"cosmetic.background.mesh" = "Reticolo";
+"cosmetic.background.drift" = "Deriva";
+"cosmetic.background.starfield" = "Campo stellare";
+"cosmetic.background.liquid" = "Liquido";
+"cosmetic.node.dot" = "Punto";
+"cosmetic.node.hex" = "Esagono";
+"cosmetic.node.gem" = "Gemma";
+"cosmetic.node.bloom" = "Fiore";
+
+/* MARK: - Prodotti */
+"product.removeads.name" = "Togli la pubblicita'";
+"product.removeads.description" = "Mai piu' pubblicita'. Un solo pagamento, per sempre.";
+"product.gems.pouch.name" = "Sacchetto di gemme";
+"product.gems.pouch.description" = "Una manciata di gemme per stili e aiuti.";
+"product.gems.chest.name" = "Scrigno di gemme";
+"product.gems.chest.description" = "Abbastanza per un set di stili completo.";
+"product.gems.vault.name" = "Forziere di gemme";
+"product.gems.vault.description" = "Il pacchetto grande. Il miglior prezzo per gemma.";
+"product.style.orchid.name" = "Pacchetto stile Orchidea";
+"product.style.orchid.description" = "Il set di colori Orchidea, tuo per sempre.";
+"product.style.neon.name" = "Pacchetto stile Neon";
+"product.style.neon.description" = "Traccia Cometa e sfondo Campo stellare, tuoi per sempre.";
+"product.pro.monthly.name" = "Prism Flow Pro";
+"product.pro.monthly.description" = "Abbonamento mensile. Livelli Pro, zero pubblicita', tutti gli stili.";
+"product.pro.yearly.name" = "Prism Flow Pro (annuale)";
+"product.pro.yearly.description" = "Dodici mesi di Pro a un costo mensile piu' basso.";
+"period.day" = "giorno";
+"period.week" = "settimana";
+"period.month" = "mese";
+"period.year" = "anno";
+
+/* MARK: - Messaggi del negozio */
+"store.error.unavailable" = "Questo articolo non e' disponibile al momento.";
+"store.error.unverified" = "Non e' stato possibile verificare l'acquisto.";
+"store.error.generic" = "Qualcosa e' andato storto. Riprova.";
+"store.banner.purchased" = "Grazie! Il tuo acquisto e' attivo.";
+"store.banner.pending" = "In attesa di approvazione.";
+"store.banner.failed" = "L'acquisto non e' andato a buon fine.";
+"store.banner.restored" = "Acquisti ripristinati.";
+"store.banner.restoreFailed" = "Nessun acquisto da ripristinare su questo Account Apple.";
+
+/* MARK: - Paywall */
+"paywall.title" = "Prism Flow Pro";
+"paywall.headline.general" = "Tutto sbloccato, e zero pubblicita'.";
+"paywall.headline.proTrack" = "Il percorso Pro e' una seconda campagna intera: griglie piu' grandi, piu' colori, caselle muro.";
+"paywall.headline.removeAds" = "Pro toglie ogni pubblicita' — e sblocca anche tutto il resto del gioco.";
+"paywall.headline.hints" = "Con Pro gli aiuti sono illimitati.";
+"paywall.headline.cosmetic" = "Questo stile fa parte di Pro, insieme a tutti gli altri.";
+"paywall.benefit.proTrack" = "Il percorso Pro — griglie piu' difficili, muri, infinito";
+"paywall.benefit.noAds" = "Nessuna pubblicita', di nessun tipo";
+"paywall.benefit.skins" = "Tutti i set di colori, tracce, sfondi e nodi";
+"paywall.benefit.drops" = "Un nuovo stile esclusivo ogni mese";
+"paywall.benefit.hints" = "Aiuti illimitati";
+"paywall.benefit.gems" = "Gemme doppie a ogni livello";
+"paywall.orJustRemoveAds" = "Vuoi solo togliere la pubblicita'?";
+
+/* MARK: - Impostazioni */
+"settings.title" = "Impostazioni";
+"settings.section.subscription" = "Abbonamento";
+"settings.section.gameplay" = "Gioco";
+"settings.section.accessibility" = "Accessibilita'";
+"settings.section.purchases" = "Acquisti";
+"settings.section.about" = "Informazioni";
+"settings.pro.status" = "Prism Flow Pro";
+"settings.pro.active" = "Attivo";
+"settings.pro.trial" = "Prova gratuita";
+"settings.pro.grace" = "Problema di pagamento";
+"settings.pro.retry" = "Pagamento non riuscito";
+"settings.pro.expired" = "Scaduto";
+"settings.pro.revoked" = "Rimborsato";
+"settings.pro.inactive" = "Nessun abbonamento";
+"settings.pro.manage" = "Gestisci abbonamento";
+"settings.pro.renewsOn" = "Si rinnova il";
+"settings.pro.endsOn" = "Termina il";
+"settings.pro.billingProblem" = "Aggiorna i dati di pagamento per mantenere Pro. L'accesso continua mentre Apple riprova.";
+"settings.sound" = "Effetti sonori";
+"settings.music" = "Musica";
+"settings.haptics" = "Vibrazione";
+"settings.colorBlind" = "Assistenza daltonismo";
+"settings.reduceMotion" = "Riduci il movimento";
+"settings.accessibilityFooter" = "L'assistenza daltonismo mette una lettera diversa su ogni coppia di estremi, cosi' il colore non e' mai l'unico modo per distinguerle.";
+"settings.restoreFooter" = "Ripristina tutto cio' che e' stato acquistato con questo Account Apple, anche su un nuovo dispositivo.";
+"settings.support" = "Assistenza";
+"settings.version" = "Versione";
+"settings.reset" = "Azzera i progressi";
+"settings.resetFooter" = "L'azzeramento cancella livelli, stelle e gemme. Acquisti e abbonamenti non vengono mai toccati.";
+"settings.reset.confirmTitle" = "Azzerare tutti i progressi?";
+"settings.reset.confirmMessage" = "Livelli, stelle e gemme verranno cancellati. Tutto cio' che hai acquistato resta tuo.";
+"settings.reset.confirm" = "Azzera";
+
+/* MARK: - Introduzione */
+"onboarding.1.title" = "Collega le coppie";
+"onboarding.1.body" = "Trascina da un punto al suo gemello. Stesso colore, una linea sola.";
+"onboarding.2.title" = "Riempi ogni casella";
+"onboarding.2.body" = "La griglia e' risolta quando tutte le coppie sono unite e non resta nessuna casella vuota.";
+"onboarding.3.title" = "Non finisce mai";
+"onboarding.3.body" = "Ogni livello viene creato al momento sul tuo dispositivo: ce n'e' sempre un altro.";
+"onboarding.next" = "Avanti";
+"onboarding.start" = "Inizia a giocare";
+"onboarding.skip" = "Salta";
+
+/* MARK: - Pubblicita' */
+"ad.placeholderTag" = "PUBBLICITA'";
+"ad.interstitialTitle" = "Una breve pausa";
+"ad.rewardedTitle" = "Guarda per una ricompensa";
+"ad.placeholderBody" = "Questo e' un segnaposto pubblicitario. Collega una rete reale dietro AdService prima della pubblicazione.";
+"ad.countdown" = "%ld s";
+"ad.claim" = "Ritira la ricompensa";

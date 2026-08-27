@@ -1,0 +1,227 @@
+{
+  "identifier" : "3F1A6C22",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : true,
+      "internalID" : "A1000001",
+      "localizations" : [
+        {
+          "description" : "No ads, ever. One payment, kept forever.",
+          "displayName" : "Remove ads",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Mai più pubblicità. Un solo pagamento, per sempre.",
+          "displayName" : "Togli la pubblicità",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.removeads",
+      "referenceName" : "Remove Ads",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : true,
+      "internalID" : "A1000002",
+      "localizations" : [
+        {
+          "description" : "The Orchid colour set, yours permanently.",
+          "displayName" : "Orchid style pack",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Il set di colori Orchidea, tuo per sempre.",
+          "displayName" : "Pacchetto stile Orchidea",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.style.orchid",
+      "referenceName" : "Orchid Style Pack",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : true,
+      "internalID" : "A1000003",
+      "localizations" : [
+        {
+          "description" : "Comet trail and Starfield backdrop, yours permanently.",
+          "displayName" : "Neon style pack",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Traccia Cometa e sfondo Campo stellare, tuoi per sempre.",
+          "displayName" : "Pacchetto stile Neon",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.style.neon",
+      "referenceName" : "Neon Style Pack",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "A1000004",
+      "localizations" : [
+        {
+          "description" : "A handful of gems for styles and hints.",
+          "displayName" : "Pouch of gems",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Una manciata di gemme per stili e aiuti.",
+          "displayName" : "Sacchetto di gemme",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.gems.pouch",
+      "referenceName" : "Gems Pouch (500)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "A1000005",
+      "localizations" : [
+        {
+          "description" : "Enough for a full style set.",
+          "displayName" : "Chest of gems",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Abbastanza per un set di stili completo.",
+          "displayName" : "Scrigno di gemme",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.gems.chest",
+      "referenceName" : "Gems Chest (1500)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "A1000006",
+      "localizations" : [
+        {
+          "description" : "The big one. Best value per gem.",
+          "displayName" : "Vault of gems",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Il pacchetto grande. Il miglior prezzo per gemma.",
+          "displayName" : "Forziere di gemme",
+          "locale" : "it_IT"
+        }
+      ],
+      "productID" : "com.prismflow.game.gems.vault",
+      "referenceName" : "Gems Vault (4000)",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_billingIssuesEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "it_IT",
+    "_storefront" : "ITA",
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21495732",
+      "localizations" : [
+        {
+          "description" : "Pro levels, no ads, every style.",
+          "displayName" : "Prism Flow Pro",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Livelli Pro, zero pubblicità, tutti gli stili.",
+          "displayName" : "Prism Flow Pro",
+          "locale" : "it_IT"
+        }
+      ],
+      "name" : "Prism Flow Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "B1000001",
+          "introductoryOffer" : {
+            "internalID" : "C1000001",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Pro levels, no ads, every style, unlimited hints.",
+              "displayName" : "Prism Flow Pro — Monthly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Livelli Pro, zero pubblicità, tutti gli stili, aiuti illimitati.",
+              "displayName" : "Prism Flow Pro — Mensile",
+              "locale" : "it_IT"
+            }
+          ],
+          "productID" : "com.prismflow.game.pro.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Prism Flow Pro Monthly",
+          "subscriptionGroupID" : "21495732",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "B1000002",
+          "introductoryOffer" : {
+            "internalID" : "C1000002",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Twelve months of Pro at a lower monthly rate.",
+              "displayName" : "Prism Flow Pro — Yearly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Dodici mesi di Pro a un costo mensile più basso.",
+              "displayName" : "Prism Flow Pro — Annuale",
+              "locale" : "it_IT"
+            }
+          ],
+          "productID" : "com.prismflow.game.pro.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Prism Flow Pro Yearly",
+          "subscriptionGroupID" : "21495732",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

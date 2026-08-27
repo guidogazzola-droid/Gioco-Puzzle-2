@@ -1,0 +1,227 @@
+/* Prism Flow - English (development language)
+
+   Format specifiers use positional arguments (%1$ld) so translators can
+   reorder them freely, and %ld rather than %d because the values are Swift
+   Ints. tools/check_localization.py verifies this file against the source. */
+
+/* MARK: - Common */
+"app.name" = "Prism Flow";
+"common.back" = "Back";
+"common.close" = "Close";
+"common.done" = "Done";
+"common.cancel" = "Cancel";
+"badge.pro" = "PRO";
+"legal.terms" = "Terms of Use";
+"legal.privacy" = "Privacy Policy";
+
+/* MARK: - Accessibility */
+"a11y.stars" = "%ld out of 3 stars";
+"a11y.board" = "Puzzle board, %1$ld by %2$ld. %3$ld of %4$ld colours connected.";
+"a11y.level" = "Level %1$ld, %2$ld stars";
+"a11y.levelLocked" = "Level %ld, locked";
+
+/* MARK: - Home */
+"home.starTotal" = "%ld stars collected";
+"home.settings" = "Settings";
+"home.continue.title" = "Keep going";
+"home.continue.subtitle" = "Level %1$ld — %2$@";
+"home.continue.action" = "Play";
+"home.levels" = "All levels";
+"home.daily.title" = "Daily puzzle";
+"home.daily.streak" = "%ld day streak";
+"home.daily.play" = "Play";
+"home.daily.replay" = "Play again";
+"home.pro.title" = "Pro track";
+"home.pro.subtitle" = "Bigger boards, more colours and wall cells. Included with Prism Flow Pro.";
+"home.pro.subtitleActive" = "Bigger boards, more colours and wall cells. Your subscription is active.";
+"home.pro.play" = "Play the Pro track";
+"home.pro.unlock" = "See Prism Flow Pro";
+"home.shop" = "Styles";
+"home.removeAds" = "Remove ads";
+
+/* MARK: - Map */
+"map.title.free" = "Levels";
+"map.title.pro" = "Pro levels";
+"chapter.dawn" = "First Light";
+"chapter.tide" = "Tidewater";
+"chapter.ember" = "Emberfall";
+"chapter.circuit" = "Circuitry";
+"chapter.orchid" = "Orchid House";
+"chapter.glacier" = "Glacier";
+"chapter.dusk" = "Long Dusk";
+"chapter.nebula" = "Nebula";
+
+/* MARK: - Game */
+"game.title.free" = "Level %ld";
+"game.title.pro" = "Pro level %ld";
+"game.daily.title" = "Daily puzzle";
+"game.subtitle" = "%1$@ connected · %2$ld / %3$ld moves";
+"game.action.reset" = "Restart";
+"game.action.hint" = "Hint";
+"game.action.goPro" = "Go Pro";
+
+/* MARK: - Level complete */
+"complete.perfect" = "Perfect!";
+"complete.good" = "Nicely done";
+"complete.solved" = "Solved";
+"complete.moves" = "Moves";
+"complete.par" = "par %ld";
+"complete.time" = "Time";
+"complete.gems" = "Gems";
+"complete.next" = "Next level";
+"complete.replay" = "Replay";
+"complete.exit" = "Menu";
+"complete.hintUsed" = "A hint was used, so this run caps at two stars.";
+"complete.dailyAlreadyClaimed" = "Today's reward has already been collected.";
+
+/* MARK: - Hints */
+"hint.title" = "Out of hints";
+"hint.body" = "A hint solves one colour for you. It caps the level at two stars.";
+"hint.watchAd" = "Watch a video for a hint";
+"hint.buyWithGems" = "Buy a hint — %ld gems";
+"hint.goPro" = "Unlimited hints with Pro";
+
+/* MARK: - Shop */
+"shop.title" = "Styles & extras";
+"shop.category" = "Category";
+"shop.section.gems" = "Gems";
+"shop.section.gemsCaption" = "Gems buy styles and hints. They never make a puzzle easier.";
+"shop.section.unlocks" = "Unlocks";
+"shop.gemsAmount" = "%ld gems";
+"shop.watchForGems" = "Watch a video";
+"shop.free" = "Free";
+"shop.owned" = "Owned";
+"shop.proCaption" = "Everything below, plus the Pro track.";
+"shop.restore" = "Restore purchases";
+"shop.legal" = "Payment is charged to your Apple Account at confirmation. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel in your Apple Account settings.";
+
+/* MARK: - Cosmetics */
+"cosmetic.category.palette" = "Colours";
+"cosmetic.category.trail" = "Trails";
+"cosmetic.category.background" = "Backdrops";
+"cosmetic.category.nodeShape" = "Nodes";
+"cosmetic.equipped" = "Equipped";
+"cosmetic.tapToEquip" = "Tap to equip";
+"cosmetic.proOnly" = "Pro only";
+"cosmetic.palette.aurora" = "Aurora";
+"cosmetic.palette.tide" = "Tidewater";
+"cosmetic.palette.ember" = "Ember";
+"cosmetic.palette.circuit" = "Circuit";
+"cosmetic.palette.orchid" = "Orchid";
+"cosmetic.palette.glacier" = "Glacier";
+"cosmetic.palette.dusk" = "Dusk";
+"cosmetic.palette.nebula" = "Nebula";
+"cosmetic.trail.solid" = "Solid";
+"cosmetic.trail.glow" = "Glow";
+"cosmetic.trail.ribbon" = "Ribbon";
+"cosmetic.trail.comet" = "Comet";
+"cosmetic.trail.plasma" = "Plasma";
+"cosmetic.background.slate" = "Slate";
+"cosmetic.background.mesh" = "Mesh";
+"cosmetic.background.drift" = "Drift";
+"cosmetic.background.starfield" = "Starfield";
+"cosmetic.background.liquid" = "Liquid";
+"cosmetic.node.dot" = "Dot";
+"cosmetic.node.hex" = "Hex";
+"cosmetic.node.gem" = "Gem";
+"cosmetic.node.bloom" = "Bloom";
+
+/* MARK: - Products */
+"product.removeads.name" = "Remove ads";
+"product.removeads.description" = "No ads, ever. One payment, kept forever.";
+"product.gems.pouch.name" = "Pouch of gems";
+"product.gems.pouch.description" = "A handful of gems for styles and hints.";
+"product.gems.chest.name" = "Chest of gems";
+"product.gems.chest.description" = "Enough for a full style set.";
+"product.gems.vault.name" = "Vault of gems";
+"product.gems.vault.description" = "The big one. Best value per gem.";
+"product.style.orchid.name" = "Orchid style pack";
+"product.style.orchid.description" = "The Orchid colour set, yours permanently.";
+"product.style.neon.name" = "Neon style pack";
+"product.style.neon.description" = "Comet trail and Starfield backdrop, yours permanently.";
+"product.pro.monthly.name" = "Prism Flow Pro";
+"product.pro.monthly.description" = "Monthly subscription. Pro levels, no ads, every style.";
+"product.pro.yearly.name" = "Prism Flow Pro (yearly)";
+"product.pro.yearly.description" = "Twelve months of Pro at a lower monthly rate.";
+"period.day" = "day";
+"period.week" = "week";
+"period.month" = "month";
+"period.year" = "year";
+
+/* MARK: - Store feedback */
+"store.error.unavailable" = "That item is not available right now.";
+"store.error.unverified" = "That purchase could not be verified.";
+"store.error.generic" = "Something went wrong. Please try again.";
+"store.banner.purchased" = "Thank you! Your purchase is active.";
+"store.banner.pending" = "Waiting for approval.";
+"store.banner.failed" = "The purchase did not go through.";
+"store.banner.restored" = "Purchases restored.";
+"store.banner.restoreFailed" = "Nothing to restore on this Apple Account.";
+
+/* MARK: - Paywall */
+"paywall.title" = "Prism Flow Pro";
+"paywall.headline.general" = "Everything unlocked, and no ads.";
+"paywall.headline.proTrack" = "The Pro track is a whole second campaign: bigger boards, more colours, wall cells.";
+"paywall.headline.removeAds" = "Pro removes every ad — and unlocks the rest of the game too.";
+"paywall.headline.hints" = "Pro gives you unlimited hints.";
+"paywall.headline.cosmetic" = "This style is part of Pro, along with every other one.";
+"paywall.benefit.proTrack" = "The Pro level track — harder boards, walls, endless";
+"paywall.benefit.noAds" = "No ads of any kind";
+"paywall.benefit.skins" = "Every colour set, trail, backdrop and node";
+"paywall.benefit.drops" = "A new exclusive style every month";
+"paywall.benefit.hints" = "Unlimited hints";
+"paywall.benefit.gems" = "Double gems from every level";
+"paywall.orJustRemoveAds" = "Only want the ads gone?";
+
+/* MARK: - Settings */
+"settings.title" = "Settings";
+"settings.section.subscription" = "Subscription";
+"settings.section.gameplay" = "Game";
+"settings.section.accessibility" = "Accessibility";
+"settings.section.purchases" = "Purchases";
+"settings.section.about" = "About";
+"settings.pro.status" = "Prism Flow Pro";
+"settings.pro.active" = "Active";
+"settings.pro.trial" = "Free trial";
+"settings.pro.grace" = "Payment issue";
+"settings.pro.retry" = "Payment failed";
+"settings.pro.expired" = "Expired";
+"settings.pro.revoked" = "Refunded";
+"settings.pro.inactive" = "Not subscribed";
+"settings.pro.manage" = "Manage subscription";
+"settings.pro.renewsOn" = "Renews";
+"settings.pro.endsOn" = "Ends";
+"settings.pro.billingProblem" = "Update your payment details to keep Pro. Your access continues while Apple retries.";
+"settings.sound" = "Sound effects";
+"settings.music" = "Music";
+"settings.haptics" = "Haptics";
+"settings.colorBlind" = "Colour-blind assist";
+"settings.reduceMotion" = "Reduce motion";
+"settings.accessibilityFooter" = "Colour-blind assist puts a distinct letter on each pair of endpoints, so colours are never the only way to tell them apart.";
+"settings.restoreFooter" = "Restores anything bought with this Apple Account, including on a new device.";
+"settings.support" = "Support";
+"settings.version" = "Version";
+"settings.reset" = "Reset progress";
+"settings.resetFooter" = "Resetting clears levels, stars and gems. Purchases and subscriptions are never affected.";
+"settings.reset.confirmTitle" = "Reset all progress?";
+"settings.reset.confirmMessage" = "Levels, stars and gems will be cleared. Anything you bought stays yours.";
+"settings.reset.confirm" = "Reset";
+
+/* MARK: - Onboarding */
+"onboarding.1.title" = "Connect the pairs";
+"onboarding.1.body" = "Drag from one dot to its twin. Same colour, one unbroken line.";
+"onboarding.2.title" = "Fill every square";
+"onboarding.2.body" = "A board is solved when all pairs are joined and no square is left empty.";
+"onboarding.3.title" = "It never runs out";
+"onboarding.3.body" = "Every level is built fresh on your device, so there is always another one.";
+"onboarding.next" = "Next";
+"onboarding.start" = "Start playing";
+"onboarding.skip" = "Skip";
+
+/* MARK: - Ads */
+"ad.placeholderTag" = "AD";
+"ad.interstitialTitle" = "A quick break";
+"ad.rewardedTitle" = "Watch for a reward";
+"ad.placeholderBody" = "This is a placeholder ad unit. Wire a real network behind AdService before release.";
+"ad.countdown" = "%ld s";
+"ad.claim" = "Claim reward";
