@@ -1,12 +1,12 @@
-/* Line Flow SW - Italiano
+/* Fieldweave - Italiano
 
    I segnaposto usano argomenti posizionali (%1$ld) per poterli riordinare
    liberamente, e %ld invece di %d perché i valori sono Int di Swift.
    tools/check_localization.py verifica questo file rispetto al codice. */
 
 /* MARK: - Comune */
-"app.name" = "Line Flow SW";
-"splash.tagline" = "Ogni colore trova la sua strada.";
+"app.name" = "Fieldweave";
+"splash.tagline" = "Intreccia il campo. Allinea il flusso.";
 "splash.skipHint" = "Tocca due volte per saltare.";
 "common.back" = "Indietro";
 "common.close" = "Chiudi";
@@ -18,29 +18,31 @@
 
 /* MARK: - Accessibilità */
 "a11y.stars" = "%ld stelle su 3";
-"a11y.board" = "Griglia di gioco, %1$ld per %2$ld. %3$ld colori collegati su %4$ld.";
+"a11y.board" = "Griglia magnetica, %1$ld per %2$ld. %3$ld circuiti attivi su %4$ld.";
+"a11y.fieldStability" = "Campo magnetico stabile al %ld percento";
 "a11y.level" = "Livello %1$ld, %2$ld stelle";
 "a11y.levelLocked" = "Livello %ld, bloccato";
 
 /* MARK: - Home */
-"home.starTotal" = "%ld stelle raccolte";
+"home.labTagline" = "LABORATORIO MAGNETICO";
+"home.starTotal" = "%ld stelle di campo raccolte";
 "home.settings" = "Impostazioni";
-"home.continue.title" = "Riprendi";
+"home.continue.title" = "Riprendi l'esperimento";
 "home.continue.subtitle" = "Livello %1$ld — %2$@";
 "home.continue.action" = "Gioca";
-"home.levels" = "Tutti i livelli";
-"home.daily.title" = "Puzzle del giorno";
+"home.levels" = "Atlante del laboratorio";
+"home.daily.title" = "Campo del giorno";
 "home.daily.streak" = "Serie di %ld giorni";
 "home.daily.play" = "Gioca";
 "home.daily.replay" = "Rigioca";
-"home.pro.title" = "Percorso Pro";
-"home.pro.subtitle" = "Griglie più grandi, più colori e caselle muro. Incluso in Line Flow SW Pro.";
-"home.pro.subtitleActive" = "Griglie più grandi, più colori e caselle muro. Il tuo abbonamento è attivo.";
+"home.pro.title" = "Laboratorio avanzato";
+"home.pro.subtitle" = "Laboratori più grandi, più rotori e barriere magnetiche. Incluso in Fieldweave Pro.";
+"home.pro.subtitleActive" = "Laboratori più grandi, più rotori e barriere magnetiche. Il tuo abbonamento è attivo.";
 "home.pro.play" = "Gioca il percorso Pro";
-"home.pro.unlock" = "Scopri Line Flow SW Pro";
-"home.shop" = "Stili";
+"home.pro.unlock" = "Scopri Fieldweave Pro";
+"home.shop" = "Stili del campo";
 "home.removeAds" = "Togli la pubblicità";
-"home.leaderboards" = "Classifiche";
+"home.leaderboards" = "Classifiche del laboratorio";
 
 /* MARK: - Game Center */
 "gamecenter.signIn" = "Accedi a Game Center";
@@ -73,19 +75,19 @@
 "chapter.nebula" = "Nebulosa";
 
 /* MARK: - Partita */
-"game.title.free" = "Livello %ld";
-"game.title.pro" = "Livello Pro %ld";
-"game.daily.title" = "Puzzle del giorno";
-"game.subtitle" = "%1$@ collegati · %2$ld / %3$ld mosse";
+"game.title.free" = "Esperimento %ld";
+"game.title.pro" = "Esperimento avanzato %ld";
+"game.daily.title" = "Campo del giorno";
+"game.subtitle" = "%1$@ circuiti · %2$@ rotori · %3$ld / %4$ld azioni";
 "game.action.reset" = "Ricomincia";
 "game.action.hint" = "Aiuto";
 "game.action.goPro" = "Passa a Pro";
 
 /* MARK: - Livello completato */
-"complete.perfect" = "Perfetto!";
-"complete.good" = "Ben fatto";
-"complete.solved" = "Risolto";
-"complete.moves" = "Mosse";
+"complete.perfect" = "Campo agganciato!";
+"complete.good" = "Campo stabilizzato";
+"complete.solved" = "Esperimento completato";
+"complete.moves" = "Azioni";
 "complete.par" = "par %ld";
 "complete.time" = "Tempo";
 "complete.gems" = "Gemme";
@@ -97,7 +99,7 @@
 
 /* MARK: - Aiuti */
 "hint.title" = "Aiuti esauriti";
-"hint.body" = "Un aiuto risolve un colore al posto tuo e limita il livello a due stelle.";
+"hint.body" = "Un aiuto allinea i rotori e attiva un circuito. Il livello vale al massimo due stelle.";
 "hint.watchAd" = "Guarda un video per un aiuto";
 "hint.buyWithGems" = "Compra un aiuto — %ld gemme";
 "hint.goPro" = "Aiuti illimitati con Pro";
@@ -117,10 +119,10 @@
 "shop.legal" = "Il pagamento viene addebitato sull'Account Apple alla conferma. Gli abbonamenti si rinnovano automaticamente se non vengono disdetti almeno 24 ore prima della fine del periodo in corso. Puoi gestirli o disdirli nelle impostazioni del tuo Account Apple.";
 
 /* MARK: - Cosmetici */
-"cosmetic.category.palette" = "Colori";
-"cosmetic.category.trail" = "Tracce";
+"cosmetic.category.palette" = "Colori del campo";
+"cosmetic.category.trail" = "Tracce di flusso";
 "cosmetic.category.background" = "Sfondi";
-"cosmetic.category.nodeShape" = "Nodi";
+"cosmetic.category.nodeShape" = "Gusci dei poli";
 "cosmetic.equipped" = "Equipaggiato";
 "cosmetic.tapToEquip" = "Tocca per equipaggiare";
 "cosmetic.proOnly" = "Solo Pro";
@@ -160,9 +162,9 @@
 "product.style.orchid.description" = "Il set di colori Orchidea, tuo per sempre.";
 "product.style.neon.name" = "Pacchetto stile Neon";
 "product.style.neon.description" = "Traccia Cometa e sfondo Campo stellare, tuoi per sempre.";
-"product.pro.monthly.name" = "Line Flow SW Pro";
-"product.pro.monthly.description" = "Abbonamento mensile. Livelli Pro, zero pubblicità, tutti gli stili.";
-"product.pro.yearly.name" = "Line Flow SW Pro (annuale)";
+"product.pro.monthly.name" = "Fieldweave Pro";
+"product.pro.monthly.description" = "Abbonamento mensile. Laboratori magnetici avanzati, zero pubblicità, tutti gli stili.";
+"product.pro.yearly.name" = "Fieldweave Pro (annuale)";
 "product.pro.yearly.description" = "Dodici mesi di Pro a un costo mensile più basso.";
 "period.day" = "giorno";
 "period.week" = "settimana";
@@ -180,15 +182,15 @@
 "store.banner.restoreFailed" = "Nessun acquisto da ripristinare su questo Account Apple.";
 
 /* MARK: - Paywall */
-"paywall.title" = "Line Flow SW Pro";
+"paywall.title" = "Fieldweave Pro";
 "paywall.headline.general" = "Tutto sbloccato, e zero pubblicità.";
-"paywall.headline.proTrack" = "Il percorso Pro è una seconda campagna intera: griglie più grandi, più colori, caselle muro.";
+"paywall.headline.proTrack" = "Il percorso Pro è un secondo laboratorio magnetico: griglie più grandi, più rotori e barriere.";
 "paywall.headline.removeAds" = "Pro toglie ogni pubblicità — e sblocca anche tutto il resto del gioco.";
 "paywall.headline.hints" = "Con Pro gli aiuti sono illimitati.";
 "paywall.headline.cosmetic" = "Questo stile fa parte di Pro, insieme a tutti gli altri.";
-"paywall.benefit.proTrack" = "Il percorso Pro — griglie più difficili, muri, infinito";
+"paywall.benefit.proTrack" = "Laboratori avanzati — più rotori, barriere, infinito";
 "paywall.benefit.noAds" = "Nessuna pubblicità, di nessun tipo";
-"paywall.benefit.skins" = "Tutti i set di colori, tracce, sfondi e nodi";
+"paywall.benefit.skins" = "Tutti i colori del campo, tracce di flusso, sfondi e gusci";
 "paywall.benefit.hints" = "Aiuti illimitati";
 "paywall.benefit.gems" = "Gemme doppie a ogni livello";
 "paywall.orJustRemoveAds" = "Vuoi solo togliere la pubblicità?";
@@ -203,7 +205,7 @@
 "settings.section.accessibility" = "Accessibilità";
 "settings.section.purchases" = "Acquisti";
 "settings.section.about" = "Informazioni";
-"settings.pro.status" = "Line Flow SW Pro";
+"settings.pro.status" = "Fieldweave Pro";
 "settings.pro.active" = "Attivo";
 "settings.pro.trial" = "Prova gratuita";
 "settings.pro.grace" = "Problema di pagamento";
@@ -221,7 +223,7 @@
 "settings.haptics" = "Vibrazione";
 "settings.colorBlind" = "Assistenza daltonismo";
 "settings.reduceMotion" = "Riduci il movimento";
-"settings.accessibilityFooter" = "L'assistenza daltonismo mette una lettera diversa su ogni coppia di estremi, così il colore non è mai l'unico modo per distinguerle.";
+"settings.accessibilityFooter" = "Ogni polo è marcato N o S. L'assistenza daltonismo aggiunge anche una lettera diversa a ogni circuito.";
 "settings.restoreFooter" = "Ripristina tutto ciò che è stato acquistato con questo Account Apple, anche su un nuovo dispositivo.";
 "settings.support" = "Assistenza";
 "settings.version" = "Versione";
@@ -232,12 +234,12 @@
 "settings.reset.confirm" = "Azzera";
 
 /* MARK: - Introduzione */
-"onboarding.1.title" = "Collega le coppie";
-"onboarding.1.body" = "Trascina da un punto al suo gemello. Stesso colore, una linea sola.";
-"onboarding.2.title" = "Riempi ogni casella";
-"onboarding.2.body" = "La griglia è risolta quando tutte le coppie sono unite e non resta nessuna casella vuota.";
-"onboarding.3.title" = "Non finisce mai";
-"onboarding.3.body" = "Ogni livello viene creato al momento sul tuo dispositivo: ce n'è sempre un altro.";
+"onboarding.1.title" = "Attiva da N a S";
+"onboarding.1.body" = "Parti da un polo N e raggiungi il polo S dello stesso circuito. Ogni circuito ha una direzione.";
+"onboarding.2.title" = "Ruota i rotori";
+"onboarding.2.body" = "Tocca un rotore per girare le sue due porte. Il circuito passa solo da una porta aperta.";
+"onboarding.3.title" = "Stabilizza il campo";
+"onboarding.3.body" = "Attiva tutti i circuiti, allinea ogni rotore e non lasciare caselle vuote.";
 "onboarding.next" = "Avanti";
 "onboarding.start" = "Inizia a giocare";
 "onboarding.skip" = "Salta";
@@ -251,6 +253,6 @@
 "ad.vidivadi.title" = "VidiVadi Planner";
 "ad.vidivadi.body" = "Pianifica tutto il viaggio in un posto solo: tappe, hotel, traghetti e ristoranti.";
 "ad.vidivadi.cta" = "Scopri VidiVadi";
-"ad.pro.title" = "Line Flow SW Pro";
-"ad.pro.body" = "Niente più interruzioni come questa - e in più il percorso Pro, tutti gli stili e aiuti illimitati.";
+"ad.pro.title" = "Fieldweave Pro";
+"ad.pro.body" = "Nessuna interruzione — più laboratori magnetici avanzati, tutti gli stili e aiuti illimitati.";
 "ad.pro.cta" = "Prova una settimana gratis";

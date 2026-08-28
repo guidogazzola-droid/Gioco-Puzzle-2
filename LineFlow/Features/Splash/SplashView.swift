@@ -149,9 +149,9 @@ struct SplashView: View {
             let color = theme.color(for: index)
             let points = flow.map { center(of: $0, in: board, cell: cell) }
 
-            drawNode(&context, at: points[0], cell: cell, color: color,
+            drawPole(&context, at: points[0], cell: cell, color: color, pole: .north,
                      scale: pop(elapsed, from: Double(index) * 0.03, over: Beat.nodesIn))
-            drawNode(&context, at: points[points.count - 1], cell: cell, color: color,
+            drawPole(&context, at: points[points.count - 1], cell: cell, color: color, pole: .south,
                      scale: pop(elapsed, from: Double(index) * 0.03, over: Beat.nodesIn))
 
             guard grown > 0 else { continue }
@@ -168,14 +168,26 @@ struct SplashView: View {
                 with: .color(color),
                 style: StrokeStyle(lineWidth: cell * 0.30, lineCap: .round, lineJoin: .round)
             )
+            if grown > 0.58, points.count > 5 {
+                drawRotor(
+                    &context,
+                    previous: points[3],
+                    center: points[4],
+                    next: points[5],
+                    cell: cell,
+                    color: color,
+                    scale: pop(elapsed, from: Beat.flowsStart + 0.22, over: 0.20)
+                )
+            }
         }
     }
 
-    private func drawNode(
+    private func drawPole(
         _ context: inout GraphicsContext,
         at point: CGPoint,
         cell: CGFloat,
         color: Color,
+        pole: MagneticPolarity,
         scale: Double
     ) {
         guard scale > 0 else { return }
@@ -184,9 +196,64 @@ struct SplashView: View {
             x: point.x - radius, y: point.y - radius,
             width: radius * 2, height: radius * 2
         )
-        context.fill(Path(ellipseIn: box.insetBy(dx: -radius * 0.7, dy: -radius * 0.7)),
-                     with: .color(color.opacity(0.22)))
-        context.fill(Path(ellipseIn: box), with: .color(color))
+        context.fill(Path(ellipseIn: box.insetBy(dx: -radius * 0.9, dy: -radius * 0.9)),
+                     with: .color(color.opacity(0.16)))
+        context.fill(Path(ellipseIn: box.insetBy(dx: -radius * 0.32, dy: -radius * 0.32)),
+                     with: .color(.black.opacity(0.82)))
+        context.stroke(
+            Path(ellipseIn: box.insetBy(dx: -radius * 0.32, dy: -radius * 0.32)),
+            with: .color(color),
+            lineWidth: max(1, cell * 0.055)
+        )
+        context.fill(
+            Path(ellipseIn: box),
+            with: .color(pole == .north ? Color(hex: "#FF5364") : Color(hex: "#42C9FF"))
+        )
+        var label = context.resolve(
+            Text(pole.rawValue)
+                .font(.system(size: cell * 0.24 * scale, weight: .black, design: .rounded))
+        )
+        label.shading = .color(.black.opacity(0.78))
+        context.draw(label, at: point, anchor: .center)
+    }
+
+    private func drawRotor(
+        _ context: inout GraphicsContext,
+        previous: CGPoint,
+        center: CGPoint,
+        next: CGPoint,
+        cell: CGFloat,
+        color: Color,
+        scale: Double
+    ) {
+        guard scale > 0 else { return }
+        let radius = cell * 0.30 * scale
+        let disc = CGRect(
+            x: center.x - radius, y: center.y - radius,
+            width: radius * 2, height: radius * 2
+        )
+        context.fill(Path(ellipseIn: disc), with: .color(.black.opacity(0.88)))
+        context.stroke(
+            Path(ellipseIn: disc),
+            with: .color(color),
+            lineWidth: max(1, cell * 0.05)
+        )
+
+        var ports = Path()
+        ports.move(to: CGPoint(
+            x: center.x + (previous.x - center.x) * 0.32,
+            y: center.y + (previous.y - center.y) * 0.32
+        ))
+        ports.addLine(to: center)
+        ports.addLine(to: CGPoint(
+            x: center.x + (next.x - center.x) * 0.32,
+            y: center.y + (next.y - center.y) * 0.32
+        ))
+        context.stroke(
+            ports,
+            with: .color(.white.opacity(0.92)),
+            style: StrokeStyle(lineWidth: cell * 0.09, lineCap: .round, lineJoin: .round)
+        )
     }
 
     /// The board, centred and inset so the wordmark has room to sit on top of

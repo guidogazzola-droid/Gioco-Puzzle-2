@@ -1,10 +1,10 @@
-# Informativa sulla privacy — Line Flow SW
+# Informativa sulla privacy — Fieldweave
 
 **Ultimo aggiornamento: 27 agosto 2026**
 
 ## In breve
 
-Line Flow SW non raccoglie nulla su di te. Non c'è alcun account, alcuna
+Fieldweave non raccoglie nulla su di te. Non c'è alcun account, alcuna
 registrazione, alcun sistema di analytics e alcun circuito pubblicitario. Il
 gioco in sé non effettua alcuna richiesta di rete; l'unico momento in cui viene
 scaricato un indirizzo è quando tocchi un annuncio, e in quel caso lo fa un
@@ -35,7 +35,7 @@ all'App Store. Non contengono nulla che ti identifichi.
 
 Due parti del gioco sono gestite da Apple e non da noi.
 
-**Acquisti e abbonamenti.** Tutto ciò che si acquista in Line Flow SW passa
+**Acquisti e abbonamenti.** Tutto ciò che si acquista in Fieldweave passa
 dall'App Store. Non vediamo mai il tuo nome, il tuo metodo di pagamento o il tuo
 Account Apple. Sappiamo soltanto, in forma aggregata, che un acquisto è
 avvenuto.
@@ -51,7 +51,7 @@ Informativa privacy di Apple: https://www.apple.com/legal/privacy/
 
 ## Pubblicità
 
-Gli annunci in Line Flow SW sono nostri. Uno riguarda VidiVadi Planner, il
+Gli annunci in Fieldweave sono nostri. Uno riguarda VidiVadi Planner, il
 nostro pianificatore di viaggi; l'altro propone l'abbonamento Pro di questo
 gioco. Non c'è alcun circuito pubblicitario di terze parti, alcun SDK
 pubblicitario, né alcun identificatore pubblicitario da nessuna parte nell'app.
@@ -77,7 +77,7 @@ di dati raccolti.
 
 ## Minori
 
-Line Flow SW ha classificazione 4+ ed è adatto a ogni età. Poiché non raccoglie
+Fieldweave ha classificazione 4+ ed è adatto a ogni età. Poiché non raccoglie
 informazioni personali da nessuno, non ne raccoglie nemmeno dai minori.
 
 ## I tuoi diritti

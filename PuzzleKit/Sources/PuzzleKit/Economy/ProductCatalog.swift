@@ -19,7 +19,7 @@ public enum StoreProductID: String, CaseIterable, Codable, Sendable, Identifiabl
     case stylePackOrchid = "com.sabettaworks.LineFlowSW.style.orchid"
     case stylePackNeon = "com.sabettaworks.LineFlowSW.style.neon"
 
-    /// Line Flow SW Pro, the monthly and yearly subscription.
+    /// Fieldweave Pro, the monthly and yearly subscription.
     case proMonthly = "com.sabettaworks.LineFlowSW.pro.monthly"
     case proYearly = "com.sabettaworks.LineFlowSW.pro.yearly"
 
@@ -113,7 +113,7 @@ public enum ProductCatalog {
     /// every subscriber would read as unsubscribed. `Products.storekit` carries
     /// the same value so the simulator answers the same question the same way.
     public static let subscriptionGroupID = "22339558"
-    public static let subscriptionGroupName = "Line Flow SW Pro"
+    public static let subscriptionGroupName = "Fieldweave Pro"
 
     public static let allIdentifiers: [String] = StoreProductID.allCases.map(\.rawValue)
 

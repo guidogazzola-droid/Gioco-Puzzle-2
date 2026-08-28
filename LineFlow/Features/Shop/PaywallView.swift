@@ -2,7 +2,7 @@ import SwiftUI
 import StoreKit
 import PuzzleKit
 
-/// The Line Flow SW Pro paywall.
+/// The Fieldweave Pro paywall.
 ///
 /// Built on `SubscriptionStoreView` so Apple's own control renders the price,
 /// the renewal period and the introductory offer for the shopper's storefront -
@@ -189,7 +189,7 @@ struct PaywallView: View {
                 .padding(.horizontal, 24)
 
             VStack(alignment: .leading, spacing: 12) {
-                benefit("square.grid.3x3.fill", "paywall.benefit.proTrack")
+                benefit("wave.3.right.circle.fill", "paywall.benefit.proTrack")
                 benefit("nosign", "paywall.benefit.noAds")
                 benefit("paintpalette.fill", "paywall.benefit.skins")
                 benefit("lightbulb.fill", "paywall.benefit.hints")

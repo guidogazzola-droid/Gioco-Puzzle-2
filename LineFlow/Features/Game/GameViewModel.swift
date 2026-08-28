@@ -75,6 +75,14 @@ final class GameViewModel {
         "\(engine.connectedColors)/\(engine.colorCount)"
     }
 
+    var fieldLabel: String {
+        "\(engine.alignedRotors)/\(engine.totalRotors)"
+    }
+
+    var fieldPercent: Int {
+        Int((engine.fieldStability * 100).rounded())
+    }
+
     /// The next campaign level, or `nil` for the daily board.
     var nextLevel: Int? {
         mode.isDaily ? nil : level + 1
@@ -119,6 +127,17 @@ final class GameViewModel {
             services.haptics.play(.connect)
         }
         if engine.isSolved { bookResult() }
+    }
+
+    @discardableResult
+    func rotate(at cell: Coordinate) -> Bool {
+        guard completion == nil else { return false }
+        let rotated = engine.rotateRotor(at: cell)
+        if rotated {
+            services.haptics.play(engine.isRotorAligned(at: cell) ? .connect : .snap)
+            if engine.isSolved { bookResult() }
+        }
+        return rotated
     }
 
     // MARK: - Board actions

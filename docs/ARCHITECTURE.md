@@ -63,9 +63,10 @@ entirely.
 
 ## Rendering
 
-The board is a single `Canvas` pass, not a grid of views. A 13×13 board is 169
-cells plus up to 14 trails plus 28 endpoint markers; as views that is a layout
-pass per frame under a drag, and as one draw call it is not.
+The board is a single `Canvas` pass, not a grid of views. A 13×13 field is 169
+cells plus up to 14 trails, 28 magnetic poles, five rotors and their field
+halos; as views that would be a layout pass per frame under a drag, and as one
+draw call it is not.
 
 `BoardGeometry` owns the mapping in both directions — point→cell for the
 gesture, cell→rect for the drawing. Keeping it in one value type is what stops

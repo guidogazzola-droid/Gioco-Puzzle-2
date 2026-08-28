@@ -1,8 +1,8 @@
-# Terms of Use — Line Flow SW
+# Terms of Use — Fieldweave
 
 **Last updated: 27 August 2026**
 
-Line Flow SW is licensed to you, not sold. Your use of it is governed by Apple's
+Fieldweave is licensed to you, not sold. Your use of it is governed by Apple's
 **Licensed Application End User License Agreement**, which applies to every app
 distributed through the App Store:
 
@@ -30,7 +30,7 @@ that account with "Restore purchases" in the game's settings.
 be exchanged for money, cannot be transferred between accounts, and are lost if
 you delete the app or its data. Unused gems are not refundable.
 
-## 3. Line Flow SW Pro (subscription)
+## 3. Fieldweave Pro (subscription)
 
 Pro is an auto-renewing subscription, sold monthly or yearly, with a one-week
 free trial on each plan.

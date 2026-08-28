@@ -2,9 +2,12 @@
 
 ## The mechanic
 
-A board is a grid with pairs of coloured endpoints. Drag from one endpoint to
-its twin to lay a coloured trail. A board is solved when **every pair is
-connected and every playable square is covered**.
+A field is a grid of directional magnetic circuits. Each circuit has an **N
+source**, an **S destination**, and zero or more two-port rotors embedded in its
+possible route. Drag from N to S to energise a circuit; tap a rotor to turn it
+clockwise. A closed port physically rejects the trail. The field is stable when
+**every N reaches its matching S, every rotor is aligned, and every playable
+cell is energised**.
 
 Requiring full coverage is what makes the puzzle interesting. Without it almost
 every board collapses into straight lines and the difficulty curve has nothing
@@ -15,7 +18,11 @@ Interaction rules, all implemented in `PuzzleEngine` and unit-tested:
 
 | Action | Result |
 |---|---|
-| Grab an endpoint | Restarts that colour from that end |
+| Grab an N pole | Restarts that circuit from its source |
+| Grab an S pole | Rejected — current cannot run backwards |
+| Tap a rotor | Turns its two open ports clockwise and spends one action |
+| Enter a closed rotor port | Rejected with no board mutation |
+| Enter another circuit's rotor | Rejected — rotors are circuit-specific |
 | Grab a cell mid-trail | Rewinds the colour to that cell and continues |
 | Drag back one cell | Rewinds one step |
 | Drag onto another colour's trail | Cuts that colour at the crossing point |
@@ -43,9 +50,14 @@ Levels are generated, never authored. `LevelGenerator` runs four steps:
 3. **Repair.** Any length-1 path is grafted onto a neighbour. Grafting onto an
    endpoint merges two paths; grafting mid-path splits the host. Both keep the
    covering valid, so a singleton is always repairable.
-4. **Colour count.** Paths are merged (shortest pair first, which keeps lengths
+4. **Circuit count.** Paths are merged (shortest pair first, which keeps lengths
    even) or split (longest first) until the count matches the curve, then a
    rebalance pass evens out the lengths without changing the count.
+5. **Magnetic field.** Internal path cells become rotors. Corners are preferred
+   because their four-state cycle creates the strongest routing decision; the
+   target orientation is derived from the covering, and a deterministic hash
+   chooses a different initial orientation. Density rises from one rotor on the
+   first field to five in advanced labs.
 
 Twelve candidate boards are built per level and scored on how close their
 turn density is to a target, how many two-cell colours they contain, and
@@ -107,9 +119,9 @@ On top of the table:
 
 ## Scoring
 
-Par is one drag per colour — a perfect solve draws each colour once, in one
-gesture. Thresholds are relative to par rather than absolute, which is what
-lets them hold for boards nobody has tuned by hand:
+Par is one drag per circuit **plus the exact clockwise turns needed to align
+every rotor**. Thresholds are relative to par rather than absolute, which is
+what lets them hold for fields nobody has tuned by hand:
 
 - **3 stars**: solved in par or better, with no hints.
 - **2 stars**: within par + max(2, par/2), or any solve that used a hint.
@@ -136,8 +148,9 @@ campaign cannot be farmed, and doubled for Pro subscribers.
 
 ## Accessibility
 
-- **Colour-blind assist** puts a distinct letter on every endpoint pair, so
-  colour is never the only way to match them. This matters more here than in
+- Every source and destination is permanently labelled **N** or **S**.
+  **Colour-blind assist** also puts a distinct letter on every circuit, so
+  colour is never the only way to match it. This matters more here than in
   most games: a board with 14 colours is unplayable if two of them read alike.
 - Palettes are chosen by **maximising the minimum CIE76 distance** between
   their colours, verified at build time (worst case across all eight palettes:

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Builds the Line Flow SW cosmetic palettes and verifies that every colour in a
+"""Builds the Fieldweave cosmetic palettes and verifies that every colour in a
 palette is perceptually separable from every other one.
 
-Distinguishable colours are a *gameplay* requirement in a Flow puzzle, not a
+Distinguishable colours are a *gameplay* requirement in a magnetic grid, not a
 styling preference: two flows that read as "the same blue" make a board
 unplayable. Each palette is therefore chosen by maximising the minimum CIE76
 distance between its colours, and the result is asserted before it can reach

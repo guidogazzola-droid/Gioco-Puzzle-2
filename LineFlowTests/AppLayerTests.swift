@@ -205,6 +205,11 @@ struct AppServicesTests {
     func finishingALevel() {
         let services = makeServices()
         var engine = PuzzleEngine(blueprint: LevelGenerator.generate(level: 1, track: .free))
+        for rotor in engine.blueprint.fluxRotors {
+            while !engine.isRotorAligned(at: rotor.coordinate) {
+                _ = engine.rotateRotor(at: rotor.coordinate)
+            }
+        }
         for path in engine.blueprint.solution {
             engine.beginDrag(at: path[0])
             for cell in path.dropFirst() { engine.extendDrag(to: cell) }

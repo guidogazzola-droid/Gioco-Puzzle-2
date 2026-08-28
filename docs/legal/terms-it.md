@@ -1,8 +1,8 @@
-# Condizioni d'uso — Line Flow SW
+# Condizioni d'uso — Fieldweave
 
 **Ultimo aggiornamento: 27 agosto 2026**
 
-Line Flow SW ti viene concesso in licenza, non venduto. L'utilizzo è regolato
+Fieldweave ti viene concesso in licenza, non venduto. L'utilizzo è regolato
 dal **Contratto di licenza con l'utente finale per applicazioni concesse in
 licenza** di Apple, che si applica a ogni app distribuita tramite l'App Store:
 
@@ -14,7 +14,7 @@ quel contratto. In caso di contrasto, prevale il contratto di Apple.
 ## 1. La licenza
 
 SabettaWorks ti concede una licenza personale e non trasferibile per usare
-Line Flow SW su dispositivi Apple di tua proprietà o sotto il tuo controllo,
+Fieldweave su dispositivi Apple di tua proprietà o sotto il tuo controllo,
 secondo i Termini e condizioni dell'App Store.
 
 ## 2. Acquisti
@@ -33,7 +33,7 @@ monetario, non possono essere convertite in denaro né trasferite fra account, e
 vanno perse se elimini l'app o i suoi dati. Le gemme non utilizzate non sono
 rimborsabili.
 
-## 3. Line Flow SW Pro (abbonamento)
+## 3. Fieldweave Pro (abbonamento)
 
 Pro è un abbonamento a rinnovo automatico, mensile o annuale, con una settimana
 di prova gratuita su ciascun piano.

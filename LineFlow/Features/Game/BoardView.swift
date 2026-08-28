@@ -17,6 +17,7 @@ struct BoardView: View {
     var onBegin: (Coordinate) -> Bool = { _ in false }
     var onExtend: (Coordinate) -> Bool = { _ in false }
     var onEnd: () -> Void = {}
+    var onRotate: (Coordinate) -> Bool = { _ in false }
 
     @State private var isDragging = false
     @State private var lastCell: Coordinate? = nil
@@ -35,6 +36,7 @@ struct BoardView: View {
             }
             .contentShape(Rectangle())
             .gesture(dragGesture(geometry), including: isInteractive ? .all : .none)
+            .simultaneousGesture(tapGesture(geometry), including: isInteractive ? .all : .none)
             .accessibilityElement()
             .accessibilityLabel(Text(accessibilityLabel))
         }
@@ -52,8 +54,49 @@ struct BoardView: View {
 
     private func draw(in context: inout GraphicsContext, geometry: BoardGeometry) {
         drawCells(in: &context, geometry: geometry)
+        drawMagneticFields(in: &context, geometry: geometry)
         drawTrails(in: &context, geometry: geometry)
+        drawRotors(in: &context, geometry: geometry)
         drawEndpoints(in: &context, geometry: geometry)
+    }
+
+    private func drawMagneticFields(
+        in context: inout GraphicsContext,
+        geometry: BoardGeometry
+    ) {
+        for (index, endpoints) in blueprint.endpoints.enumerated() {
+            let color = theme.color(for: index)
+            for cell in [endpoints.start, endpoints.end] {
+                let center = geometry.center(of: cell)
+                for scale in [0.42, 0.54] {
+                    let radius = geometry.cellSize * scale
+                    let rect = CGRect(
+                        x: center.x - radius, y: center.y - radius,
+                        width: radius * 2, height: radius * 2
+                    )
+                    context.stroke(
+                        Path(ellipseIn: rect),
+                        with: .color(color.opacity(scale == 0.42 ? 0.15 : 0.07)),
+                        lineWidth: max(0.8, geometry.cellSize * 0.018)
+                    )
+                }
+            }
+        }
+
+        for rotor in blueprint.fluxRotors {
+            let center = geometry.center(of: rotor.coordinate)
+            let radius = geometry.cellSize * 0.45
+            let rect = CGRect(
+                x: center.x - radius, y: center.y - radius,
+                width: radius * 2, height: radius * 2
+            )
+            context.fill(
+                Path(ellipseIn: rect),
+                with: .color(theme.color(for: rotor.color).opacity(
+                    engine.isRotorAligned(at: rotor.coordinate) ? 0.13 : 0.06
+                ))
+            )
+        }
     }
 
     private func drawCells(in context: inout GraphicsContext, geometry: BoardGeometry) {
@@ -135,7 +178,7 @@ struct BoardView: View {
     }
 
     private func drawEndpoints(in context: inout GraphicsContext, geometry: BoardGeometry) {
-        let radius = geometry.cellSize * 0.30
+        let radius = geometry.cellSize * 0.27
 
         for (index, endpoints) in blueprint.endpoints.enumerated() {
             let color = theme.color(for: index)
@@ -143,34 +186,120 @@ struct BoardView: View {
 
             for cell in [endpoints.start, endpoints.end] {
                 let center = geometry.center(of: cell)
-                let shape = BoardShapes.path(for: theme.node, center: center, radius: radius)
+                let pole: MagneticPolarity = cell == endpoints.start ? .north : .south
+                let shape = BoardShapes.path(
+                    for: theme.node, center: center, radius: radius * 1.26
+                )
+                let coreRect = CGRect(
+                    x: center.x - radius, y: center.y - radius,
+                    width: radius * 2, height: radius * 2
+                )
+                let poleColor = pole == .north
+                    ? Color(hex: "#FF5364")
+                    : Color(hex: "#42C9FF")
 
                 context.fill(
-                    BoardShapes.path(for: theme.node, center: center, radius: radius * 1.32),
+                    BoardShapes.path(for: theme.node, center: center, radius: radius * 1.48),
                     with: .color(.black.opacity(0.30))
                 )
-                context.fill(shape, with: .color(color))
+                context.fill(shape, with: .color(.black.opacity(0.72)))
+                context.stroke(
+                    shape,
+                    with: .color(color),
+                    lineWidth: max(2, geometry.cellSize * 0.07)
+                )
+                context.fill(Path(ellipseIn: coreRect), with: .color(poleColor))
 
                 if connected {
-                    // A ring marks a finished pair without changing its colour.
                     context.stroke(
-                        BoardShapes.path(for: theme.node, center: center, radius: radius * 1.34),
+                        BoardShapes.path(for: theme.node, center: center, radius: radius * 1.58),
                         with: .color(.white.opacity(0.85)),
                         lineWidth: max(1.5, geometry.cellSize * 0.05)
                     )
                 }
 
-                if colorBlindAssist {
-                    // Shape and letter, not just hue: pairs stay matchable for
-                    // players who cannot separate the colours.
-                    var text = context.resolve(
-                        Text(theme.glyph(for: index))
-                            .font(.system(size: geometry.cellSize * 0.34, weight: .heavy, design: .rounded))
-                    )
-                    text.shading = .color(.black.opacity(0.75))
-                    context.draw(text, at: center, anchor: .center)
-                }
+                let label = colorBlindAssist
+                    ? "\(pole.rawValue)·\(theme.glyph(for: index))"
+                    : pole.rawValue
+                var text = context.resolve(
+                    Text(label)
+                        .font(.system(
+                            size: geometry.cellSize * (colorBlindAssist ? 0.24 : 0.32),
+                            weight: .black,
+                            design: .rounded
+                        ))
+                )
+                text.shading = .color(.black.opacity(0.78))
+                context.draw(text, at: center, anchor: .center)
             }
+        }
+    }
+
+    private func drawRotors(in context: inout GraphicsContext, geometry: BoardGeometry) {
+        let radius = geometry.cellSize * 0.34
+
+        for rotor in blueprint.fluxRotors {
+            guard let orientation = engine.rotorOrientation(at: rotor.coordinate) else { continue }
+            let center = geometry.center(of: rotor.coordinate)
+            let color = theme.color(for: rotor.color)
+            let rect = CGRect(
+                x: center.x - radius, y: center.y - radius,
+                width: radius * 2, height: radius * 2
+            )
+            let disc = Path(ellipseIn: rect)
+
+            context.fill(disc, with: .color(.black.opacity(0.88)))
+            context.stroke(
+                disc,
+                with: .color(color.opacity(0.95)),
+                lineWidth: max(1.5, geometry.cellSize * 0.055)
+            )
+
+            for port in orientation.ports {
+                var segment = Path()
+                segment.move(to: center)
+                segment.addLine(to: portPoint(
+                    port, center: center, distance: geometry.cellSize * 0.34
+                ))
+                context.stroke(
+                    segment,
+                    with: .color(color),
+                    style: StrokeStyle(
+                        lineWidth: geometry.cellSize * 0.13,
+                        lineCap: .round,
+                        lineJoin: .round
+                    )
+                )
+            }
+
+            let hubRadius = geometry.cellSize * 0.09
+            let hub = CGRect(
+                x: center.x - hubRadius, y: center.y - hubRadius,
+                width: hubRadius * 2, height: hubRadius * 2
+            )
+            context.fill(Path(ellipseIn: hub), with: .color(.white.opacity(0.92)))
+
+            if engine.isRotorAligned(at: rotor.coordinate) {
+                context.stroke(
+                    Path(ellipseIn: rect.insetBy(dx: -geometry.cellSize * 0.055,
+                                                 dy: -geometry.cellSize * 0.055)),
+                    with: .color(.white.opacity(0.72)),
+                    lineWidth: max(1, geometry.cellSize * 0.025)
+                )
+            }
+        }
+    }
+
+    private func portPoint(
+        _ direction: FieldDirection,
+        center: CGPoint,
+        distance: CGFloat
+    ) -> CGPoint {
+        switch direction {
+        case .north: CGPoint(x: center.x, y: center.y - distance)
+        case .east: CGPoint(x: center.x + distance, y: center.y)
+        case .south: CGPoint(x: center.x, y: center.y + distance)
+        case .west: CGPoint(x: center.x - distance, y: center.y)
         }
     }
 
@@ -203,6 +332,14 @@ struct BoardView: View {
                 if isDragging { onEnd() }
                 isDragging = false
                 lastCell = nil
+            }
+    }
+
+    private func tapGesture(_ geometry: BoardGeometry) -> some Gesture {
+        SpatialTapGesture()
+            .onEnded { value in
+                guard let cell = geometry.coordinate(at: value.location) else { return }
+                _ = onRotate(cell)
             }
     }
 }

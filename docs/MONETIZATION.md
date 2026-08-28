@@ -22,7 +22,7 @@ silently break a purchase. `tools/check_products.py` checks them against
 | `com.sabettaworks.LineFlowSW.pro.monthly` | Auto-renewable | €4,99/month | Everything, 1-week free trial |
 | `com.sabettaworks.LineFlowSW.pro.yearly` | Auto-renewable | €39,99/year | Everything, 1-week free trial |
 
-Subscription group `22339558` ("Line Flow SW Pro"), both plans family-shareable.
+Subscription group `22339558` ("Fieldweave Pro"), both plans family-shareable.
 Prices are a starting point; App Store pricing is per storefront and the app
 never hard-codes a price — every price shown comes from StoreKit.
 
@@ -79,7 +79,7 @@ So the slot is inventory we own, and it carries two creatives that alternate:
 | Creative | Form | Destination | What it is for |
 |---|---|---|---|
 | VidiVadi Planner | 15 s video spot | www.vidivadi.com, in a Safari sheet over the game | Cross-promotion to another Sabetta Works product |
-| Line Flow SW Pro | Card | The paywall | Selling the thing that removes the slot |
+| Fieldweave Pro | Card | The paywall | Selling the thing that removes the slot |
 
 The second one is the point. A player who has just been interrupted is the most
 receptive audience the subscription will ever have, and no third-party

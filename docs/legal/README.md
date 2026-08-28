@@ -1,18 +1,18 @@
 # Published legal pages
 
 The source of the three pages hosted at
-`https://sabettaworks.com/games/lineflow/`. They live in the repository
+`https://sabettaworks.com/games/fieldweave/`. They live in the repository
 rather than only on the website for one reason: **the privacy policy is a claim
 about what the code does**, and the two have to move together.
 
 | File | Published at |
 |---|---|
-| `privacy-en.md` | `/games/lineflow/privacy` |
-| `privacy-it.md` | `/games/lineflow/privacy-it` |
-| `terms-en.md` | `/games/lineflow/terms` |
-| `terms-it.md` | `/games/lineflow/terms-it` |
-| `support-en.md` | `/games/lineflow/support` |
-| `support-it.md` | `/games/lineflow/support-it` |
+| `privacy-en.md` | `/games/fieldweave/privacy` |
+| `privacy-it.md` | `/games/fieldweave/privacy-it` |
+| `terms-en.md` | `/games/fieldweave/terms` |
+| `terms-it.md` | `/games/fieldweave/terms-it` |
+| `support-en.md` | `/games/fieldweave/support` |
+| `support-it.md` | `/games/fieldweave/support-it` |
 
 The same URLs are in `LineFlow/Services/LegalLinks.swift` and have to be entered
 in App Store Connect. All three must resolve before submission: a broken privacy

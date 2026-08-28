@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Line Flow SW, as shipped in this repository, keeps everything on device:
+	<!-- Fieldweave, as shipped in this repository, keeps everything on device:
 	     the save file is local JSON, levels are generated rather than fetched,
 	     and no analytics or advertising SDK is linked. That is what the empty
 	     arrays below declare.

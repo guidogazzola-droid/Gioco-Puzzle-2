@@ -1,12 +1,12 @@
-/* Line Flow SW - English (development language)
+/* Fieldweave - English (development language)
 
    Format specifiers use positional arguments (%1$ld) so translators can
    reorder them freely, and %ld rather than %d because the values are Swift
    Ints. tools/check_localization.py verifies this file against the source. */
 
 /* MARK: - Common */
-"app.name" = "Line Flow SW";
-"splash.tagline" = "Every colour finds its way.";
+"app.name" = "Fieldweave";
+"splash.tagline" = "Weave the field. Align the flux.";
 "splash.skipHint" = "Double tap to skip.";
 "common.back" = "Back";
 "common.close" = "Close";
@@ -18,29 +18,31 @@
 
 /* MARK: - Accessibility */
 "a11y.stars" = "%ld out of 3 stars";
-"a11y.board" = "Puzzle board, %1$ld by %2$ld. %3$ld of %4$ld colours connected.";
+"a11y.board" = "Magnetic grid, %1$ld by %2$ld. %3$ld of %4$ld circuits energised.";
+"a11y.fieldStability" = "Magnetic field %ld percent stable";
 "a11y.level" = "Level %1$ld, %2$ld stars";
 "a11y.levelLocked" = "Level %ld, locked";
 
 /* MARK: - Home */
-"home.starTotal" = "%ld stars collected";
+"home.labTagline" = "MAGNETIC GRID LAB";
+"home.starTotal" = "%ld field stars collected";
 "home.settings" = "Settings";
-"home.continue.title" = "Keep going";
+"home.continue.title" = "Resume experiment";
 "home.continue.subtitle" = "Level %1$ld — %2$@";
 "home.continue.action" = "Play";
-"home.levels" = "All levels";
-"home.daily.title" = "Daily puzzle";
+"home.levels" = "Lab atlas";
+"home.daily.title" = "Daily field";
 "home.daily.streak" = "%ld day streak";
 "home.daily.play" = "Play";
 "home.daily.replay" = "Play again";
-"home.pro.title" = "Pro track";
-"home.pro.subtitle" = "Bigger boards, more colours and wall cells. Included with Line Flow SW Pro.";
-"home.pro.subtitleActive" = "Bigger boards, more colours and wall cells. Your subscription is active.";
+"home.pro.title" = "Advanced lab";
+"home.pro.subtitle" = "Bigger labs, denser rotor fields and magnetic barriers. Included with Fieldweave Pro.";
+"home.pro.subtitleActive" = "Bigger labs, denser rotor fields and magnetic barriers. Your subscription is active.";
 "home.pro.play" = "Play the Pro track";
-"home.pro.unlock" = "See Line Flow SW Pro";
-"home.shop" = "Styles";
+"home.pro.unlock" = "See Fieldweave Pro";
+"home.shop" = "Field styles";
 "home.removeAds" = "Remove ads";
-"home.leaderboards" = "Leaderboards";
+"home.leaderboards" = "Lab rankings";
 
 /* MARK: - Game Center */
 "gamecenter.signIn" = "Sign in to Game Center";
@@ -73,19 +75,19 @@
 "chapter.nebula" = "Nebula";
 
 /* MARK: - Game */
-"game.title.free" = "Level %ld";
-"game.title.pro" = "Pro level %ld";
-"game.daily.title" = "Daily puzzle";
-"game.subtitle" = "%1$@ connected · %2$ld / %3$ld moves";
+"game.title.free" = "Experiment %ld";
+"game.title.pro" = "Advanced experiment %ld";
+"game.daily.title" = "Daily field";
+"game.subtitle" = "%1$@ circuits · %2$@ rotors · %3$ld / %4$ld actions";
 "game.action.reset" = "Restart";
 "game.action.hint" = "Hint";
 "game.action.goPro" = "Go Pro";
 
 /* MARK: - Level complete */
-"complete.perfect" = "Perfect!";
-"complete.good" = "Nicely done";
-"complete.solved" = "Solved";
-"complete.moves" = "Moves";
+"complete.perfect" = "Field locked!";
+"complete.good" = "Field stabilised";
+"complete.solved" = "Experiment complete";
+"complete.moves" = "Actions";
 "complete.par" = "par %ld";
 "complete.time" = "Time";
 "complete.gems" = "Gems";
@@ -97,7 +99,7 @@
 
 /* MARK: - Hints */
 "hint.title" = "Out of hints";
-"hint.body" = "A hint solves one colour for you. It caps the level at two stars.";
+"hint.body" = "A hint aligns the rotors and energises one circuit. It caps the level at two stars.";
 "hint.watchAd" = "Watch a video for a hint";
 "hint.buyWithGems" = "Buy a hint — %ld gems";
 "hint.goPro" = "Unlimited hints with Pro";
@@ -117,10 +119,10 @@
 "shop.legal" = "Payment is charged to your Apple Account at confirmation. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel in your Apple Account settings.";
 
 /* MARK: - Cosmetics */
-"cosmetic.category.palette" = "Colours";
-"cosmetic.category.trail" = "Trails";
+"cosmetic.category.palette" = "Field colours";
+"cosmetic.category.trail" = "Flux trails";
 "cosmetic.category.background" = "Backdrops";
-"cosmetic.category.nodeShape" = "Nodes";
+"cosmetic.category.nodeShape" = "Pole shells";
 "cosmetic.equipped" = "Equipped";
 "cosmetic.tapToEquip" = "Tap to equip";
 "cosmetic.proOnly" = "Pro only";
@@ -160,9 +162,9 @@
 "product.style.orchid.description" = "The Orchid colour set, yours permanently.";
 "product.style.neon.name" = "Neon style pack";
 "product.style.neon.description" = "Comet trail and Starfield backdrop, yours permanently.";
-"product.pro.monthly.name" = "Line Flow SW Pro";
-"product.pro.monthly.description" = "Monthly subscription. Pro levels, no ads, every style.";
-"product.pro.yearly.name" = "Line Flow SW Pro (yearly)";
+"product.pro.monthly.name" = "Fieldweave Pro";
+"product.pro.monthly.description" = "Monthly subscription. Advanced magnetic labs, no ads, every style.";
+"product.pro.yearly.name" = "Fieldweave Pro (yearly)";
 "product.pro.yearly.description" = "Twelve months of Pro at a lower monthly rate.";
 "period.day" = "day";
 "period.week" = "week";
@@ -180,15 +182,15 @@
 "store.banner.restoreFailed" = "Nothing to restore on this Apple Account.";
 
 /* MARK: - Paywall */
-"paywall.title" = "Line Flow SW Pro";
+"paywall.title" = "Fieldweave Pro";
 "paywall.headline.general" = "Everything unlocked, and no ads.";
-"paywall.headline.proTrack" = "The Pro track is a whole second campaign: bigger boards, more colours, wall cells.";
+"paywall.headline.proTrack" = "The Pro track is a second magnetic lab: bigger grids, denser rotor fields and barriers.";
 "paywall.headline.removeAds" = "Pro removes every ad — and unlocks the rest of the game too.";
 "paywall.headline.hints" = "Pro gives you unlimited hints.";
 "paywall.headline.cosmetic" = "This style is part of Pro, along with every other one.";
-"paywall.benefit.proTrack" = "The Pro level track — harder boards, walls, endless";
+"paywall.benefit.proTrack" = "Advanced field labs — more rotors, barriers, endless";
 "paywall.benefit.noAds" = "No ads of any kind";
-"paywall.benefit.skins" = "Every colour set, trail, backdrop and node";
+"paywall.benefit.skins" = "Every field colour, flux trail, backdrop and pole shell";
 "paywall.benefit.hints" = "Unlimited hints";
 "paywall.benefit.gems" = "Double gems from every level";
 "paywall.orJustRemoveAds" = "Only want the ads gone?";
@@ -203,7 +205,7 @@
 "settings.section.accessibility" = "Accessibility";
 "settings.section.purchases" = "Purchases";
 "settings.section.about" = "About";
-"settings.pro.status" = "Line Flow SW Pro";
+"settings.pro.status" = "Fieldweave Pro";
 "settings.pro.active" = "Active";
 "settings.pro.trial" = "Free trial";
 "settings.pro.grace" = "Payment issue";
@@ -221,7 +223,7 @@
 "settings.haptics" = "Haptics";
 "settings.colorBlind" = "Colour-blind assist";
 "settings.reduceMotion" = "Reduce motion";
-"settings.accessibilityFooter" = "Colour-blind assist puts a distinct letter on each pair of endpoints, so colours are never the only way to tell them apart.";
+"settings.accessibilityFooter" = "Every pole is marked N or S. Colour-blind assist also adds a distinct circuit letter, so hue is never the only clue.";
 "settings.restoreFooter" = "Restores anything bought with this Apple Account, including on a new device.";
 "settings.support" = "Support";
 "settings.version" = "Version";
@@ -232,12 +234,12 @@
 "settings.reset.confirm" = "Reset";
 
 /* MARK: - Onboarding */
-"onboarding.1.title" = "Connect the pairs";
-"onboarding.1.body" = "Drag from one dot to its twin. Same colour, one unbroken line.";
-"onboarding.2.title" = "Fill every square";
-"onboarding.2.body" = "A board is solved when all pairs are joined and no square is left empty.";
-"onboarding.3.title" = "It never runs out";
-"onboarding.3.body" = "Every level is built fresh on your device, so there is always another one.";
+"onboarding.1.title" = "Energise N to S";
+"onboarding.1.body" = "Start at an N pole and weave a route to the matching S pole. Every circuit has a direction.";
+"onboarding.2.title" = "Turn the rotors";
+"onboarding.2.body" = "Tap a field rotor to rotate its two ports. A circuit only passes through an open port.";
+"onboarding.3.title" = "Stabilise the field";
+"onboarding.3.body" = "Energise every circuit, align every rotor and leave no grid cell empty.";
 "onboarding.next" = "Next";
 "onboarding.start" = "Start playing";
 "onboarding.skip" = "Skip";
@@ -251,6 +253,6 @@
 "ad.vidivadi.title" = "VidiVadi Planner";
 "ad.vidivadi.body" = "Plan the whole trip in one place: stops, hotels, ferries and restaurants.";
 "ad.vidivadi.cta" = "See VidiVadi";
-"ad.pro.title" = "Line Flow SW Pro";
-"ad.pro.body" = "No more interruptions like this one - plus the Pro track, every style and unlimited hints.";
+"ad.pro.title" = "Fieldweave Pro";
+"ad.pro.body" = "No interruptions — plus advanced magnetic labs, every field style and unlimited hints.";
 "ad.pro.cta" = "Try a week free";

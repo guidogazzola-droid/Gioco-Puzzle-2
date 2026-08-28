@@ -75,6 +75,9 @@ struct HomeView: View {
                 Text("app.name")
                     .font(.largeTitle.weight(.heavy))
                     .foregroundStyle(Ink.primary)
+                Label("home.labTagline", systemImage: "wave.3.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(Ink.accent)
                 Text(String(
                     format: NSLocalizedString("home.starTotal", comment: ""),
                     services.profile.totalStars

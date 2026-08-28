@@ -114,7 +114,7 @@ struct GameView: View {
     private var subtitleText: String {
         String(
             format: NSLocalizedString("game.subtitle", comment: ""),
-            model.progressLabel, model.moves, model.par
+            model.progressLabel, model.fieldLabel, model.moves, model.par
         )
     }
 
@@ -128,9 +128,24 @@ struct GameView: View {
             isInteractive: model.completion == nil,
             onBegin: { model.begin(at: $0) },
             onExtend: { model.extend(to: $0) },
-            onEnd: { model.endDrag() }
+            onEnd: { model.endDrag() },
+            onRotate: { model.rotate(at: $0) }
         )
         .padding(.vertical, 4)
+        .overlay(alignment: .topTrailing) {
+            Label("\(model.fieldPercent)%", systemImage: "wave.3.right.circle.fill")
+                .font(.caption2.weight(.bold))
+                .foregroundStyle(model.fieldPercent == 100 ? Ink.gold : Ink.secondary)
+                .padding(.horizontal, 9)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(Ink.cardRaised.opacity(0.94)))
+                .overlay(Capsule().strokeBorder(Ink.stroke, lineWidth: 1))
+                .accessibilityLabel(Text(String(
+                    format: NSLocalizedString("a11y.fieldStability", comment: ""),
+                    model.fieldPercent
+                )))
+                .padding(8)
+        }
     }
 
     // MARK: - Controls

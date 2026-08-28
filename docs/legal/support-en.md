@@ -1,4 +1,4 @@
-# Line Flow SW — Support
+# Fieldweave — Support
 
 ## Get in touch
 
@@ -19,7 +19,7 @@ subscriptions restore on any device with *Restore purchases*, but levels, stars
 and gems do not travel with them.
 
 **How do I cancel Pro?**
-Settings › your name › Subscriptions › Line Flow SW Pro › Cancel Subscription.
+Settings › your name › Subscriptions › Fieldweave Pro › Cancel Subscription.
 Cancelling stops the next renewal — Pro stays active until the end of the period
 you have already paid for.
 
@@ -45,5 +45,5 @@ own.
 
 ## Privacy and terms
 
-- Privacy Policy: https://sabettaworks.com/games/lineflow/privacy
-- Terms of Use: https://sabettaworks.com/games/lineflow/terms
+- Privacy Policy: https://sabettaworks.com/games/fieldweave/privacy
+- Terms of Use: https://sabettaworks.com/games/fieldweave/terms

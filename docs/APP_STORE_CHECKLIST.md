@@ -7,20 +7,33 @@ each step unblocks the next.
 
 - [ ] Enrol in the Apple Developer Program (€99/year; as an individual or a
       company — a company enrolment needs a D-U-N-S number and takes longer).
-- [ ] Pick a real bundle identifier and replace `com.sabettaworks.LineFlowSW` in:
-      `LineFlow.xcodeproj` (both `PRODUCT_BUNDLE_IDENTIFIER` settings), the
-      test target (`…​.tests`), and every product id in
-      `PuzzleKit/Sources/PuzzleKit/Economy/ProductCatalog.swift` and
-      `Configuration/Products.storekit`.
-      Then run `python3 tools/check_products.py` — it will tell you if you
-      missed one.
+- [x] Keep the existing App Store bundle identifier
+      `com.sabettaworks.LineFlowSW`. The customer-facing product is now
+      Fieldweave, but changing the identifier would create a different app and
+      disconnect build 2, Game Center and the existing product records.
 - [ ] Set `DEVELOPMENT_TEAM` in the project (Signing & Capabilities → Team).
 - [ ] Register the App ID with **In-App Purchase** *and* **Game Center**
       enabled. Game Center has to be on the App ID before you build: the app
       ships `LineFlow/LineFlow.entitlements` declaring it, and a provisioning
       profile that does not match the entitlement fails signing with a message
       that does not mention Game Center at all.
-- [ ] Check the name "Line Flow SW" is free on the App Store, and reserve it.
+- [ ] Reserve "Fieldweave: Magnetic Grid" in App Store Connect. A public App
+      Store search found no exact Fieldweave game on 28 August 2026; reservation
+      in the existing app record is still the authoritative availability check.
+
+## 1b. Guideline 4.3(a) resubmission evidence
+
+- [x] Replace interchangeable endpoints with directional N/S poles.
+- [x] Add deterministic two-port rotors that the player rotates and that
+      physically gate trail traversal.
+- [x] Count rotor turns in par and expose field stability in the HUD.
+- [x] Replace the icon, splash, onboarding, board markers and product copy with
+      the magnetic-lab identity.
+- [ ] Capture a short review video showing: S rejects a reverse start; a closed
+      rotor rejects a trail; one tap opens its port; the completed field reaches
+      100% stability.
+- [ ] In Review Notes, describe those behaviours and state that this is a
+      substantive gameplay redesign following the previous 4.3(a) rejection.
 
 ## 2a. In-app purchases
 
@@ -54,7 +67,7 @@ subscription on its own — the **group comes first**, because the group is what
 lets a player move between plans without paying twice.
 
 - [ ] Create the subscription group. Give it a localised **display name**
-      ("Line Flow SW Pro") — this is what the player sees in their Apple Account
+      ("Fieldweave Pro") — this is what the player sees in their Apple Account
       subscription settings, not the plan name.
 - [ ] Inside the group, create `…​.pro.monthly` — duration **1 month**.
 - [ ] Inside the group, create `…​.pro.yearly` — duration **1 year**.
@@ -192,7 +205,7 @@ Neither field blocks submission.
       `LegalLinks.swift` points at them and serves the Italian page to a player
       whose app is in Italian. `check_project.py` fails the build if a
       placeholder domain ever comes back.
-- [x] All six pages are published under `https://sabettaworks.com/games/lineflow/`
+- [x] All six pages are published under `https://sabettaworks.com/games/fieldweave/`
       and every one answers 200 — checked with a request, not assumed. The `www`
       host answers 301 to the bare one, which is why `LegalLinks.swift` uses the
       bare form: a redirect is a round trip on every tap and a dependency on a

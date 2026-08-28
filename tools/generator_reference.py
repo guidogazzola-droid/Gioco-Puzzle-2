@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Reference implementation + validation harness for the Line Flow SW procedural
+Reference implementation + validation harness for the Fieldweave procedural
 level generator.
 
 This file is the executable specification that `PuzzleKit/Sources/PuzzleKit/

@@ -2,7 +2,7 @@ import SwiftUI
 
 /// The advertisements the game shows, all of them ours.
 ///
-/// Line Flow SW carries no third-party ad network, and that is a decision
+/// Fieldweave carries no third-party ad network, and that is a decision
 /// rather than a gap. A network would bring an ATT prompt, a GDPR consent
 /// flow required across the EU even for non-personalised ads, tracking domains
 /// in the privacy manifest, and an App Store privacy label that stops saying

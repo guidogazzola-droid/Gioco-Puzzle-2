@@ -1,4 +1,4 @@
-# Line Flow SW — Assistenza
+# Fieldweave — Assistenza
 
 ## Contatti
 
@@ -20,7 +20,7 @@ Acquisti e abbonamenti si ripristinano su qualsiasi dispositivo con *Ripristina
 acquisti*, ma livelli, stelle e gemme non li seguono.
 
 **Come disdico Pro?**
-Impostazioni › il tuo nome › Abbonamenti › Line Flow SW Pro › Annulla
+Impostazioni › il tuo nome › Abbonamenti › Fieldweave Pro › Annulla
 abbonamento. L'annullamento ferma il rinnovo successivo: Pro resta attivo fino
 alla fine del periodo già pagato.
 
@@ -46,5 +46,5 @@ schermata di apertura. L'app segue da sola anche l'impostazione di sistema
 
 ## Privacy e condizioni
 
-- Informativa privacy: https://sabettaworks.com/games/lineflow/privacy-it
-- Condizioni d'uso: https://sabettaworks.com/games/lineflow/terms-it
+- Informativa privacy: https://sabettaworks.com/games/fieldweave/privacy-it
+- Condizioni d'uso: https://sabettaworks.com/games/fieldweave/terms-it

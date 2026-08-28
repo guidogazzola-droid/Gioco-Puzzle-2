@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Draws the Line Flow SW app icon from the game's own visual language.
+"""Draws the Fieldweave app icon from the game's own visual language.
 
-The icon is three flows finishing a knot on a dark board: the same round caps,
-the same endpoint nodes and the same aurora palette the game draws with, so the
-Home Screen and the first frame of the game look like the same product.
+The icon is a magnetic field woven through a central rotor. Red N cores, blue S
+cores, coloured circuit shells and the two-port rotor are the same pieces the
+player manipulates in the game, so this cannot read as a generic line puzzle.
 
 Written with zlib and nothing else - the icon is a build input, not something
 that should need an image toolchain to reproduce. iOS icons must be fully
@@ -24,8 +24,8 @@ BACKGROUND_TOP = (0x1A, 0x22, 0x33)
 BACKGROUND_BOTTOM = (0x0A, 0x0E, 0x18)
 BOARD = (0x11, 0x17, 0x22)
 
-# Three flows on a 5x5 board, drawn in aurora colours.
-FLOWS = [
+# Three circuits on a 5x5 field, drawn in aurora colours.
+CIRCUITS = [
     ((0xF3, 0x7F, 0x20), [(0, 4), (0, 3), (0, 2), (1, 2), (2, 2), (2, 3), (2, 4)]),
     ((0x20, 0xF3, 0xB4), [(4, 0), (3, 0), (2, 0), (2, 1), (1, 1), (0, 1), (0, 0)]),
     ((0x20, 0x7F, 0xF3), [(4, 4), (4, 3), (3, 3), (3, 2), (4, 2), (4, 1), (3, 1)]),
@@ -36,6 +36,8 @@ MARGIN = SIZE * 0.14
 CELL = (SIZE - MARGIN * 2) / GRID
 STROKE = CELL * 0.40
 NODE = CELL * 0.30
+NORTH = (0xFF, 0x53, 0x64)
+SOUTH = (0x42, 0xC9, 0xFF)
 
 
 def blend(base, color, alpha):
@@ -136,16 +138,37 @@ def main():
     board = MARGIN - CELL * 0.22
     canvas.rounded_rect(board, board, SIZE - board, SIZE - board, CELL * 0.42, BOARD, 0.85)
 
-    for color, path in FLOWS:
+    for color, path in CIRCUITS:
         points = [center(cell) for cell in path]
-        # Halo first, then the trail, matching the in-game glow trail style.
+        # Field halo first, then the energised route.
         for (ax, ay), (bx, by) in zip(points, points[1:]):
             canvas.capsule(ax, ay, bx, by, STROKE * 0.5 + CELL * 0.16, color, 0.22)
         for (ax, ay), (bx, by) in zip(points, points[1:]):
             canvas.capsule(ax, ay, bx, by, STROKE * 0.5, color)
-        for cx, cy in (points[0], points[-1]):
-            canvas.disc(cx, cy, NODE * 1.34, (0, 0, 0), 0.28)
-            canvas.disc(cx, cy, NODE, color)
+        # Circuit-coloured shells around universal red-N and blue-S cores.
+        for (cx, cy), pole in ((points[0], NORTH), (points[-1], SOUTH)):
+            canvas.disc(cx, cy, NODE * 1.72, color, 0.13)
+            canvas.disc(cx, cy, NODE * 1.36, (0, 0, 0), 0.82)
+            canvas.disc(cx, cy, NODE * 1.14, color)
+            canvas.disc(cx, cy, NODE * 0.78, pole)
+
+    # Signature two-port rotor at the centre: west-to-south elbow.
+    rotor_x, rotor_y = center((2, 2))
+    rotor_color = CIRCUITS[0][0]
+    canvas.disc(rotor_x, rotor_y, CELL * 0.55, rotor_color, 0.16)
+    canvas.disc(rotor_x, rotor_y, CELL * 0.44, rotor_color)
+    canvas.disc(rotor_x, rotor_y, CELL * 0.36, (0x08, 0x0C, 0x14))
+    canvas.capsule(
+        rotor_x - CELL * 0.35, rotor_y,
+        rotor_x, rotor_y,
+        CELL * 0.075, rotor_color
+    )
+    canvas.capsule(
+        rotor_x, rotor_y,
+        rotor_x, rotor_y + CELL * 0.35,
+        CELL * 0.075, rotor_color
+    )
+    canvas.disc(rotor_x, rotor_y, CELL * 0.10, (0xF5, 0xF8, 0xFF))
 
     written = canvas.write_png(OUTPUT)
     print(f"wrote {OUTPUT} ({written / 1024:.0f} KB, {SIZE}x{SIZE}, RGB no alpha)")

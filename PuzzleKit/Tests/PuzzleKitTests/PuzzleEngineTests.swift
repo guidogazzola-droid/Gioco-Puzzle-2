@@ -6,6 +6,13 @@ struct PuzzleEngineTests {
     /// Draws a colour end to end, the way a player's finger would.
     @discardableResult
     private func draw(_ engine: inout PuzzleEngine, _ path: [Coordinate]) -> Bool {
+        if let color = engine.blueprint.endpointColor(at: path[0]) {
+            for rotor in engine.blueprint.fluxRotors where rotor.color == color {
+                while !engine.isRotorAligned(at: rotor.coordinate) {
+                    _ = engine.rotateRotor(at: rotor.coordinate)
+                }
+            }
+        }
         guard engine.beginDrag(at: path[0]) else { return false }
         for cell in path.dropFirst() {
             guard engine.extendDrag(to: cell) else {
@@ -112,9 +119,13 @@ struct PuzzleEngineTests {
         draw(&engine, path)
         #expect(engine.isConnected(color: 0))
 
-        // Grabbing the finished trail's far end restarts it, which is the
-        // player's way of undoing a colour.
-        let grabbed = engine.beginDrag(at: path[path.count - 1])
+        // S is a destination and cannot energise a circuit in reverse.
+        let rejected = engine.beginDrag(at: path[path.count - 1])
+        #expect(!rejected)
+        #expect(engine.isConnected(color: 0))
+
+        // Restarting from N remains the player's way to redraw the circuit.
+        let grabbed = engine.beginDrag(at: path[0])
         #expect(grabbed)
         engine.endDrag()
         #expect(!engine.isConnected(color: 0))
@@ -213,7 +224,11 @@ struct PuzzleEngineTests {
         #expect(!grabbed)
 
         if let approach = wall.neighbours(width: blueprint.width, height: blueprint.height)
-            .compactMap({ cell in blueprint.endpointColor(at: cell).map { (cell, $0) } })
+            .compactMap({ cell in
+                guard blueprint.polarity(at: cell) == .north,
+                      let color = blueprint.endpointColor(at: cell) else { return nil }
+                return (cell, color)
+            })
             .first {
             let grabbed2 = engine.beginDrag(at: approach.0)
             #expect(grabbed2)
@@ -237,5 +252,65 @@ struct PuzzleEngineTests {
         let moves = engine.moves
         engine.clear(color: 0)
         #expect(engine.moves == moves)
+    }
+
+    @Test("a circuit can only start at its N pole")
+    func polarityGivesCircuitsDirection() {
+        let blueprint = LevelGenerator.generate(level: 1, track: .free)
+        var engine = PuzzleEngine(blueprint: blueprint)
+        let endpoints = blueprint.endpoints[0]
+
+        #expect(blueprint.polarity(at: endpoints.start) == .north)
+        #expect(blueprint.polarity(at: endpoints.end) == .south)
+        #expect(!engine.beginDrag(at: endpoints.end))
+        #expect(engine.beginDrag(at: endpoints.start))
+    }
+
+    @Test("an energised rotor locks in place")
+    func occupiedRotorCannotRotate() {
+        let blueprint = LevelGenerator.generate(level: 1, track: .free)
+        var engine = PuzzleEngine(blueprint: blueprint)
+        guard let rotor = blueprint.fluxRotors.first else {
+            Issue.record("expected the introductory board to contain a rotor")
+            return
+        }
+
+        #expect(draw(&engine, blueprint.solution[rotor.color]))
+        let orientation = engine.rotorOrientation(at: rotor.coordinate)
+        let moves = engine.moves
+
+        #expect(!engine.rotateRotor(at: rotor.coordinate))
+        #expect(engine.rotorOrientation(at: rotor.coordinate) == orientation)
+        #expect(engine.moves == moves)
+    }
+
+    @Test("misaligned rotors physically block the intended circuit")
+    func rotorsGateTraversal() {
+        let blueprint = LevelGenerator.generate(level: 25, track: .free)
+        #expect(!blueprint.fluxRotors.isEmpty)
+        var engine = PuzzleEngine(blueprint: blueprint)
+        let rotor = blueprint.fluxRotors[0]
+        let path = blueprint.solution[rotor.color]
+
+        #expect(engine.beginDrag(at: path[0]))
+        var reachedSouth = true
+        for cell in path.dropFirst() {
+            if !engine.extendDrag(to: cell) {
+                reachedSouth = false
+                break
+            }
+        }
+        #expect(!reachedSouth)
+    }
+
+    @Test("rotating every field element to target enables a perfect solve")
+    func alignedFieldSolvesAtPar() {
+        var engine = PuzzleEngine(blueprint: LevelGenerator.generate(level: 48, track: .pro))
+        for path in engine.blueprint.solution { #expect(draw(&engine, path)) }
+
+        #expect(engine.alignedRotors == engine.totalRotors)
+        #expect(engine.fieldStability == 1)
+        #expect(engine.isSolved)
+        #expect(engine.moves == engine.parMoves)
     }
 }

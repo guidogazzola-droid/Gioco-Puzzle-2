@@ -29,6 +29,7 @@ struct LevelGeneratorTests {
             #expect(first.solution == second.solution)
             #expect(first.blocked == second.blocked)
             #expect(first.seed == second.seed)
+            #expect(first.fluxRotors == second.fluxRotors)
         }
     }
 
@@ -102,6 +103,23 @@ struct LevelGeneratorTests {
                 #expect(blueprint.isPlayable(endpoints.end))
                 #expect(seen.insert(endpoints.start).inserted)
                 #expect(seen.insert(endpoints.end).inserted)
+            }
+        }
+    }
+
+    @Test("magnetic rotors are internal, owned and initially misaligned")
+    func fluxRotorsAreWellFormed() {
+        for level in Self.sweep {
+            let blueprint = LevelGenerator.generate(level: level, track: .free)
+            #expect(!blueprint.fluxRotors.isEmpty)
+            #expect(blueprint.fluxRotors.count <= 5)
+
+            var seen: Set<Coordinate> = []
+            for rotor in blueprint.fluxRotors {
+                #expect(seen.insert(rotor.coordinate).inserted)
+                #expect(rotor.initial != rotor.target)
+                #expect(blueprint.solution[rotor.color].dropFirst().dropLast().contains(rotor.coordinate))
+                #expect(rotor.initial.cycleLength == rotor.target.cycleLength)
             }
         }
     }

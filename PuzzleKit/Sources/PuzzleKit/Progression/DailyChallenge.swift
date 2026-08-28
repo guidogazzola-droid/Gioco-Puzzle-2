@@ -12,7 +12,7 @@ public enum DailyChallenge {
     static let band: ClosedRange<Int> = 35...70
 
     public static func salt(forDay day: String) -> UInt64 {
-        SeededRandom.hash("lineflow.daily.\(day)")
+        SeededRandom.hash("fieldweave.daily.\(day)")
     }
 
     public static func level(forDay day: String) -> Int {

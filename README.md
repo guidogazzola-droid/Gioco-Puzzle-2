@@ -1,15 +1,16 @@
-# Line Flow SW
+# Fieldweave
 
-A hybrid-casual flow puzzle for iOS, free to play, monetised with ads, one-off
+A magnetic-routing puzzle for iOS, free to play, monetised with ads, one-off
 purchases and a monthly subscription.
 
-Connect every pair of coloured dots with an unbroken line and leave no square
-empty. One finger, no timer pressure, thirty seconds a board — and it never
-runs out, because there are no level files: **every board is generated on the
-device from its level number**.
+Energise coloured circuits from N to S, rotate two-port field elements until
+the flux can pass, and leave no square outside the magnetic weave. Rotors are
+physical constraints rather than decoration: a closed port rejects the trail,
+and both rotor turns and circuit drags count against par. There are no level
+files: **every field is generated on the device from its level number**.
 
 <p align="center">
-  <img src="LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Line Flow SW app icon">
+  <img src="LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Fieldweave app icon">
 </p>
 
 ---
@@ -17,11 +18,12 @@ device from its level number**.
 ## Why generated levels
 
 A puzzle game usually ships hand-authored levels, and the content budget then
-caps the campaign. Line Flow SW builds each board by *construction* instead: the
-playable cells are partitioned into vertex-disjoint simple paths, and the player
-is handed only the two ends of each path. Because the partition already covers
-the board, a full-coverage solution provably exists — the generator just built
-one. No solver runs at runtime, and an unsolvable level cannot ship.
+caps the campaign. Fieldweave builds each board by *construction* instead: the
+playable cells are partitioned into vertex-disjoint simple circuits. The player
+receives their N/S poles plus a deterministic set of initially misaligned flux
+rotors derived from the hidden covering. Because the partition already covers
+the board and every rotor has a valid target orientation, a full-field solution
+provably exists — the generator just built one. No solver runs at runtime.
 
 Generation is seeded and deterministic, so level 137 is the same board on every
 device and in every future build, without a single byte of level data.
@@ -32,12 +34,12 @@ tracks, zero invalid boards, worst colour-length imbalance 1.9x**.
 
 ## Business model
 
-| | Free | Remove ads (one-off) | Line Flow SW Pro (subscription) |
+| | Free | Remove ads (one-off) | Fieldweave Pro (subscription) |
 |---|---|---|---|
 | Endless free campaign | ✅ | ✅ | ✅ |
 | Daily puzzle | ✅ | ✅ | ✅ |
 | Ads | interstitial every 3 levels | none | none |
-| Pro level track | — | — | ✅ bigger boards, more colours, walls |
+| Pro lab track | — | — | ✅ bigger grids, denser rotor fields, barriers |
 | Cosmetics | earn with stars and gems | earn with stars and gems | ✅ the whole catalogue |
 | Monthly exclusive drop | — | — | ✅ |
 | Hints | earned or bought | earned or bought | ✅ unlimited |
@@ -116,8 +118,9 @@ generation, economy and progression suites run anywhere Swift does.
 The repository is complete and runnable, but three things are placeholders that
 **must** be replaced — they are listed in full in the release checklist:
 
-1. Your team and bundle identifier (`com.sabettaworks.LineFlowSW` is a placeholder).
-2. Your privacy policy and support URLs in `LineFlow/Services/LegalLinks.swift`.
+1. Your signing team. Keep `com.sabettaworks.LineFlowSW`: it is the identifier
+   already registered for this App Store record even though the display name changed.
+2. Verify the published policy and support URLs in `LineFlow/Services/LegalLinks.swift`.
 3. A real ad network behind `AdService`, if you want ad revenue. The shipped
    `SimulatedAdService` renders an in-app placeholder so the project builds and
    the pacing can be felt without linking an SDK.
