@@ -218,8 +218,12 @@ To go live with, say, AdMob:
    `SKAdNetworkItems` list. Do not invent those identifiers — take them from
    the network's published list.
 5. Request App Tracking Transparency **before** initialising the SDK if you
-   want personalised ads. `NSUserTrackingUsageDescription` is already in
-   `Info.plist`; call `ATTrackingManager.requestTrackingAuthorization` and pass
+   want personalised ads. Add `NSUserTrackingUsageDescription` to `Info.plist`
+   **in the same release** that starts requesting it, and not before: App Store
+   Connect cross-checks the key against the app's privacy declaration and
+   refuses a build that declares a permission it never asks for. It carried
+   that key unused once, and cost a build cycle to find out.
+   Then call `ATTrackingManager.requestTrackingAuthorization` and pass
    the result into `AdService.configure(allowsPersonalisedAds:)`. Ask at a
    moment that makes sense — after a few levels, not on first launch.
 6. Update `LineFlow/PrivacyInfo.xcprivacy`: set `NSPrivacyTracking` to true,

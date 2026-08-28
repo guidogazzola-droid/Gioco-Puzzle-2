@@ -27,13 +27,6 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 
-	<!-- Required before AppTrackingTransparency can be requested. The shipped
-	     build serves no personalised ads and never asks; the string is here so
-	     that wiring an ad network does not need an Info.plist change to be
-	     compliant. See docs/MONETIZATION.md. -->
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Allow tracking to see ads that are relevant to you. The game plays exactly the same either way, and you can change this at any time in Settings.</string>
-
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
