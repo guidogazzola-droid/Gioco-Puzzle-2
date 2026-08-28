@@ -128,6 +128,43 @@ def check_house_ad_videos(failures):
             failures.append(f"house ad names {name}.mp4, which is not in LineFlow/Resources")
 
 
+def check_tracking_declaration(failures):
+    """Info.plist and PrivacyInfo.xcprivacy have to tell the same story.
+
+    App Store Connect refuses a build that asks for tracking permission while
+    declaring it does not track - the two are read together, and the privacy
+    manifest is the one reviewers trust. This is not a ban on the key: the day
+    an ad network arrives, NSPrivacyTracking becomes true and the usage string
+    becomes required. What is forbidden is shipping one without the other.
+    """
+    info = pathlib.Path("LineFlow/Info.plist")
+    manifest = pathlib.Path("LineFlow/PrivacyInfo.xcprivacy")
+    if not info.exists() or not manifest.exists():
+        failures.append("Info.plist or PrivacyInfo.xcprivacy is missing")
+        return
+
+    project = pathlib.Path("LineFlow.xcodeproj/project.pbxproj").read_text()
+    # Xcode can inject plist entries from build settings, which is a second
+    # place the key can hide.
+    asks_to_track = (
+        "NSUserTrackingUsageDescription" in info.read_text()
+        or "INFOPLIST_KEY_NSUserTrackingUsageDescription" in project
+    )
+    declares_tracking = "<key>NSPrivacyTracking</key>" in manifest.read_text() and \
+        manifest.read_text().split("<key>NSPrivacyTracking</key>")[1].lstrip().startswith("<true/>")
+
+    if asks_to_track and not declares_tracking:
+        failures.append(
+            "NSUserTrackingUsageDescription is present but PrivacyInfo.xcprivacy "
+            "declares NSPrivacyTracking false - App Store Connect rejects that pair"
+        )
+    if declares_tracking and not asks_to_track:
+        failures.append(
+            "PrivacyInfo.xcprivacy declares tracking but no "
+            "NSUserTrackingUsageDescription is set - ATT cannot be requested without it"
+        )
+
+
 def check_legal_links(failures):
     """A placeholder privacy or terms URL is a guaranteed rejection, and it is
     invisible until a reviewer taps it. The links are literals in one file, so
@@ -151,6 +188,7 @@ def main():
     check_plists(failures)
     check_workflows(failures)
     check_legal_links(failures)
+    check_tracking_declaration(failures)
     check_house_ad_videos(failures)
 
     print(f"targets: {sorted(name for _, name in targets)}")
