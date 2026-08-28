@@ -224,13 +224,8 @@ struct PuzzleEngineTests {
         #expect(!grabbed)
 
         if let approach = wall.neighbours(width: blueprint.width, height: blueprint.height)
-            .compactMap({ cell in
-                guard blueprint.polarity(at: cell) == .north,
-                      let color = blueprint.endpointColor(at: cell) else { return nil }
-                return (cell, color)
-            })
-            .first {
-            let grabbed2 = engine.beginDrag(at: approach.0)
+            .first(where: { blueprint.polarity(at: $0) == .north }) {
+            let grabbed2 = engine.beginDrag(at: approach)
             #expect(grabbed2)
             let stepped = engine.extendDrag(to: wall)
             #expect(!stepped)
@@ -262,8 +257,10 @@ struct PuzzleEngineTests {
 
         #expect(blueprint.polarity(at: endpoints.start) == .north)
         #expect(blueprint.polarity(at: endpoints.end) == .south)
-        #expect(!engine.beginDrag(at: endpoints.end))
-        #expect(engine.beginDrag(at: endpoints.start))
+        let startedAtSouth = engine.beginDrag(at: endpoints.end)
+        #expect(!startedAtSouth)
+        let startedAtNorth = engine.beginDrag(at: endpoints.start)
+        #expect(startedAtNorth)
     }
 
     @Test("an energised rotor locks in place")
@@ -275,11 +272,13 @@ struct PuzzleEngineTests {
             return
         }
 
-        #expect(draw(&engine, blueprint.solution[rotor.color]))
+        let drewCircuit = draw(&engine, blueprint.solution[rotor.color])
+        #expect(drewCircuit)
         let orientation = engine.rotorOrientation(at: rotor.coordinate)
         let moves = engine.moves
 
-        #expect(!engine.rotateRotor(at: rotor.coordinate))
+        let rotated = engine.rotateRotor(at: rotor.coordinate)
+        #expect(!rotated)
         #expect(engine.rotorOrientation(at: rotor.coordinate) == orientation)
         #expect(engine.moves == moves)
     }
@@ -292,7 +291,8 @@ struct PuzzleEngineTests {
         let rotor = blueprint.fluxRotors[0]
         let path = blueprint.solution[rotor.color]
 
-        #expect(engine.beginDrag(at: path[0]))
+        let started = engine.beginDrag(at: path[0])
+        #expect(started)
         var reachedSouth = true
         for cell in path.dropFirst() {
             if !engine.extendDrag(to: cell) {
@@ -306,7 +306,10 @@ struct PuzzleEngineTests {
     @Test("rotating every field element to target enables a perfect solve")
     func alignedFieldSolvesAtPar() {
         var engine = PuzzleEngine(blueprint: LevelGenerator.generate(level: 48, track: .pro))
-        for path in engine.blueprint.solution { #expect(draw(&engine, path)) }
+        for path in engine.blueprint.solution {
+            let drewCircuit = draw(&engine, path)
+            #expect(drewCircuit)
+        }
 
         #expect(engine.alignedRotors == engine.totalRotors)
         #expect(engine.fieldStability == 1)
