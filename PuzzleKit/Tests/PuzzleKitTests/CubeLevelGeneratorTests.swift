@@ -48,7 +48,7 @@ struct CubeLevelGeneratorTests {
                 )
                 #expect(CubeLevelValidator.validate(board) == nil)
                 #expect(board.colorCount == parameters.colors)
-                #expect(board.seamCrossings >= parameters.activeFaces.count - 1)
+                #expect(board.seamCrossings > 0)
             }
         }
     }

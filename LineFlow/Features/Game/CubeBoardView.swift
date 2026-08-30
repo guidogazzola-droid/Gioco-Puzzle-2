@@ -337,7 +337,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
             let wallMaterial = material(
                 UIColor(white: 0.30, alpha: 0.55), roughness: 0.8, metallic: false
             )
-            for angle in [Float(-.pi / 4), Float(.pi / 4)] {
+            for angle in [Float.pi / -4, Float.pi / 4] {
                 let bar = ModelEntity(
                     mesh: .generateBox(size: [cellSize * 0.55, cellSize * 0.055, 0.018]),
                     materials: [wallMaterial]
@@ -359,7 +359,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
             let lift: Float = 0.095
             let start = surfacePosition(first, lift: lift)
             let end = surfacePosition(second, lift: lift)
-            let radius = cellSize * parent.theme.trail.thickness * 0.25
+            let radius = cellSize * Float(parent.theme.trail.thickness) * 0.25
 
             if first.face == second.face {
                 addCylinder(from: start, to: end, radius: radius, color: color)
@@ -403,7 +403,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                 let glow = ModelEntity(
                     mesh: .generateCylinder(
                         height: length,
-                        radius: radius + parent.theme.trail.glowRadius * radius * 0.9
+                        radius: radius + Float(parent.theme.trail.glowRadius) * radius * 0.9
                     ),
                     materials: [material(glowColor, roughness: 0.9, metallic: false)]
                 )
@@ -611,7 +611,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
             roughness: Float,
             metallic: Bool
         ) -> SimpleMaterial {
-            SimpleMaterial(color: color, roughness: roughness, isMetallic: metallic)
+            SimpleMaterial(color: color, roughness: .float(roughness), isMetallic: metallic)
         }
 
         private static func entityName(for cell: CubeCell) -> String {

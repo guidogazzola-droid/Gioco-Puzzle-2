@@ -357,10 +357,32 @@ public enum CubeLevelGenerator {
             return nil
         }
 
-        let snake = assemble(0, []) ?? order.flatMap {
-            faceSnakes(face: $0, side: parameters.side)[0]
+        let paths: [[CubeCell]]
+        if let snake = assemble(0, []) {
+            paths = splitFallbackSnake(snake, colors: parameters.colors)
+        } else {
+            // An odd-sized complete cube has a parity constraint that prevents
+            // six whole face-snakes being concatenated into one Hamiltonian
+            // path. Keep one joined face pair (so the fallback is still truly
+            // cubical), retain the other faces as snakes, then split away from
+            // the seam until the requested circuit count is reached.
+            var base: [[CubeCell]] = []
+            let firstVariants = faceSnakes(face: .front, side: parameters.side)
+            let secondVariants = faceSnakes(face: .right, side: parameters.side)
+            outer: for first in firstVariants {
+                for second in secondVariants where CubeTopology.areAdjacent(
+                    first.last!, second.first!, side: parameters.side
+                ) {
+                    base.append(first + second)
+                    break outer
+                }
+            }
+            for face in order where face != .front && face != .right {
+                base.append(faceSnakes(face: face, side: parameters.side)[0])
+            }
+            while base.count < parameters.colors, splitFallbackPath(&base) {}
+            paths = base
         }
-        let paths = splitFallbackSnake(snake, colors: parameters.colors)
         let blueprint = CubeLevelBlueprint(
             level: level,
             track: track,
@@ -438,5 +460,28 @@ public enum CubeLevelGenerator {
             cursor = cut
         }
         return paths
+    }
+
+    @discardableResult
+    static func splitFallbackPath(_ paths: inout [[CubeCell]]) -> Bool {
+        let candidates = paths.indices.compactMap { index -> (Int, Int)? in
+            let path = paths[index]
+            guard path.count >= 4 else { return nil }
+            let desired = path.count / 2
+            let cuts = (2...(path.count - 2)).filter {
+                path[$0 - 1].face == path[$0].face
+            }
+            guard let cut = cuts.min(by: {
+                abs($0 - desired) < abs($1 - desired)
+            }) else { return nil }
+            return (index, cut)
+        }
+        guard let winner = candidates.max(by: {
+            paths[$0.0].count < paths[$1.0].count
+        }) else { return false }
+        let path = paths[winner.0]
+        paths[winner.0] = Array(path[0..<winner.1])
+        paths.append(Array(path[winner.1...]))
+        return true
     }
 }

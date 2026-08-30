@@ -201,13 +201,15 @@ struct AppServicesTests {
         #expect(!services.buyHintWithGems())
     }
 
-    @Test("finishing a level records it and pays out once")
+    @Test("finishing a cubical level records it and pays out once")
     func finishingALevel() {
         let services = makeServices()
-        var engine = PuzzleEngine(blueprint: LevelGenerator.generate(level: 1, track: .free))
+        var engine = CubePuzzleEngine(
+            blueprint: CubeLevelGenerator.generate(level: 1, track: .free)
+        )
         for rotor in engine.blueprint.fluxRotors {
-            while !engine.isRotorAligned(at: rotor.coordinate) {
-                _ = engine.rotateRotor(at: rotor.coordinate)
+            while !engine.isRotorAligned(at: rotor.cell) {
+                _ = engine.rotateRotor(at: rotor.cell)
             }
         }
         for path in engine.blueprint.solution {
