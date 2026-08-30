@@ -125,6 +125,51 @@ final class AppServices {
         return outcome
     }
 
+    /// Cubical boards share the player's existing campaign and economy. The
+    /// geometric model changes, but no save key or App Store entitlement does.
+    func finish(
+        engine: CubePuzzleEngine,
+        seconds: Int,
+        track: LevelTrack
+    ) -> LevelOutcome {
+        finishCube(
+            level: engine.blueprint.level,
+            moves: engine.moves,
+            par: engine.parMoves,
+            hintsUsed: engine.hintsUsed,
+            seconds: seconds,
+            track: track
+        )
+    }
+
+    private func finishCube(
+        level: Int,
+        moves: Int,
+        par: Int,
+        hintsUsed: Int,
+        seconds: Int,
+        track: LevelTrack
+    ) -> LevelOutcome {
+        // Rewards intentionally retain the original campaign tuning so an
+        // update cannot devalue progress or purchased currency.
+        let parameters = DifficultyCurve.parameters(level: level, track: track)
+        let outcome = ScoreRules.outcome(
+            level: level,
+            track: track,
+            parameters: parameters,
+            moves: moves,
+            par: par,
+            seconds: seconds,
+            hintsUsed: hintsUsed,
+            isFirstClear: !profile.progress(for: track).isCleared(level),
+            gemMultiplier: entitlements.gemMultiplier
+        )
+        profileStore.update { $0.apply(outcome, on: DayKey.key(for: Date())) }
+        haptics.play(.win)
+        gameCenter.submit(LeaderboardRules.afterCampaignLevel(profile: profile))
+        return outcome
+    }
+
     /// Books the daily board, or returns `nil` if it was already claimed today.
     func finishDaily(
         engine: PuzzleEngine,
@@ -142,6 +187,36 @@ final class AppServices {
             gemMultiplier: entitlements.gemMultiplier
         )
         let bonus = DailyChallenge.bonusGems(stars: outcome.stars, streak: profile.stats.currentStreak)
+        profileStore.update { $0.applyDaily(outcome, on: day, bonusGems: bonus) }
+        haptics.play(.win)
+        gameCenter.submit(LeaderboardRules.afterDaily(outcome: outcome, profile: profile))
+        return (outcome, bonus)
+    }
+
+    func finishDaily(
+        engine: CubePuzzleEngine,
+        seconds: Int
+    ) -> (outcome: LevelOutcome, bonus: Int)? {
+        let day = todayKey
+        guard !profile.hasClearedDaily(on: day) else { return nil }
+
+        let level = engine.blueprint.level
+        let parameters = DifficultyCurve.parameters(level: level, track: .free)
+        let outcome = ScoreRules.outcome(
+            level: level,
+            track: .free,
+            parameters: parameters,
+            moves: engine.moves,
+            par: engine.parMoves,
+            seconds: seconds,
+            hintsUsed: engine.hintsUsed,
+            isFirstClear: true,
+            gemMultiplier: entitlements.gemMultiplier
+        )
+        let bonus = DailyChallenge.bonusGems(
+            stars: outcome.stars,
+            streak: profile.stats.currentStreak
+        )
         profileStore.update { $0.applyDaily(outcome, on: day, bonusGems: bonus) }
         haptics.play(.win)
         gameCenter.submit(LeaderboardRules.afterDaily(outcome: outcome, profile: profile))

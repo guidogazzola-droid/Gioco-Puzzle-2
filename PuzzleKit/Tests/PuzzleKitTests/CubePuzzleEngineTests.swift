@@ -27,7 +27,8 @@ struct CubePuzzleEngineTests {
             blueprint: CubeLevelGenerator.generate(level: level, track: .free)
         )
         for path in engine.blueprint.solution {
-            #expect(draw(&engine, path: path))
+            let didDraw = draw(&engine, path: path)
+            #expect(didDraw)
         }
         #expect(engine.isSolved)
         #expect(engine.moves == engine.parMoves)
@@ -45,7 +46,8 @@ struct CubePuzzleEngineTests {
             return
         }
         var engine = CubePuzzleEngine(blueprint: board)
-        #expect(draw(&engine, path: path))
+        let didDraw = draw(&engine, path: path)
+        #expect(didDraw)
         #expect(engine.isConnected(color: board.endpointColor(at: path[0])!))
     }
 
@@ -53,8 +55,10 @@ struct CubePuzzleEngineTests {
     func polarityIsDirectional() {
         let board = CubeLevelGenerator.generate(level: 1, track: .free)
         var engine = CubePuzzleEngine(blueprint: board)
-        #expect(!engine.beginDrag(at: board.endpoints[0].end))
-        #expect(engine.beginDrag(at: board.endpoints[0].start))
+        let startedAtSouth = engine.beginDrag(at: board.endpoints[0].end)
+        #expect(!startedAtSouth)
+        let startedAtNorth = engine.beginDrag(at: board.endpoints[0].start)
+        #expect(startedAtNorth)
     }
 
     @Test("misaligned cube rotors block current")
@@ -63,7 +67,8 @@ struct CubePuzzleEngineTests {
         let rotor = board.fluxRotors[0]
         let path = board.solution[rotor.color]
         var engine = CubePuzzleEngine(blueprint: board)
-        #expect(engine.beginDrag(at: path[0]))
+        let started = engine.beginDrag(at: path[0])
+        #expect(started)
         var reachedEnd = true
         for cell in path.dropFirst() {
             if !engine.extendDrag(to: cell) {

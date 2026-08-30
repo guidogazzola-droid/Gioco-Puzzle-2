@@ -19,6 +19,7 @@
 /* MARK: - Accessibility */
 "a11y.stars" = "%ld out of 3 stars";
 "a11y.board" = "Magnetic grid, %1$ld by %2$ld. %3$ld of %4$ld circuits energised.";
+"a11y.cube" = "Three-dimensional cube puzzle, %1$ld of 6 faces active. %2$ld of %3$ld circuits energised.";
 "a11y.fieldStability" = "Magnetic field %ld percent stable";
 "a11y.level" = "Level %1$ld, %2$ld stars";
 "a11y.levelLocked" = "Level %ld, locked";
@@ -79,6 +80,8 @@
 "game.title.pro" = "Advanced experiment %ld";
 "game.daily.title" = "Daily field";
 "game.subtitle" = "%1$@ circuits · %2$@ rotors · %3$ld / %4$ld actions";
+"game.cube.faces" = "%ld/6 faces";
+"game.cube.hint" = "Drag N → S · Swipe empty space to rotate";
 "game.action.reset" = "Restart";
 "game.action.hint" = "Hint";
 "game.action.goPro" = "Go Pro";
@@ -235,11 +238,11 @@
 
 /* MARK: - Onboarding */
 "onboarding.1.title" = "Energise N to S";
-"onboarding.1.body" = "Start at an N pole and weave a route to the matching S pole. Every circuit has a direction.";
+"onboarding.1.body" = "Start at an N pole and weave over the cube to the matching S pole. Trails continue around edges.";
 "onboarding.2.title" = "Turn the rotors";
 "onboarding.2.body" = "Tap a field rotor to rotate its two ports. A circuit only passes through an open port.";
 "onboarding.3.title" = "Stabilise the field";
-"onboarding.3.body" = "Energise every circuit, align every rotor and leave no grid cell empty.";
+"onboarding.3.body" = "Swipe empty space to rotate the cube. Energise every circuit and leave no active surface tile empty.";
 "onboarding.next" = "Next";
 "onboarding.start" = "Start playing";
 "onboarding.skip" = "Skip";

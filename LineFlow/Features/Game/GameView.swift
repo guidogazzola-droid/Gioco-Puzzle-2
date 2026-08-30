@@ -121,7 +121,7 @@ struct GameView: View {
     // MARK: - Board
 
     private var board: some View {
-        BoardView(
+        CubeBoardView(
             engine: model.engine,
             theme: theme,
             colorBlindAssist: services.profile.settings.colorBlindAssist,
@@ -132,6 +132,22 @@ struct GameView: View {
             onRotate: { model.rotate(at: $0) }
         )
         .padding(.vertical, 4)
+        .overlay(alignment: .topLeading) {
+            Label(
+                String(
+                    format: NSLocalizedString("game.cube.faces", comment: "Active cube faces"),
+                    model.engine.blueprint.activeFaces.count
+                ),
+                systemImage: "cube.transparent"
+            )
+            .font(.caption2.weight(.bold))
+            .foregroundStyle(Ink.secondary)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 6)
+            .background(Capsule().fill(Ink.cardRaised.opacity(0.94)))
+            .overlay(Capsule().strokeBorder(Ink.stroke, lineWidth: 1))
+            .padding(8)
+        }
         .overlay(alignment: .topTrailing) {
             Label("\(model.fieldPercent)%", systemImage: "wave.3.right.circle.fill")
                 .font(.caption2.weight(.bold))

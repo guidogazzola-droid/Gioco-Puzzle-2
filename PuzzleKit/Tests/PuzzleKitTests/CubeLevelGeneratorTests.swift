@@ -8,9 +8,10 @@ struct CubeLevelGeneratorTests {
     func boardsAreValid(track: LevelTrack) {
         for level in Self.sweep {
             let board = CubeLevelGenerator.generate(level: level, track: track)
+            let failure = CubeLevelValidator.validate(board)
             #expect(
-                CubeLevelValidator.validate(board) == nil,
-                "level \(level) on \(track.rawValue): \(CubeLevelValidator.validate(board)?.rawValue ?? \"\")"
+                failure == nil,
+                "level \(level) on \(track.rawValue): \(failure?.rawValue ?? "unknown")"
             )
             let parameters = CubeDifficultyCurve.parameters(level: level, track: track)
             #expect(board.side == parameters.side)

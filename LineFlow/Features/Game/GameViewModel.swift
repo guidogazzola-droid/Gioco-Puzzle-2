@@ -22,7 +22,7 @@ final class GameViewModel {
     }
 
     let mode: Mode
-    private(set) var engine: PuzzleEngine
+    private(set) var engine: CubePuzzleEngine
     /// Set once the board is solved and the result has been booked.
     private(set) var completion: Completion?
     private(set) var isShowingCompletion = false
@@ -46,15 +46,15 @@ final class GameViewModel {
         self.mode = mode
         self.services = services
         self.startedAt = Date()
-        self.engine = PuzzleEngine(blueprint: Self.blueprint(mode: mode, level: level))
+        self.engine = CubePuzzleEngine(blueprint: Self.blueprint(mode: mode, level: level))
     }
 
-    private static func blueprint(mode: Mode, level: Int) -> LevelBlueprint {
+    private static func blueprint(mode: Mode, level: Int) -> CubeLevelBlueprint {
         switch mode {
         case .daily:
-            DailyChallenge.blueprint(for: Date())
+            DailyChallenge.cubeBlueprint(for: Date())
         case .campaign(let track):
-            LevelGenerator.generate(level: level, track: track)
+            CubeLevelGenerator.generate(level: level, track: track)
         }
     }
 
@@ -105,12 +105,12 @@ final class GameViewModel {
 
     // MARK: - Input
 
-    func begin(at cell: Coordinate) -> Bool {
+    func begin(at cell: CubeCell) -> Bool {
         guard completion == nil else { return false }
         return engine.beginDrag(at: cell)
     }
 
-    func extend(to cell: Coordinate) -> Bool {
+    func extend(to cell: CubeCell) -> Bool {
         guard completion == nil else { return false }
         let moved = engine.extendDrag(to: cell)
         if moved {
@@ -130,7 +130,7 @@ final class GameViewModel {
     }
 
     @discardableResult
-    func rotate(at cell: Coordinate) -> Bool {
+    func rotate(at cell: CubeCell) -> Bool {
         guard completion == nil else { return false }
         let rotated = engine.rotateRotor(at: cell)
         if rotated {
@@ -225,7 +225,7 @@ final class GameViewModel {
     }
 
     func load(level: Int) {
-        engine = PuzzleEngine(blueprint: Self.blueprint(mode: mode, level: level))
+        engine = CubePuzzleEngine(blueprint: Self.blueprint(mode: mode, level: level))
         completion = nil
         isShowingCompletion = false
         startedAt = Date()

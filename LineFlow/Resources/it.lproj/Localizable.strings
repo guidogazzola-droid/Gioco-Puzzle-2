@@ -19,6 +19,7 @@
 /* MARK: - Accessibilità */
 "a11y.stars" = "%ld stelle su 3";
 "a11y.board" = "Griglia magnetica, %1$ld per %2$ld. %3$ld circuiti attivi su %4$ld.";
+"a11y.cube" = "Puzzle su cubo tridimensionale, %1$ld facce attive su 6. %2$ld circuiti attivi su %3$ld.";
 "a11y.fieldStability" = "Campo magnetico stabile al %ld percento";
 "a11y.level" = "Livello %1$ld, %2$ld stelle";
 "a11y.levelLocked" = "Livello %ld, bloccato";
@@ -79,6 +80,8 @@
 "game.title.pro" = "Esperimento avanzato %ld";
 "game.daily.title" = "Campo del giorno";
 "game.subtitle" = "%1$@ circuiti · %2$@ rotori · %3$ld / %4$ld azioni";
+"game.cube.faces" = "%ld/6 facce";
+"game.cube.hint" = "Trascina N → S · Scorri sul vuoto per ruotare";
 "game.action.reset" = "Ricomincia";
 "game.action.hint" = "Aiuto";
 "game.action.goPro" = "Passa a Pro";
@@ -235,11 +238,11 @@
 
 /* MARK: - Introduzione */
 "onboarding.1.title" = "Attiva da N a S";
-"onboarding.1.body" = "Parti da un polo N e raggiungi il polo S dello stesso circuito. Ogni circuito ha una direzione.";
+"onboarding.1.body" = "Parti da un polo N e intreccia il percorso sul cubo fino al polo S corrispondente. Le tracce continuano oltre gli spigoli.";
 "onboarding.2.title" = "Ruota i rotori";
 "onboarding.2.body" = "Tocca un rotore per girare le sue due porte. Il circuito passa solo da una porta aperta.";
 "onboarding.3.title" = "Stabilizza il campo";
-"onboarding.3.body" = "Attiva tutti i circuiti, allinea ogni rotore e non lasciare caselle vuote.";
+"onboarding.3.body" = "Scorri sullo spazio vuoto per ruotare il cubo. Attiva tutti i circuiti e non lasciare tessere attive vuote.";
 "onboarding.next" = "Avanti";
 "onboarding.start" = "Inizia a giocare";
 "onboarding.skip" = "Salta";

@@ -12,9 +12,9 @@ struct OnboardingView: View {
     @State private var page = 0
 
     private let pages: [(icon: String, titleKey: LocalizedStringKey, bodyKey: LocalizedStringKey)] = [
-        ("n.circle.fill", "onboarding.1.title", "onboarding.1.body"),
+        ("cube.transparent", "onboarding.1.title", "onboarding.1.body"),
         ("arrow.clockwise.circle.fill", "onboarding.2.title", "onboarding.2.body"),
-        ("wave.3.right.circle.fill", "onboarding.3.title", "onboarding.3.body")
+        ("rotate.3d", "onboarding.3.title", "onboarding.3.body")
     ]
 
     var body: some View {
@@ -24,8 +24,8 @@ struct OnboardingView: View {
             VStack(spacing: 24) {
                 Spacer(minLength: 12)
 
-                DemoBoardView()
-                    .frame(maxWidth: 300, maxHeight: 300)
+                DemoCubeView()
+                    .frame(maxWidth: 320, maxHeight: 320)
 
                 TabView(selection: $page) {
                     ForEach(pages.indices, id: \.self) { index in
@@ -81,16 +81,16 @@ struct OnboardingView: View {
 
 /// A small board that draws itself, used to show the mechanic rather than
 /// describe it.
-private struct DemoBoardView: View {
+private struct DemoCubeView: View {
 
     /// Generated once: the tutorial board never changes, and re-running the
     /// generator on every layout pass would be waste.
-    private static let blueprint = LevelGenerator.generate(level: 1, track: .free)
+    private static let blueprint = CubeLevelGenerator.generate(level: 5, track: .free)
 
     var body: some View {
         TimelineView(.animation(minimumInterval: 1.0 / 20.0)) { timeline in
             let phase = timeline.date.timeIntervalSinceReferenceDate
-            BoardView(
+            CubeBoardView(
                 engine: engine(at: phase),
                 theme: .preview,
                 isInteractive: false
@@ -100,12 +100,12 @@ private struct DemoBoardView: View {
 
     /// Replays the intended solution on a loop by feeding the engine the same
     /// moves a player would make.
-    private func engine(at phase: TimeInterval) -> PuzzleEngine {
+    private func engine(at phase: TimeInterval) -> CubePuzzleEngine {
         let blueprint = Self.blueprint
-        var engine = PuzzleEngine(blueprint: blueprint)
+        var engine = CubePuzzleEngine(blueprint: blueprint)
         for rotor in blueprint.fluxRotors {
-            while !engine.isRotorAligned(at: rotor.coordinate) {
-                _ = engine.rotateRotor(at: rotor.coordinate)
+            while !engine.isRotorAligned(at: rotor.cell) {
+                _ = engine.rotateRotor(at: rotor.cell)
             }
         }
         let totalCells = blueprint.solution.reduce(0) { $0 + $1.count }
