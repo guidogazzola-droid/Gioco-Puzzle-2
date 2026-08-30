@@ -2,33 +2,31 @@
 
 ## The mechanic
 
-A field is a directional magnetic network wrapped around a freely rotatable
-cube. Each circuit has an **N source**, an **S destination**, and zero or more
-two-port rotors embedded in its route. Drag from N to S and continue around cube
-edges; tap a rotor to turn it clockwise. A closed port physically rejects the
-trail. The field is stable when **every N reaches its matching S, every rotor is
-aligned, and every active surface tile is energised**.
+A field is a network of matching-colour endpoint pairs wrapped around a freely
+rotatable cube. Start from either endpoint and continue around cube edges until
+the two matching colours meet. Two filaments can never share a tile. The cube
+is solved when **every matching pair is connected**; unused surface tiles are
+valid and do not affect completion.
 
-Requiring full surface coverage makes cube rotation part of the reasoning. A
-route disappearing over an edge still occupies space on the neighbouring face,
-so the player must remember and inspect the whole object rather than solve six
-independent flat boards.
+A route disappearing over an edge still occupies space on the neighbouring
+face, so the player must remember and inspect the whole object rather than solve
+six independent flat boards. From level 91, two-port rotors add a second rule:
+tap one to turn it clockwise, because a closed port physically rejects a trail.
 
 Interaction rules, all implemented in `CubePuzzleEngine` and unit-tested:
 
 | Action | Result |
 |---|---|
-| Grab an N pole | Restarts that circuit from its source |
-| Grab an S pole | Rejected — current cannot run backwards |
-| Tap a rotor | Turns its two open ports clockwise and spends one action |
+| Grab either matching endpoint | Restarts that colour from the selected end |
+| Tap a rotor (level 91+) | Turns its two open ports clockwise and spends one action |
 | Enter a closed rotor port | Rejected with no board mutation |
 | Enter another circuit's rotor | Rejected — rotors are circuit-specific |
 | Grab a cell mid-trail | Rewinds the colour to that cell and continues |
 | Drag back one cell | Rewinds one step |
-| Drag onto another colour's trail | Cuts that colour at the crossing point |
+| Drag onto another colour's trail | Rejected with no board mutation |
 | Drag onto another colour's endpoint | Rejected — endpoints are never passable |
 | Drag onto a wall | Rejected |
-| Reach the far endpoint | The colour locks |
+| Reach the matching endpoint | The colour locks |
 | Swipe from an empty tile | Rotates the cube freely |
 | Lift, rotate, resume at a loose end | Continues the same scored action |
 
@@ -59,22 +57,24 @@ Levels are generated, never authored. `CubeLevelGenerator` runs these steps:
 6. **Cube constraint.** Candidates must contain a rising minimum number of seam
    crossings. This prevents the renderer from being a cosmetic cube holding
    unrelated 2D puzzles.
-7. **Magnetic field.** Internal path tiles become rotors. Corners are preferred
+7. **Advanced field.** From level 91, internal path tiles become rotors. Corners are preferred
    because their four-state cycle creates the strongest routing decision; the
    target orientation is derived from the covering, and a deterministic hash
-   chooses a different initial orientation. Density rises from one rotor on the
-   first field to six in advanced labs.
+   chooses a different initial orientation. Levels 1–90 contain no rotors; the
+   count then rises gradually from one to five.
 
 Ten valid candidate cubes are built per level and scored on turn density, seam
 use and colour balance. A deterministic Hamiltonian fallback covers the surface
 if every random attempt fails; odd full cubes use a parity-safe joined face
 pair rather than an invalid straight concatenation.
 
-Because the partition covers every playable cell and each path is a simple
-path, the partition *is* a solution. Solvability is a property of construction,
-not of search — there is no solver at runtime and there is no way to ship an
-unsolvable board. `CubeLevelValidator` asserts the invariants anyway, on every
-cube, before it reaches the player.
+Because the generated partition covers every playable cell and each path is a
+simple path, it is a guaranteed non-crossing solution certificate. The player
+is not required to reproduce that covering and may leave tiles empty while
+connecting the same pairs by other routes. Solvability is a property of
+construction, not of search — there is no solver at runtime and there is no way
+to ship an unsolvable board. `CubeLevelValidator` asserts the certificate
+invariants anyway, on every cube, before it reaches the player.
 
 ### Determinism
 
@@ -125,8 +125,8 @@ On top of the table:
 
 ## Scoring
 
-Par is one drag per circuit **plus the exact clockwise turns needed to align
-every rotor**. Thresholds are relative to par rather than absolute, which is
+Par is one drag per pair **plus, after level 90, the exact clockwise turns needed
+on the generated certificate route**. Thresholds are relative to par rather than absolute, which is
 what lets them hold for fields nobody has tuned by hand:
 
 - **3 stars**: solved in par or better, with no hints.
@@ -154,9 +154,9 @@ campaign cannot be farmed, and doubled for Pro subscribers.
 
 ## Accessibility
 
-- Every source and destination is permanently labelled **N** or **S**.
-  **Colour-blind assist** also adds a unique four-pip binary marker to every
-  endpoint pair, so colour is never the only way to match up to 14 circuits.
+- Both endpoints in a pair use the same strong colour and identical target
+  shape. **Colour-blind assist** also adds a unique four-pip binary marker to
+  every endpoint pair, so colour is never the only way to match up to 14 circuits.
 - Palettes are chosen by **maximising the minimum CIE76 distance** between
   their colours, verified at build time (worst case across all eight palettes:
   ΔE 30.9, threshold 22). Distinguishable colours are a gameplay requirement

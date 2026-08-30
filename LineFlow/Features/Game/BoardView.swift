@@ -186,7 +186,6 @@ struct BoardView: View {
 
             for cell in [endpoints.start, endpoints.end] {
                 let center = geometry.center(of: cell)
-                let pole: MagneticPolarity = cell == endpoints.start ? .north : .south
                 let shape = BoardShapes.path(
                     for: theme.node, center: center, radius: radius * 1.26
                 )
@@ -194,13 +193,9 @@ struct BoardView: View {
                     x: center.x - radius, y: center.y - radius,
                     width: radius * 2, height: radius * 2
                 )
-                let poleColor = pole == .north
-                    ? Color(hex: "#FF5364")
-                    : Color(hex: "#42C9FF")
-
                 context.fill(
                     BoardShapes.path(for: theme.node, center: center, radius: radius * 1.48),
-                    with: .color(.black.opacity(0.30))
+                    with: .color(color.opacity(0.24))
                 )
                 context.fill(shape, with: .color(.black.opacity(0.72)))
                 context.stroke(
@@ -208,7 +203,14 @@ struct BoardView: View {
                     with: .color(color),
                     lineWidth: max(2, geometry.cellSize * 0.07)
                 )
-                context.fill(Path(ellipseIn: coreRect), with: .color(poleColor))
+                context.fill(Path(ellipseIn: coreRect), with: .color(color))
+
+                let glintRadius = radius * 0.18
+                let glintRect = CGRect(
+                    x: center.x - glintRadius, y: center.y - glintRadius,
+                    width: glintRadius * 2, height: glintRadius * 2
+                )
+                context.fill(Path(ellipseIn: glintRect), with: .color(.white.opacity(0.92)))
 
                 if connected {
                     context.stroke(
@@ -218,19 +220,18 @@ struct BoardView: View {
                     )
                 }
 
-                let label = colorBlindAssist
-                    ? "\(pole.rawValue)·\(theme.glyph(for: index))"
-                    : pole.rawValue
-                var text = context.resolve(
-                    Text(label)
-                        .font(.system(
-                            size: geometry.cellSize * (colorBlindAssist ? 0.24 : 0.32),
-                            weight: .black,
-                            design: .rounded
-                        ))
-                )
-                text.shading = .color(.black.opacity(0.78))
-                context.draw(text, at: center, anchor: .center)
+                if colorBlindAssist {
+                    var text = context.resolve(
+                        Text(theme.glyph(for: index))
+                            .font(.system(
+                                size: geometry.cellSize * 0.23,
+                                weight: .black,
+                                design: .rounded
+                            ))
+                    )
+                    text.shading = .color(.black.opacity(0.82))
+                    context.draw(text, at: center, anchor: .center)
+                }
             }
         }
     }

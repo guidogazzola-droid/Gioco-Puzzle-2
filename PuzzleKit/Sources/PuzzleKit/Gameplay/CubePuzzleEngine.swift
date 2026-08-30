@@ -36,8 +36,8 @@ public struct CubePuzzleEngine: Sendable {
     public var parMoves: Int { blueprint.parMoves }
     public var filledCells: Int { occupancy.count }
     public var completionRatio: Double {
-        guard blueprint.playableCells > 0 else { return 1 }
-        return Double(filledCells) / Double(blueprint.playableCells)
+        guard colorCount > 0 else { return 1 }
+        return Double(connectedColors) / Double(colorCount)
     }
 
     public func color(at cell: CubeCell) -> Int? { occupancy[cell] }
@@ -47,7 +47,10 @@ public struct CubePuzzleEngine: Sendable {
         guard paths.indices.contains(color) else { return false }
         let path = paths[color]
         let target = blueprint.solution[color]
-        return path.count >= 2 && path.first == target.first && path.last == target.last
+        guard path.count >= 2 else { return false }
+        let forward = path.first == target.first && path.last == target.last
+        let reverse = path.first == target.last && path.last == target.first
+        return forward || reverse
     }
 
     public var connectedColors: Int {
@@ -75,9 +78,7 @@ public struct CubePuzzleEngine: Sendable {
     }
 
     public var isSolved: Bool {
-        occupancy.count == blueprint.playableCells
-            && paths.indices.allSatisfy { isConnected(color: $0) }
-            && alignedRotors == totalRotors
+        paths.indices.allSatisfy { isConnected(color: $0) }
     }
 
     // MARK: - Trail input
@@ -86,7 +87,6 @@ public struct CubePuzzleEngine: Sendable {
     public mutating func beginDrag(at cell: CubeCell) -> Bool {
         guard blueprint.isPlayable(cell) else { return false }
         if let color = endpointOwners[cell] {
-            guard blueprint.polarity(at: cell) == .north else { return false }
             dragChangedBoard = !paths[color].isEmpty
             clearPath(color: color)
             paths[color] = [cell]
@@ -134,8 +134,10 @@ public struct CubePuzzleEngine: Sendable {
                 dragChangedBoard = true
                 return true
             }
-            guard let index = paths[occupant].firstIndex(of: cell) else { return false }
-            truncate(color: occupant, keepingThrough: index - 1)
+            // A trail is a hard obstacle for every other colour. Rejecting the
+            // step keeps an attempted crossing from erasing somebody else's
+            // work and makes the no-crossing rule predictable.
+            return false
         }
 
         paths[color].append(cell)

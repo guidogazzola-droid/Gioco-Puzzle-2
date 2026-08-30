@@ -10,7 +10,7 @@ each step unblocks the next.
 - [x] Keep the existing App Store bundle identifier
       `com.sabettaworks.LineFlowSW`. The customer-facing product is now
       Fieldweave, but changing the identifier would create a different app and
-      disconnect build 2, Game Center and the existing product records.
+      disconnect build 5, Game Center and the existing product records.
 - [ ] Set `DEVELOPMENT_TEAM` in the project (Signing & Capabilities → Team).
 - [ ] Register the App ID with **In-App Purchase** *and* **Game Center**
       enabled. Game Center has to be on the App ID before you build: the app
@@ -23,10 +23,14 @@ each step unblocks the next.
 
 ## 1b. Guideline 4.3(a) resubmission evidence
 
-- [x] Replace interchangeable endpoints with directional N/S poles.
-- [x] Add deterministic two-port rotors that the player rotates and that
-      physically gate trail traversal.
-- [x] Count rotor turns in par and expose field stability in the HUD.
+- [x] Render each pair as two conspicuous, interchangeable endpoints in exactly
+      the same colour, with optional matching dot codes for colour-blind play.
+- [x] Make filaments hard obstacles: a colour cannot cross, share a tile with,
+      or erase another colour's trail.
+- [x] Complete a cube when every pair is connected; unused surface tiles are
+      explicitly allowed and the HUD reports pair completion.
+- [x] Keep levels 1–90 focused on cube routing, then introduce deterministic
+      two-port rotors from level 91.
 - [x] Move gameplay onto a freely rotatable RealityKit cube with exact,
       reversible routes across all twelve edges.
 - [x] Force generated solutions to cross face seams, so 3D is a rule rather
@@ -34,8 +38,9 @@ each step unblocks the next.
 - [x] Replace the icon, splash, onboarding, board markers and product copy with
       the magnetic-lab identity.
 - [ ] Capture a short review video showing: an empty-surface swipe rotates the
-      cube; a circuit continues around an edge; S rejects a reverse start; a
-      closed rotor rejects a trail; the completed field reaches 100% stability.
+      cube; a circuit continues around an edge; either matching endpoint can
+      start; an attempted crossing is rejected; all pairs complete with empty
+      tiles remaining; and a level 91 rotor blocks a closed port.
 - [ ] In Review Notes, describe those behaviours and state that this is a
       substantive gameplay redesign following the previous 4.3(a) rejection.
 

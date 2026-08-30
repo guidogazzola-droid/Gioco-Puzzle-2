@@ -4,7 +4,7 @@ import Testing
 struct CubeLevelGeneratorTests {
     static let sweep = 1...160
 
-    @Test("every cubical board is a valid surface covering", arguments: LevelTrack.allCases)
+    @Test("every cubical board has a valid solvability certificate", arguments: LevelTrack.allCases)
     func boardsAreValid(track: LevelTrack) {
         for level in Self.sweep {
             let board = CubeLevelGenerator.generate(level: level, track: track)
@@ -36,6 +36,16 @@ struct CubeLevelGeneratorTests {
         #expect(CubeDifficultyCurve.parameters(level: 12, track: .free).activeFaces.count >= 4)
         #expect(CubeDifficultyCurve.parameters(level: 40, track: .free).activeFaces.count == 6)
         #expect(CubeDifficultyCurve.parameters(level: 90, track: .pro).activeFaces.count == 6)
+    }
+
+    @Test("rotors begin at level 91 on both tracks")
+    func rotorProgression() {
+        for track in LevelTrack.allCases {
+            #expect(CubeLevelGenerator.generate(level: 1, track: track).fluxRotors.isEmpty)
+            #expect(CubeLevelGenerator.generate(level: 90, track: track).fluxRotors.isEmpty)
+            #expect(!CubeLevelGenerator.generate(level: 91, track: track).fluxRotors.isEmpty)
+        }
+        #expect(DailyChallenge.cubeBlueprint(forDay: "2026-08-30").fluxRotors.isEmpty)
     }
 
     @Test("fallbacks are valid and retain every forced seam")

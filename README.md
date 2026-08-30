@@ -3,12 +3,12 @@
 A three-dimensional magnetic-routing puzzle for iOS, free to play, monetised
 with ads, one-off purchases and a monthly subscription.
 
-Energise coloured circuits from N to S, rotate two-port field elements until
-the flux can pass, and weave trails around the edges of a freely rotatable cube.
-Rotors are physical constraints rather than decoration: a closed port rejects
-the trail, and both rotor turns and circuit drags count against par. There are
-no level files: **every cubical field is generated on the device from its level
-number**.
+Connect matching-colour endpoints and weave trails around the edges of a freely
+rotatable cube without letting two colours share a tile. Empty surface tiles
+are allowed: the goal is to complete every pair, not cover the object. From
+level 91, two-port rotors become physical constraints whose closed ports reject
+the trail. There are no level files: **every cubical field is generated on the
+device from its level number**.
 
 <p align="center">
   <img src="LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Fieldweave app icon">
@@ -22,9 +22,10 @@ A puzzle game usually ships hand-authored levels, and the content budget then
 caps the campaign. Fieldweave builds each level by *construction* instead: the
 active tiles on two to six cube faces are partitioned into vertex-disjoint
 simple circuits. The generator uses exact fold transforms at all twelve edges,
-forces paths to bend between faces, and derives every rotor from the hidden
-covering. The partition itself is therefore a full-surface solution; no solver
-runs at runtime.
+forces paths to bend between faces, and derives advanced rotors from the hidden
+covering. The partition is a full-surface solvability certificate, while the
+player may discover any non-crossing set of routes between the matching pairs;
+no solver runs at runtime.
 
 Generation is seeded and deterministic, so level 137 is the same board on every
 device and in every future build, without a single byte of level data.
@@ -40,7 +41,7 @@ stage. It also proves that every seam mapping is reversible.
 | Endless free campaign | ✅ | ✅ | ✅ |
 | Daily puzzle | ✅ | ✅ | ✅ |
 | Ads | interstitial every 3 levels | none | none |
-| Pro lab track | — | — | ✅ more faces sooner, denser rotor fields, barriers |
+| Pro lab track | — | — | ✅ more faces sooner, harder routing, barriers |
 | Cosmetics | earn with stars and gems | earn with stars and gems | ✅ the whole catalogue |
 | Monthly exclusive drop | — | — | ✅ |
 | Hints | earned or bought | earned or bought | ✅ unlimited |

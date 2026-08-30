@@ -189,11 +189,11 @@ struct PaywallView: View {
                 .padding(.horizontal, 24)
 
             VStack(alignment: .leading, spacing: 12) {
-                benefit("wave.3.right.circle.fill", "paywall.benefit.proTrack")
-                benefit("nosign", "paywall.benefit.noAds")
-                benefit("paintpalette.fill", "paywall.benefit.skins")
-                benefit("lightbulb.fill", "paywall.benefit.hints")
-                benefit("diamond.fill", "paywall.benefit.gems")
+                benefit(icon: "wave.3.right.circle.fill", key: "paywall.benefit.proTrack")
+                benefit(icon: "nosign", key: "paywall.benefit.noAds")
+                benefit(icon: "paintpalette.fill", key: "paywall.benefit.skins")
+                benefit(icon: "lightbulb.fill", key: "paywall.benefit.hints")
+                benefit(icon: "diamond.fill", key: "paywall.benefit.gems")
             }
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
@@ -201,7 +201,7 @@ struct PaywallView: View {
         .padding(.horizontal, 16)
     }
 
-    private func benefit(_ icon: String, _ key: LocalizedStringKey) -> some View {
+    private func benefit(icon: String, key: LocalizedStringKey) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
             Image(systemName: icon)
                 .foregroundStyle(Ink.pro)

@@ -6,7 +6,7 @@
 
 /* MARK: - Comune */
 "app.name" = "Fieldweave";
-"splash.tagline" = "Intreccia il campo. Allinea il flusso.";
+"splash.tagline" = "Abbina i colori. Intreccia il cubo.";
 "splash.skipHint" = "Tocca due volte per saltare.";
 "common.back" = "Indietro";
 "common.close" = "Chiudi";
@@ -18,9 +18,9 @@
 
 /* MARK: - Accessibilità */
 "a11y.stars" = "%ld stelle su 3";
-"a11y.board" = "Griglia magnetica, %1$ld per %2$ld. %3$ld circuiti attivi su %4$ld.";
-"a11y.cube" = "Puzzle su cubo tridimensionale, %1$ld facce attive su 6. %2$ld circuiti attivi su %3$ld.";
-"a11y.fieldStability" = "Campo magnetico stabile al %ld percento";
+"a11y.board" = "Griglia magnetica, %1$ld per %2$ld. %3$ld coppie collegate su %4$ld.";
+"a11y.cube" = "Puzzle su cubo tridimensionale, %1$ld facce attive su 6. %2$ld coppie collegate su %3$ld.";
+"a11y.connectionProgress" = "%ld percento delle coppie collegate";
 "a11y.level" = "Livello %1$ld, %2$ld stelle";
 "a11y.levelLocked" = "Livello %ld, bloccato";
 
@@ -37,8 +37,8 @@
 "home.daily.play" = "Gioca";
 "home.daily.replay" = "Rigioca";
 "home.pro.title" = "Laboratorio avanzato";
-"home.pro.subtitle" = "Più facce del cubo fin da subito, più rotori e barriere magnetiche. Incluso in Fieldweave Pro.";
-"home.pro.subtitleActive" = "Più facce del cubo fin da subito, più rotori e barriere magnetiche. Il tuo abbonamento è attivo.";
+"home.pro.subtitle" = "Più facce del cubo fin da subito, percorsi avanzati e barriere magnetiche. I rotori si sbloccano dopo il livello 90. Incluso in Fieldweave Pro.";
+"home.pro.subtitleActive" = "Più facce del cubo fin da subito, percorsi avanzati e barriere magnetiche. I rotori si sbloccano dopo il livello 90. Il tuo abbonamento è attivo.";
 "home.pro.play" = "Gioca il percorso Pro";
 "home.pro.unlock" = "Scopri Fieldweave Pro";
 "home.shop" = "Stili del campo";
@@ -79,17 +79,19 @@
 "game.title.free" = "Esperimento %ld";
 "game.title.pro" = "Esperimento avanzato %ld";
 "game.daily.title" = "Campo del giorno";
-"game.subtitle" = "%1$@ circuiti · %2$@ rotori · %3$ld / %4$ld azioni";
+"game.subtitle.basic" = "%1$@ coppie · %2$ld / %3$ld azioni";
+"game.subtitle.rotors" = "%1$@ coppie · %2$@ rotori · %3$ld / %4$ld azioni";
 "game.cube.faces" = "%ld/6 facce";
-"game.cube.hint" = "Trascina N → S · Scorri sul vuoto per ruotare";
+"game.cube.hint.basic" = "Unisci i colori uguali · Scorri sul vuoto per ruotare";
+"game.cube.hint.rotors" = "Unisci le coppie · Tocca i rotori · Scorri sul vuoto per ruotare";
 "game.action.reset" = "Ricomincia";
 "game.action.hint" = "Aiuto";
 "game.action.goPro" = "Passa a Pro";
 
 /* MARK: - Livello completato */
-"complete.perfect" = "Campo agganciato!";
-"complete.good" = "Campo stabilizzato";
-"complete.solved" = "Esperimento completato";
+"complete.perfect" = "Tutte le coppie unite!";
+"complete.good" = "Collegamenti completati";
+"complete.solved" = "Cubo risolto";
 "complete.moves" = "Azioni";
 "complete.par" = "par %ld";
 "complete.time" = "Tempo";
@@ -102,7 +104,7 @@
 
 /* MARK: - Aiuti */
 "hint.title" = "Aiuti esauriti";
-"hint.body" = "Un aiuto allinea i rotori e attiva un circuito. Il livello vale al massimo due stelle.";
+"hint.body" = "Un aiuto completa una coppia e allinea gli eventuali rotori sul percorso. Il livello vale al massimo due stelle.";
 "hint.watchAd" = "Guarda un video per un aiuto";
 "hint.buyWithGems" = "Compra un aiuto — %ld gemme";
 "hint.goPro" = "Aiuti illimitati con Pro";
@@ -187,11 +189,11 @@
 /* MARK: - Paywall */
 "paywall.title" = "Fieldweave Pro";
 "paywall.headline.general" = "Tutto sbloccato, e zero pubblicità.";
-"paywall.headline.proTrack" = "Il percorso Pro apre prima più facce del cubo, con più rotori e barriere.";
+"paywall.headline.proTrack" = "Il percorso Pro apre prima più facce del cubo, con percorsi avanzati e barriere.";
 "paywall.headline.removeAds" = "Pro toglie ogni pubblicità — e sblocca anche tutto il resto del gioco.";
 "paywall.headline.hints" = "Con Pro gli aiuti sono illimitati.";
 "paywall.headline.cosmetic" = "Questo stile fa parte di Pro, insieme a tutti gli altri.";
-"paywall.benefit.proTrack" = "Laboratori avanzati — più rotori, barriere, infinito";
+"paywall.benefit.proTrack" = "Laboratori avanzati — percorsi difficili, barriere, infinito";
 "paywall.benefit.noAds" = "Nessuna pubblicità, di nessun tipo";
 "paywall.benefit.skins" = "Tutti i colori del campo, tracce di flusso, sfondi e gusci";
 "paywall.benefit.hints" = "Aiuti illimitati";
@@ -226,7 +228,7 @@
 "settings.haptics" = "Vibrazione";
 "settings.colorBlind" = "Assistenza daltonismo";
 "settings.reduceMotion" = "Riduci il movimento";
-"settings.accessibilityFooter" = "Ogni polo è marcato N o S. L'assistenza daltonismo aggiunge anche una lettera diversa a ogni circuito.";
+"settings.accessibilityFooter" = "Le due estremità di una coppia hanno lo stesso colore. L'assistenza daltonismo aggiunge lo stesso motivo di punti a ogni coppia, così il colore non è l'unico indizio.";
 "settings.restoreFooter" = "Ripristina tutto ciò che è stato acquistato con questo Account Apple, anche su un nuovo dispositivo.";
 "settings.support" = "Assistenza";
 "settings.version" = "Versione";
@@ -237,12 +239,12 @@
 "settings.reset.confirm" = "Azzera";
 
 /* MARK: - Introduzione */
-"onboarding.1.title" = "Attiva da N a S";
-"onboarding.1.body" = "Parti da un polo N e intreccia il percorso sul cubo fino al polo S corrispondente. Le tracce continuano oltre gli spigoli.";
-"onboarding.2.title" = "Ruota i rotori";
-"onboarding.2.body" = "Tocca un rotore per girare le sue due porte. Il circuito passa solo da una porta aperta.";
-"onboarding.3.title" = "Stabilizza il campo";
-"onboarding.3.body" = "Scorri sullo spazio vuoto per ruotare il cubo. Attiva tutti i circuiti e non lasciare tessere attive vuote.";
+"onboarding.1.title" = "Abbina i colori";
+"onboarding.1.body" = "Unisci le due estremità dello stesso colore. Parti da quella che preferisci e prosegui oltre gli spigoli del cubo.";
+"onboarding.2.title" = "Non incrociare i filamenti";
+"onboarding.2.body" = "Due filamenti non possono occupare la stessa tessera. Torna indietro e cerca un altro percorso quando un colore blocca il passaggio.";
+"onboarding.3.title" = "Ruota il cubo";
+"onboarding.3.body" = "Scorri sullo spazio vuoto per ruotare il cubo e collega ogni coppia. Le tessere vuote sono ammesse.";
 "onboarding.next" = "Avanti";
 "onboarding.start" = "Inizia a giocare";
 "onboarding.skip" = "Salta";

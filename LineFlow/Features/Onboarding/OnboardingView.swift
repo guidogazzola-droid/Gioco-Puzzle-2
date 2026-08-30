@@ -12,8 +12,8 @@ struct OnboardingView: View {
     @State private var page = 0
 
     private let pages: [(icon: String, titleKey: LocalizedStringKey, bodyKey: LocalizedStringKey)] = [
-        ("cube.transparent", "onboarding.1.title", "onboarding.1.body"),
-        ("arrow.clockwise.circle.fill", "onboarding.2.title", "onboarding.2.body"),
+        ("link.circle.fill", "onboarding.1.title", "onboarding.1.body"),
+        ("xmark.circle.fill", "onboarding.2.title", "onboarding.2.body"),
         ("rotate.3d", "onboarding.3.title", "onboarding.3.body")
     ]
 
@@ -103,11 +103,6 @@ private struct DemoCubeView: View {
     private func engine(at phase: TimeInterval) -> CubePuzzleEngine {
         let blueprint = Self.blueprint
         var engine = CubePuzzleEngine(blueprint: blueprint)
-        for rotor in blueprint.fluxRotors {
-            while !engine.isRotorAligned(at: rotor.cell) {
-                _ = engine.rotateRotor(at: rotor.cell)
-            }
-        }
         let totalCells = blueprint.solution.reduce(0) { $0 + $1.count }
         let cycle = Double(totalCells) + 6
         let progress = phase.truncatingRemainder(dividingBy: cycle * 0.35) / 0.35

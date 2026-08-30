@@ -1,6 +1,6 @@
 import Foundation
 
-/// The two magnetic poles of one circuit on the cube.
+/// The two interchangeable endpoints of one circuit on the cube.
 public struct CubeEndpoints: Hashable, Codable, Sendable {
     public let start: CubeCell
     public let end: CubeCell
@@ -39,8 +39,10 @@ public struct CubeFluxRotor: Hashable, Codable, Sendable, Identifiable {
 
 /// A guaranteed-solvable puzzle wrapped around a cube.
 ///
-/// Every active surface tile appears exactly once in `solution`. Paths may
-/// cross face seams, so one circuit can physically bend around the object.
+/// `solution` is a non-crossing solvability certificate generated across the
+/// active surface. Players may connect each pair by any valid route and do not
+/// need to cover every tile. Paths may cross face seams, so one circuit can
+/// physically bend around the object.
 public struct CubeLevelBlueprint: Hashable, Codable, Sendable, Identifiable {
     public let level: Int
     public let track: LevelTrack
@@ -107,6 +109,10 @@ public struct CubeLevelBlueprint: Hashable, Codable, Sendable, Identifiable {
 
     /// Rotors are derived from the hidden solution, never placed speculatively.
     public var fluxRotors: [CubeFluxRotor] {
+        // The first 90 levels teach routing around a cube without a second
+        // interaction rule. Advanced levels introduce rotors from level 91.
+        guard level > 90 else { return [] }
+
         var candidates: [(rotor: CubeFluxRotor, isCorner: Bool, rank: UInt64)] = []
 
         for (color, path) in solution.enumerated() where path.count >= 3 {
@@ -141,9 +147,8 @@ public struct CubeLevelBlueprint: Hashable, Codable, Sendable, Identifiable {
             if $0.rank != $1.rank { return $0.rank < $1.rank }
             return $0.rotor.cell < $1.rotor.cell
         }
-        let campaignCount = 1 + min(4, max(0, level - 1) / 14)
-        let trackBonus = track == .pro ? 1 : 0
-        return candidates.prefix(min(candidates.count, min(6, campaignCount + trackBonus)))
+        let campaignCount = 1 + min(4, max(0, level - 91) / 20)
+        return candidates.prefix(min(candidates.count, campaignCount))
             .map(\.rotor)
     }
 

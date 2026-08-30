@@ -39,7 +39,7 @@ struct CubeBoardView: View {
                 Spacer()
                 HStack(spacing: 7) {
                     Image(systemName: "rotate.3d")
-                    Text("game.cube.hint")
+                    Text(hintKey)
                 }
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(Ink.secondary)
@@ -53,7 +53,11 @@ struct CubeBoardView: View {
         .aspectRatio(1, contentMode: .fit)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(accessibilityLabel))
-        .accessibilityHint(Text("game.cube.hint"))
+        .accessibilityHint(Text(hintKey))
+    }
+
+    private var hintKey: LocalizedStringKey {
+        engine.totalRotors > 0 ? "game.cube.hint.rotors" : "game.cube.hint.basic"
     }
 
     private var accessibilityLabel: String {
@@ -269,73 +273,54 @@ private struct CubeBoardRealityView: UIViewRepresentable {
 
         private func addEndpoints(cellSize: Float) {
             for (color, endpoints) in parent.engine.blueprint.endpoints.enumerated() {
-                for (cell, polarity) in [
-                    (endpoints.start, MagneticPolarity.north),
-                    (endpoints.end, MagneticPolarity.south)
-                ] {
+                for cell in [endpoints.start, endpoints.end] {
                     let holder = Entity()
                     holder.position = surfacePosition(cell, lift: 0.075)
                     holder.orientation = faceOrientation(cell.face)
 
                     let circuitColor = UIColor(parent.theme.color(for: color))
+                    let halo = ModelEntity(
+                        mesh: .generateCylinder(height: 0.018, radius: cellSize * 0.36),
+                        materials: [material(circuitColor.withAlphaComponent(0.28), roughness: 0.5, metallic: false)]
+                    )
+                    halo.orientation = simd_quatf(angle: .pi / 2, axis: [1, 0, 0])
+                    halo.position.z = -0.012
+                    holder.addChild(halo)
+
                     let rim = ModelEntity(
-                        mesh: .generateCylinder(height: 0.045, radius: cellSize * 0.29),
+                        mesh: .generateCylinder(height: 0.05, radius: cellSize * 0.31),
                         materials: [material(circuitColor, roughness: 0.24, metallic: true)]
                     )
                     rim.orientation = simd_quatf(angle: .pi / 2, axis: [1, 0, 0])
                     holder.addChild(rim)
 
-                    let poleColor = polarity == .north
-                        ? UIColor(red: 1, green: 0.25, blue: 0.34, alpha: 1)
-                        : UIColor(red: 0.18, green: 0.75, blue: 1, alpha: 1)
+                    let well = ModelEntity(
+                        mesh: .generateCylinder(height: 0.058, radius: cellSize * 0.235),
+                        materials: [material(UIColor(white: 0.025, alpha: 0.98), roughness: 0.62, metallic: false)]
+                    )
+                    well.orientation = simd_quatf(angle: .pi / 2, axis: [1, 0, 0])
+                    well.position.z = 0.022
+                    holder.addChild(well)
+
                     let core = ModelEntity(
-                        mesh: .generateCylinder(height: 0.055, radius: cellSize * 0.205),
-                        materials: [material(poleColor, roughness: 0.34, metallic: false)]
+                        mesh: .generateCylinder(height: 0.063, radius: cellSize * 0.155),
+                        materials: [material(circuitColor, roughness: 0.25, metallic: false)]
                     )
                     core.orientation = simd_quatf(angle: .pi / 2, axis: [1, 0, 0])
-                    core.position.z = 0.024
+                    core.position.z = 0.041
                     holder.addChild(core)
-                    addLetter(polarity, to: holder, cellSize: cellSize, z: 0.058)
+
+                    let glint = ModelEntity(
+                        mesh: .generateSphere(radius: cellSize * 0.038),
+                        materials: [material(UIColor(white: 1, alpha: 0.96), roughness: 0.2, metallic: false)]
+                    )
+                    glint.position = [0, 0, 0.082]
+                    holder.addChild(glint)
                     if parent.colorBlindAssist {
-                        addAssistMarker(color: color, to: holder, cellSize: cellSize, z: 0.064)
+                        addAssistMarker(color: color, to: holder, cellSize: cellSize, z: 0.086)
                     }
                     cubeRoot.addChild(holder)
                 }
-            }
-        }
-
-        private func addLetter(
-            _ polarity: MagneticPolarity,
-            to holder: Entity,
-            cellSize: Float,
-            z: Float
-        ) {
-            let ink = material(UIColor(white: 0.025, alpha: 0.92), roughness: 0.8, metallic: false)
-            let stroke = cellSize * 0.035
-            let height = cellSize * 0.25
-
-            func bar(size: SIMD3<Float>, position: SIMD3<Float>, angle: Float = 0) {
-                let entity = ModelEntity(mesh: .generateBox(size: size), materials: [ink])
-                entity.position = position
-                entity.orientation = simd_quatf(angle: angle, axis: [0, 0, 1])
-                holder.addChild(entity)
-            }
-
-            if polarity == .north {
-                bar(size: [stroke, height, 0.014], position: [-height * 0.27, 0, z])
-                bar(size: [stroke, height, 0.014], position: [height * 0.27, 0, z])
-                bar(
-                    size: [stroke, height * 1.08, 0.014],
-                    position: [0, 0, z],
-                    angle: -.pi / 6
-                )
-            } else {
-                let wide = height * 0.55
-                bar(size: [wide, stroke, 0.014], position: [0, height * 0.40, z])
-                bar(size: [wide, stroke, 0.014], position: [0, 0, z])
-                bar(size: [wide, stroke, 0.014], position: [0, -height * 0.40, z])
-                bar(size: [stroke, height * 0.42, 0.014], position: [-wide * 0.46, height * 0.20, z])
-                bar(size: [stroke, height * 0.42, 0.014], position: [wide * 0.46, -height * 0.20, z])
             }
         }
 

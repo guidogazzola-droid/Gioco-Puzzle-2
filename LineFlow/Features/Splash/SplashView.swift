@@ -10,8 +10,8 @@ import PuzzleKit
 /// settled anyway.
 ///
 /// What it draws is the game's own rule, not decoration borrowed from
-/// somewhere else: flows growing from endpoint to endpoint, filling the grid,
-/// never crossing. In the player's own equipped palette, so a subscriber's
+/// somewhere else: flows growing between matching endpoints without crossing.
+/// In the player's own equipped palette, so a subscriber's
 /// launch looks like their game.
 struct SplashView: View {
 
@@ -149,9 +149,9 @@ struct SplashView: View {
             let color = theme.color(for: index)
             let points = flow.map { center(of: $0, in: board, cell: cell) }
 
-            drawPole(&context, at: points[0], cell: cell, color: color, pole: .north,
+            drawEndpoint(&context, at: points[0], cell: cell, color: color,
                      scale: pop(elapsed, from: Double(index) * 0.03, over: Beat.nodesIn))
-            drawPole(&context, at: points[points.count - 1], cell: cell, color: color, pole: .south,
+            drawEndpoint(&context, at: points[points.count - 1], cell: cell, color: color,
                      scale: pop(elapsed, from: Double(index) * 0.03, over: Beat.nodesIn))
 
             guard grown > 0 else { continue }
@@ -168,26 +168,14 @@ struct SplashView: View {
                 with: .color(color),
                 style: StrokeStyle(lineWidth: cell * 0.30, lineCap: .round, lineJoin: .round)
             )
-            if grown > 0.58, points.count > 5 {
-                drawRotor(
-                    &context,
-                    previous: points[3],
-                    center: points[4],
-                    next: points[5],
-                    cell: cell,
-                    color: color,
-                    scale: pop(elapsed, from: Beat.flowsStart + 0.22, over: 0.20)
-                )
-            }
         }
     }
 
-    private func drawPole(
+    private func drawEndpoint(
         _ context: inout GraphicsContext,
         at point: CGPoint,
         cell: CGFloat,
         color: Color,
-        pole: MagneticPolarity,
         scale: Double
     ) {
         guard scale > 0 else { return }
@@ -207,52 +195,17 @@ struct SplashView: View {
         )
         context.fill(
             Path(ellipseIn: box),
-            with: .color(pole == .north ? Color(hex: "#FF5364") : Color(hex: "#42C9FF"))
+            with: .color(color)
         )
-        var label = context.resolve(
-            Text(pole.rawValue)
-                .font(.system(size: cell * 0.24 * scale, weight: .black, design: .rounded))
-        )
-        label.shading = .color(.black.opacity(0.78))
-        context.draw(label, at: point, anchor: .center)
-    }
-
-    private func drawRotor(
-        _ context: inout GraphicsContext,
-        previous: CGPoint,
-        center: CGPoint,
-        next: CGPoint,
-        cell: CGFloat,
-        color: Color,
-        scale: Double
-    ) {
-        guard scale > 0 else { return }
-        let radius = cell * 0.30 * scale
-        let disc = CGRect(
-            x: center.x - radius, y: center.y - radius,
-            width: radius * 2, height: radius * 2
-        )
-        context.fill(Path(ellipseIn: disc), with: .color(.black.opacity(0.88)))
-        context.stroke(
-            Path(ellipseIn: disc),
-            with: .color(color),
-            lineWidth: max(1, cell * 0.05)
-        )
-
-        var ports = Path()
-        ports.move(to: CGPoint(
-            x: center.x + (previous.x - center.x) * 0.32,
-            y: center.y + (previous.y - center.y) * 0.32
-        ))
-        ports.addLine(to: center)
-        ports.addLine(to: CGPoint(
-            x: center.x + (next.x - center.x) * 0.32,
-            y: center.y + (next.y - center.y) * 0.32
-        ))
-        context.stroke(
-            ports,
-            with: .color(.white.opacity(0.92)),
-            style: StrokeStyle(lineWidth: cell * 0.09, lineCap: .round, lineJoin: .round)
+        let glintRadius = radius * 0.18
+        context.fill(
+            Path(ellipseIn: CGRect(
+                x: point.x - glintRadius,
+                y: point.y - glintRadius,
+                width: glintRadius * 2,
+                height: glintRadius * 2
+            )),
+            with: .color(.white.opacity(0.94))
         )
     }
 

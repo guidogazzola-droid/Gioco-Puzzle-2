@@ -112,9 +112,15 @@ struct GameView: View {
     }
 
     private var subtitleText: String {
-        String(
-            format: NSLocalizedString("game.subtitle", comment: ""),
-            model.progressLabel, model.fieldLabel, model.moves, model.par
+        if model.hasRotors {
+            return String(
+                format: NSLocalizedString("game.subtitle.rotors", comment: ""),
+                model.progressLabel, model.fieldLabel, model.moves, model.par
+            )
+        }
+        return String(
+            format: NSLocalizedString("game.subtitle.basic", comment: ""),
+            model.progressLabel, model.moves, model.par
         )
     }
 
@@ -149,16 +155,16 @@ struct GameView: View {
             .padding(8)
         }
         .overlay(alignment: .topTrailing) {
-            Label("\(model.fieldPercent)%", systemImage: "wave.3.right.circle.fill")
+            Label("\(model.connectionPercent)%", systemImage: "link.circle.fill")
                 .font(.caption2.weight(.bold))
-                .foregroundStyle(model.fieldPercent == 100 ? Ink.gold : Ink.secondary)
+                .foregroundStyle(model.connectionPercent == 100 ? Ink.gold : Ink.secondary)
                 .padding(.horizontal, 9)
                 .padding(.vertical, 6)
                 .background(Capsule().fill(Ink.cardRaised.opacity(0.94)))
                 .overlay(Capsule().strokeBorder(Ink.stroke, lineWidth: 1))
                 .accessibilityLabel(Text(String(
-                    format: NSLocalizedString("a11y.fieldStability", comment: ""),
-                    model.fieldPercent
+                    format: NSLocalizedString("a11y.connectionProgress", comment: ""),
+                    model.connectionPercent
                 )))
                 .padding(8)
         }

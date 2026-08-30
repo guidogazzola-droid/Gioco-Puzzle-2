@@ -75,12 +75,14 @@ final class GameViewModel {
         "\(engine.connectedColors)/\(engine.colorCount)"
     }
 
+    var hasRotors: Bool { engine.totalRotors > 0 }
+
     var fieldLabel: String {
         "\(engine.alignedRotors)/\(engine.totalRotors)"
     }
 
-    var fieldPercent: Int {
-        Int((engine.fieldStability * 100).rounded())
+    var connectionPercent: Int {
+        Int((engine.completionRatio * 100).rounded())
     }
 
     /// The next campaign level, or `nil` for the daily board.
