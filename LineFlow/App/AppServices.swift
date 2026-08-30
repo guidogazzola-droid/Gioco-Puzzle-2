@@ -66,7 +66,6 @@ final class AppServices {
         gameCenter.onAuthenticated = { [weak self] in
             guard let self else { return }
             gameCenter.submit(LeaderboardRules.standings(for: profile))
-            Task { await self.gameCenter.refreshStandings() }
         }
         gameCenter.authenticate()
     }

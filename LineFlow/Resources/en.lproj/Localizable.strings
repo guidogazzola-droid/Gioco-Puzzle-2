@@ -87,6 +87,11 @@
 "game.action.reset" = "Restart";
 "game.action.hint" = "Hint";
 "game.action.goPro" = "Go Pro";
+"game.standing.title" = "Ranking update";
+"game.standing.open" = "Full rankings";
+"game.standing.gained" = "Up %ld places";
+"game.standing.lost" = "Down %ld places";
+"game.standing.accessibilityHint" = "Opens the complete Game Center rankings.";
 
 /* MARK: - Level complete */
 "complete.perfect" = "Every pair connected!";

@@ -187,6 +187,68 @@ struct CubeInteractionGeometryTests {
 }
 
 @MainActor
+struct LevelStandingsSummaryTests {
+
+    private func standing(
+        _ leaderboard: LeaderboardID,
+        rank: Int,
+        score: String
+    ) -> GameCenterService.Standing {
+        GameCenterService.Standing(
+            leaderboard: leaderboard,
+            rank: rank,
+            formattedScore: score
+        )
+    }
+
+    @Test("a new free level shows stars and the free-track position")
+    func freeTrackSummary() {
+        let summary = LevelStandingsSummary.make(
+            standings: [
+                standing(.dailyTime, rank: 9, score: "0:42"),
+                standing(.freeTrack, rank: 28, score: "20"),
+                standing(.proTrack, rank: 7, score: "4"),
+                standing(.totalStars, rank: 41, score: "55")
+            ],
+            track: .free,
+            previousRanks: [.freeTrack: 32, .totalStars: 41]
+        )
+
+        #expect(summary.items.map(\.leaderboard) == [.totalStars, .freeTrack])
+        #expect(summary.items.map(\.rankChange) == [0, 4])
+    }
+
+    @Test("a Pro level uses the Pro board and reports positions lost")
+    func proTrackSummary() {
+        let summary = LevelStandingsSummary.make(
+            standings: [
+                standing(.totalStars, rank: 12, score: "90"),
+                standing(.freeTrack, rank: 8, score: "25"),
+                standing(.proTrack, rank: 19, score: "11")
+            ],
+            track: .pro,
+            previousRanks: [.totalStars: 10, .proTrack: 18]
+        )
+
+        #expect(summary.items.map(\.leaderboard) == [.totalStars, .proTrack])
+        #expect(summary.items.map(\.rankChange) == [-2, -1])
+    }
+
+    @Test("missing Game Center entries simply produce a smaller banner")
+    func missingEntriesAreOmitted() {
+        let summary = LevelStandingsSummary.make(
+            standings: [standing(.totalStars, rank: 5, score: "120")],
+            track: .free,
+            previousRanks: [:]
+        )
+
+        #expect(summary.items.count == 1)
+        #expect(summary.items.first?.leaderboard == .totalStars)
+        #expect(summary.items.first?.rankChange == 0)
+    }
+}
+
+@MainActor
 struct AppServicesTests {
 
     private func makeServices() -> AppServices {

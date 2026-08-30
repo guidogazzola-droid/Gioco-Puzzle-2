@@ -10,6 +10,9 @@ struct GameView: View {
 
     @State private var model: GameViewModel
     @State private var isShowingPaywall = false
+    @State private var isShowingLeaderboards = false
+    @State private var standingsSummary: LevelStandingsSummary?
+    @State private var previousRanks: [LeaderboardID: Int] = [:]
 
     init(model: GameViewModel) {
         _model = State(initialValue: model)
@@ -47,7 +50,18 @@ struct GameView: View {
                 .zIndex(1)
             }
         }
+        .overlay(alignment: .top) {
+            if let standingsSummary, !model.isShowingCompletion {
+                LevelStandingsBanner(summary: standingsSummary) {
+                    isShowingLeaderboards = true
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 66)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
         .animation(.spring(response: 0.35, dampingFraction: 0.8), value: model.isShowingCompletion)
+        .animation(.spring(response: 0.35, dampingFraction: 0.82), value: standingsSummary)
         .navigationBarBackButtonHidden()
         .sheet(isPresented: $model.isShowingHintOptions) {
             HintOptionsView(
@@ -60,10 +74,61 @@ struct GameView: View {
         .sheet(isPresented: $isShowingPaywall) {
             PaywallView(context: .hints)
         }
+        .sheet(isPresented: $isShowingLeaderboards) {
+            LeaderboardsView()
+        }
+        .task(id: standingsTaskID) {
+            await showStandingsForCurrentLevel()
+        }
         .onChange(of: scenePhase) { _, phase in
             // Never let backgrounded time count toward a best-time record.
             if phase == .active { model.resumeClock() } else { model.pauseClock() }
         }
+    }
+
+    private var standingsTaskID: String {
+        "\(model.level)-\(services.gameCenter.isAuthenticated)"
+    }
+
+    /// Waits for the score from the level just completed, then briefly shows
+    /// the fresh Game Center position over the new board.
+    private func showStandingsForCurrentLevel() async {
+        guard !model.mode.isDaily, services.gameCenter.isAuthenticated else {
+            standingsSummary = nil
+            return
+        }
+
+        if previousRanks.isEmpty {
+            previousRanks = Dictionary(uniqueKeysWithValues:
+                services.gameCenter.standings.map { ($0.leaderboard, $0.rank) }
+            )
+        }
+
+        await services.gameCenter.refreshStandingsAfterPendingSubmission()
+        guard !Task.isCancelled else { return }
+
+        let standings = services.gameCenter.standings
+        let summary = LevelStandingsSummary.make(
+            standings: standings,
+            track: model.track,
+            previousRanks: previousRanks
+        )
+        previousRanks = Dictionary(uniqueKeysWithValues:
+            standings.map { ($0.leaderboard, $0.rank) }
+        )
+        guard !summary.items.isEmpty else {
+            standingsSummary = nil
+            return
+        }
+
+        standingsSummary = summary
+        do {
+            try await Task.sleep(for: .seconds(5))
+        } catch {
+            return
+        }
+        guard !Task.isCancelled else { return }
+        standingsSummary = nil
     }
 
     // MARK: - Header

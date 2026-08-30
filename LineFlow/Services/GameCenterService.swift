@@ -40,6 +40,9 @@ final class GameCenterService {
     var onAuthenticated: (() -> Void)?
 
     private var hasStartedAuthentication = false
+    /// Score submissions are serialized so a standings refresh can never race
+    /// ahead of the score that triggered it.
+    private var pendingSubmission: Task<Void, Never>?
 
     // MARK: - Authentication
 
@@ -86,7 +89,10 @@ final class GameCenterService {
     /// lost to a dead connection recover on its own.
     func submit(_ submissions: [LeaderboardSubmission]) {
         guard isAuthenticated, !submissions.isEmpty else { return }
-        Task { [submissions] in
+        let previousSubmission = pendingSubmission
+        pendingSubmission = Task { [weak self, submissions] in
+            await previousSubmission?.value
+            guard let self, self.isAuthenticated else { return }
             for submission in submissions {
                 do {
                     try await GKLeaderboard.submitScore(
@@ -99,9 +105,13 @@ final class GameCenterService {
                     // Offline, or an identifier that does not exist in App
                     // Store Connect. The second one is silent in production,
                     // so it is worth surfacing here while developing.
-                    lastError = error.localizedDescription
+                    self.lastError = error.localizedDescription
                 }
             }
+            // Game Center normally reflects the new score immediately. Doing
+            // this in the same serialized task guarantees the next-level
+            // banner never reads the old rank before submission completes.
+            await self.refreshStandings()
         }
     }
 
@@ -142,6 +152,16 @@ final class GameCenterService {
             // Offline is the common case. Keep whatever was shown last rather
             // than blanking the card.
             lastError = error.localizedDescription
+        }
+    }
+
+    /// Used by level transitions that must show the rank produced by the most
+    /// recent score, rather than whatever happened to be cached beforehand.
+    func refreshStandingsAfterPendingSubmission() async {
+        if let pendingSubmission {
+            await pendingSubmission.value
+        } else {
+            await refreshStandings()
         }
     }
 

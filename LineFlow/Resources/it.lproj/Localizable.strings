@@ -87,6 +87,11 @@
 "game.action.reset" = "Ricomincia";
 "game.action.hint" = "Aiuto";
 "game.action.goPro" = "Passa a Pro";
+"game.standing.title" = "Classifica aggiornata";
+"game.standing.open" = "Classifica completa";
+"game.standing.gained" = "Hai guadagnato %ld posizioni";
+"game.standing.lost" = "Hai perso %ld posizioni";
+"game.standing.accessibilityHint" = "Apre le classifiche complete di Game Center.";
 
 /* MARK: - Livello completato */
 "complete.perfect" = "Tutte le coppie unite!";
