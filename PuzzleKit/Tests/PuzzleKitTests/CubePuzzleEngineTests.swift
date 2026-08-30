@@ -102,9 +102,12 @@ struct CubePuzzleEngineTests {
         #expect(draw(&engine, path: middlePath))
         let protectedPath = engine.paths[1]
 
-        #expect(engine.beginDrag(at: cell(0, 0)))
-        #expect(engine.extendDrag(to: cell(1, 0)))
-        #expect(!engine.extendDrag(to: cell(1, 1)))
+        let didBegin = engine.beginDrag(at: cell(0, 0))
+        #expect(didBegin)
+        let didExtend = engine.extendDrag(to: cell(1, 0))
+        #expect(didExtend)
+        let didCross = engine.extendDrag(to: cell(1, 1))
+        #expect(!didCross)
         engine.endDrag()
 
         #expect(engine.paths[1] == protectedPath)
