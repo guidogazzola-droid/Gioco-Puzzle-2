@@ -28,6 +28,21 @@ public enum DailyChallenge {
         blueprint(forDay: DayKey.key(for: date, calendar: calendar))
     }
 
+    public static func cubeBlueprint(forDay day: String) -> CubeLevelBlueprint {
+        CubeLevelGenerator.generate(
+            level: level(forDay: day),
+            track: .free,
+            salt: salt(forDay: day)
+        )
+    }
+
+    public static func cubeBlueprint(
+        for date: Date,
+        calendar: Calendar = .current
+    ) -> CubeLevelBlueprint {
+        cubeBlueprint(forDay: DayKey.key(for: date, calendar: calendar))
+    }
+
     /// Bonus gems on top of the normal level award, so the daily is worth the
     /// detour even once the player has cleared that difficulty band.
     public static func bonusGems(stars: Int, streak: Int) -> Int {

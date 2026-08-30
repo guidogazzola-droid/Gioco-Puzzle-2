@@ -92,9 +92,19 @@ public enum FluxOrientation: String, Codable, Sendable, Hashable {
         next: Coordinate
     ) -> FluxOrientation? {
         guard let first = FieldDirection.between(cell, previous),
-              let second = FieldDirection.between(cell, next),
-              first != second
+              let second = FieldDirection.between(cell, next)
         else { return nil }
+
+        return connecting(first, second)
+    }
+
+    /// The rotor shape exposing two local ports. Cube cells use the same six
+    /// physical pieces as flat cells; only their face-local directions differ.
+    public static func connecting(
+        _ first: FieldDirection,
+        _ second: FieldDirection
+    ) -> FluxOrientation? {
+        guard first != second else { return nil }
 
         let ports: Set<FieldDirection> = [first, second]
         if ports == [.east, .west] { return .horizontal }

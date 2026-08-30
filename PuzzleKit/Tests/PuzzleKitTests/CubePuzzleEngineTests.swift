@@ -1,0 +1,91 @@
+import Testing
+@testable import PuzzleKit
+
+struct CubePuzzleEngineTests {
+    @discardableResult
+    private func draw(_ engine: inout CubePuzzleEngine, path: [CubeCell]) -> Bool {
+        guard let color = engine.blueprint.endpointColor(at: path[0]) else { return false }
+        for rotor in engine.blueprint.fluxRotors where rotor.color == color {
+            while !engine.isRotorAligned(at: rotor.cell) {
+                _ = engine.rotateRotor(at: rotor.cell)
+            }
+        }
+        guard engine.beginDrag(at: path[0]) else { return false }
+        for cell in path.dropFirst() {
+            guard engine.extendDrag(to: cell) else {
+                engine.endDrag()
+                return false
+            }
+        }
+        engine.endDrag()
+        return true
+    }
+
+    @Test("the generated solution wins around cube edges", arguments: [1, 12, 40, 80])
+    func solvesAtPar(level: Int) {
+        var engine = CubePuzzleEngine(
+            blueprint: CubeLevelGenerator.generate(level: level, track: .free)
+        )
+        for path in engine.blueprint.solution {
+            #expect(draw(&engine, path: path))
+        }
+        #expect(engine.isSolved)
+        #expect(engine.moves == engine.parMoves)
+        #expect(engine.completionRatio == 1)
+        #expect(engine.connectedColors == engine.colorCount)
+    }
+
+    @Test("a trail can cross a folded seam without teleporting")
+    func seamTraversal() {
+        let board = CubeLevelGenerator.generate(level: 40, track: .free)
+        guard let path = board.solution.first(where: { path in
+            zip(path, path.dropFirst()).contains { $0.0.face != $0.1.face }
+        }) else {
+            Issue.record("expected a circuit that crosses a seam")
+            return
+        }
+        var engine = CubePuzzleEngine(blueprint: board)
+        #expect(draw(&engine, path: path))
+        #expect(engine.isConnected(color: board.endpointColor(at: path[0])!))
+    }
+
+    @Test("south poles cannot energise a circuit")
+    func polarityIsDirectional() {
+        let board = CubeLevelGenerator.generate(level: 1, track: .free)
+        var engine = CubePuzzleEngine(blueprint: board)
+        #expect(!engine.beginDrag(at: board.endpoints[0].end))
+        #expect(engine.beginDrag(at: board.endpoints[0].start))
+    }
+
+    @Test("misaligned cube rotors block current")
+    func rotorsGateTrails() {
+        let board = CubeLevelGenerator.generate(level: 25, track: .free)
+        let rotor = board.fluxRotors[0]
+        let path = board.solution[rotor.color]
+        var engine = CubePuzzleEngine(blueprint: board)
+        #expect(engine.beginDrag(at: path[0]))
+        var reachedEnd = true
+        for cell in path.dropFirst() {
+            if !engine.extendDrag(to: cell) {
+                reachedEnd = false
+                break
+            }
+        }
+        engine.endDrag()
+        #expect(!reachedEnd)
+    }
+
+    @Test("hints and reset preserve cube invariants")
+    func hintAndReset() {
+        let board = CubeLevelGenerator.generate(level: 55, track: .pro)
+        var engine = CubePuzzleEngine(blueprint: board)
+        let color = engine.revealHint()
+        #expect(color != nil)
+        if let color { #expect(engine.paths[color] == board.solution[color]) }
+        #expect(engine.hintsUsed == 1)
+        engine.reset()
+        #expect(engine.filledCells == 0)
+        #expect(engine.moves == 0)
+        #expect(engine.hintsUsed == 0)
+    }
+}
