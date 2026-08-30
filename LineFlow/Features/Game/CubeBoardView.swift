@@ -124,6 +124,8 @@ private struct CubeBoardRealityView: UIViewRepresentable {
 
         private let cubeHalfExtent: Float = 1.18
         private let tileDepth: Float = 0.045
+        private let cameraPosition: SIMD3<Float> = [0, 0, 5.45]
+        private static let occluderName = "cube-touch-occluder"
 
         init(parent: CubeBoardRealityView) {
             self.parent = parent
@@ -136,7 +138,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
 
             let camera = PerspectiveCamera()
             camera.camera.fieldOfViewInDegrees = 40
-            camera.position = [0, 0, 5.45]
+            camera.position = cameraPosition
             worldAnchor.addChild(camera)
 
             let keyLight = DirectionalLight()
@@ -189,6 +191,10 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                 mesh: .generateBox(size: cubeHalfExtent * 1.94),
                 materials: [material(.init(white: 0.035, alpha: 1), roughness: 0.34, metallic: true)]
             )
+            // Stop rays passing through the small gaps between visible tiles
+            // and selecting a tile on the rear face of the cube.
+            core.name = Self.occluderName
+            core.generateCollisionShapes(recursive: false)
             cubeRoot.addChild(core)
 
             let side = parent.engine.blueprint.side
@@ -558,9 +564,14 @@ private struct CubeBoardRealityView: UIViewRepresentable {
 
         private func hitCell(at point: CGPoint) -> CubeCell? {
             guard let hit = view?.hitTest(point).first else { return nil }
+            if hit.entity.name == Self.occluderName { return nil }
+
             var entity: Entity? = hit.entity
             while let current = entity {
-                if let cell = Self.cell(from: current.name) { return cell }
+                if current.name == Self.occluderName { return nil }
+                if let cell = Self.cell(from: current.name) {
+                    return isFaceTouchable(cell.face) ? cell : nil
+                }
                 entity = current.parent
             }
             return nil
@@ -580,7 +591,9 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                 let cell = queue[cursor]
                 cursor += 1
                 for neighbour in cell.neighbours(side: blueprint.side)
-                where blueprint.isPlayable(neighbour) && seen.insert(neighbour).inserted {
+                where blueprint.isPlayable(neighbour)
+                    && isFaceTouchable(neighbour.face)
+                    && seen.insert(neighbour).inserted {
                     previous[neighbour] = cell
                     if neighbour == end {
                         var result = [end]
@@ -595,6 +608,15 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                 }
             }
             return []
+        }
+
+        private func isFaceTouchable(_ face: CubeFace) -> Bool {
+            CubeInteractionGeometry.isFaceTouchable(
+                localNormal: vector(face.normal),
+                cubeOrientation: cubeRoot.orientation,
+                cameraPosition: cameraPosition,
+                cubeHalfExtent: cubeHalfExtent
+            )
         }
 
         func gestureRecognizer(

@@ -1,4 +1,5 @@
 import Foundation
+import simd
 import Testing
 @testable import LineFlow
 @testable import PuzzleKit
@@ -134,6 +135,54 @@ struct BoardGeometryTests {
         let geometry = BoardGeometry(size: .zero, columns: 5, rows: 5)
         #expect(geometry.cellSize >= 1)
         #expect(geometry.columns == 5)
+    }
+}
+
+struct CubeInteractionGeometryTests {
+    private let camera: SIMD3<Float> = [0, 0, 5.45]
+
+    @Test("only the front side of an unrotated cube accepts touches")
+    func frontAndBackFaces() {
+        let identity = simd_quatf(angle: 0, axis: [0, 1, 0])
+        #expect(CubeInteractionGeometry.isFaceTouchable(
+            localNormal: [0, 0, 1],
+            cubeOrientation: identity,
+            cameraPosition: camera,
+            cubeHalfExtent: 1.18
+        ))
+        #expect(!CubeInteractionGeometry.isFaceTouchable(
+            localNormal: [0, 0, -1],
+            cubeOrientation: identity,
+            cameraPosition: camera,
+            cubeHalfExtent: 1.18
+        ))
+    }
+
+    @Test("a grazing face is rejected to keep cube edges unambiguous")
+    func grazingFace() {
+        #expect(!CubeInteractionGeometry.isFaceTouchable(
+            localNormal: [1, 0, 0],
+            cubeOrientation: simd_quatf(angle: 0, axis: [0, 1, 0]),
+            cameraPosition: camera,
+            cubeHalfExtent: 1.18
+        ))
+    }
+
+    @Test("rotating the cube transfers touchability to the newly visible face")
+    func rotatedFace() {
+        let turnRightFaceForward = simd_quatf(angle: -.pi / 2, axis: [0, 1, 0])
+        #expect(CubeInteractionGeometry.isFaceTouchable(
+            localNormal: [1, 0, 0],
+            cubeOrientation: turnRightFaceForward,
+            cameraPosition: camera,
+            cubeHalfExtent: 1.18
+        ))
+        #expect(!CubeInteractionGeometry.isFaceTouchable(
+            localNormal: [-1, 0, 0],
+            cubeOrientation: turnRightFaceForward,
+            cameraPosition: camera,
+            cubeHalfExtent: 1.18
+        ))
     }
 }
 
