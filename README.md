@@ -1,13 +1,14 @@
 # Fieldweave
 
-A magnetic-routing puzzle for iOS, free to play, monetised with ads, one-off
-purchases and a monthly subscription.
+A three-dimensional magnetic-routing puzzle for iOS, free to play, monetised
+with ads, one-off purchases and a monthly subscription.
 
 Energise coloured circuits from N to S, rotate two-port field elements until
-the flux can pass, and leave no square outside the magnetic weave. Rotors are
-physical constraints rather than decoration: a closed port rejects the trail,
-and both rotor turns and circuit drags count against par. There are no level
-files: **every field is generated on the device from its level number**.
+the flux can pass, and weave trails around the edges of a freely rotatable cube.
+Rotors are physical constraints rather than decoration: a closed port rejects
+the trail, and both rotor turns and circuit drags count against par. There are
+no level files: **every cubical field is generated on the device from its level
+number**.
 
 <p align="center">
   <img src="LineFlow/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="140" alt="Fieldweave app icon">
@@ -18,19 +19,19 @@ files: **every field is generated on the device from its level number**.
 ## Why generated levels
 
 A puzzle game usually ships hand-authored levels, and the content budget then
-caps the campaign. Fieldweave builds each board by *construction* instead: the
-playable cells are partitioned into vertex-disjoint simple circuits. The player
-receives their N/S poles plus a deterministic set of initially misaligned flux
-rotors derived from the hidden covering. Because the partition already covers
-the board and every rotor has a valid target orientation, a full-field solution
-provably exists — the generator just built one. No solver runs at runtime.
+caps the campaign. Fieldweave builds each level by *construction* instead: the
+active tiles on two to six cube faces are partitioned into vertex-disjoint
+simple circuits. The generator uses exact fold transforms at all twelve edges,
+forces paths to bend between faces, and derives every rotor from the hidden
+covering. The partition itself is therefore a full-surface solution; no solver
+runs at runtime.
 
 Generation is seeded and deterministic, so level 137 is the same board on every
 device and in every future build, without a single byte of level data.
 
-`tools/generator_reference.py` is a line-for-line Python twin of the Swift
-generator, used to validate the algorithm end to end: **800 levels across both
-tracks, zero invalid boards, worst colour-length imbalance 1.9x**.
+The Foundation-only `PuzzleKit` suite sweeps both flat compatibility levels and
+the new cubical campaign, including every grid size, face count and Pro wall
+stage. It also proves that every seam mapping is reversible.
 
 ## Business model
 
@@ -39,7 +40,7 @@ tracks, zero invalid boards, worst colour-length imbalance 1.9x**.
 | Endless free campaign | ✅ | ✅ | ✅ |
 | Daily puzzle | ✅ | ✅ | ✅ |
 | Ads | interstitial every 3 levels | none | none |
-| Pro lab track | — | — | ✅ bigger grids, denser rotor fields, barriers |
+| Pro lab track | — | — | ✅ more faces sooner, denser rotor fields, barriers |
 | Cosmetics | earn with stars and gems | earn with stars and gems | ✅ the whole catalogue |
 | Monthly exclusive drop | — | — | ✅ |
 | Hints | earned or bought | earned or bought | ✅ unlimited |
@@ -59,8 +60,9 @@ ad pacing rules and how to wire a real ad network.
 Requirements: **Xcode 16 or newer**, iOS 18 deployment target.
 
 ```bash
-git clone <this repo>
+git clone https://github.com/guidogazzola-droid/Gioco-Puzzle-2.git
 cd Gioco-Puzzle-2
+git switch claude/puzzle-game-app-store-2xi1vr
 open LineFlow.xcodeproj          # then just run
 ```
 
@@ -85,14 +87,14 @@ Xcode project. CI runs the same script on Linux plus the Swift suites on macOS.
 
 ```
 PuzzleKit/              Swift package: all game logic, no UI, no UIKit
-  Core/                 seeded RNG, coordinates
-  Generation/           the level generator, difficulty curve, validator
+  Core/                 seeded RNG, cube faces, coordinates and seam topology
+  Generation/           cubical generator, difficulty curve, validator
   Gameplay/             the drag/win engine, scoring
   Progression/          save file, chapters, daily challenge, streaks
   Economy/              products, entitlements, cosmetics, ad pacing
 LineFlow/              the iOS app
   App/                  entry point, service graph, routing
-  Features/             board renderer, home, map, shop, paywall, settings
+  Features/             RealityKit cube, home, map, shop, paywall, settings
   Services/             StoreKit, ads, persistence, haptics
   DesignSystem/         theme, components, backdrop
   Resources/            asset catalogue, en.lproj, it.lproj

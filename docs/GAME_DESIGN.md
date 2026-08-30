@@ -2,19 +2,19 @@
 
 ## The mechanic
 
-A field is a grid of directional magnetic circuits. Each circuit has an **N
-source**, an **S destination**, and zero or more two-port rotors embedded in its
-possible route. Drag from N to S to energise a circuit; tap a rotor to turn it
-clockwise. A closed port physically rejects the trail. The field is stable when
-**every N reaches its matching S, every rotor is aligned, and every playable
-cell is energised**.
+A field is a directional magnetic network wrapped around a freely rotatable
+cube. Each circuit has an **N source**, an **S destination**, and zero or more
+two-port rotors embedded in its route. Drag from N to S and continue around cube
+edges; tap a rotor to turn it clockwise. A closed port physically rejects the
+trail. The field is stable when **every N reaches its matching S, every rotor is
+aligned, and every active surface tile is energised**.
 
-Requiring full coverage is what makes the puzzle interesting. Without it almost
-every board collapses into straight lines and the difficulty curve has nothing
-to climb. With it, the player has to reason about the whole board rather than
-one pair at a time.
+Requiring full surface coverage makes cube rotation part of the reasoning. A
+route disappearing over an edge still occupies space on the neighbouring face,
+so the player must remember and inspect the whole object rather than solve six
+independent flat boards.
 
-Interaction rules, all implemented in `PuzzleEngine` and unit-tested:
+Interaction rules, all implemented in `CubePuzzleEngine` and unit-tested:
 
 | Action | Result |
 |---|---|
@@ -29,45 +29,52 @@ Interaction rules, all implemented in `PuzzleEngine` and unit-tested:
 | Drag onto another colour's endpoint | Rejected — endpoints are never passable |
 | Drag onto a wall | Rejected |
 | Reach the far endpoint | The colour locks |
+| Swipe from an empty tile | Rotates the cube freely |
+| Lift, rotate, resume at a loose end | Continues the same scored action |
 
-A drag that moves faster than one cell per frame is filled in by
-`BoardGeometry.route`, which walks the longer axis first. Without it, a quick
-flick leaves gaps in the trail and the game feels broken on the exact swipe
-players use most.
+A fast drag is interpolated through the shortest valid surface route. At a seam
+the topology maps face-local coordinates exactly and reversibly, so a trail
+bends around an edge rather than teleporting through the cube.
 
 ## Generation
 
-Levels are generated, never authored. `LevelGenerator` runs four steps:
+Levels are generated, never authored. `CubeLevelGenerator` runs these steps:
 
-1. **Walls.** On the Pro track only, wall cells are carved one at a time, each
-   checked to keep the remaining board orthogonally connected. An island of
-   free cells would be unsolvable.
-2. **Partition.** Every free cell is covered by vertex-disjoint simple paths.
+1. **Surface.** The difficulty curve activates two to six faces at 3×3, 4×4 or
+   5×5 tiles per face. `CubeTopology` supplies the four neighbours of every tile,
+   including exact folds across all twelve edges.
+2. **Walls.** On the Pro track only, wall tiles are carved one at a time, each
+   checked to keep the remaining surface graph connected.
+3. **Partition.** Every free tile is covered by vertex-disjoint simple paths.
    Paths grow from *both* ends with a Warnsdorff-style bias — step onto the
    neighbour with the fewest onward options — which is what stops the board
    fragmenting into stranded single cells. A length cap of 1.5x the average
    stops any one colour swallowing the board.
-3. **Repair.** Any length-1 path is grafted onto a neighbour. Grafting onto an
+4. **Repair.** Any length-1 path is grafted onto a neighbour. Grafting onto an
    endpoint merges two paths; grafting mid-path splits the host. Both keep the
    covering valid, so a singleton is always repairable.
-4. **Circuit count.** Paths are merged (shortest pair first, which keeps lengths
+5. **Circuit count.** Paths are merged (shortest pair first, which keeps lengths
    even) or split (longest first) until the count matches the curve, then a
    rebalance pass evens out the lengths without changing the count.
-5. **Magnetic field.** Internal path cells become rotors. Corners are preferred
+6. **Cube constraint.** Candidates must contain a rising minimum number of seam
+   crossings. This prevents the renderer from being a cosmetic cube holding
+   unrelated 2D puzzles.
+7. **Magnetic field.** Internal path tiles become rotors. Corners are preferred
    because their four-state cycle creates the strongest routing decision; the
    target orientation is derived from the covering, and a deterministic hash
    chooses a different initial orientation. Density rises from one rotor on the
-   first field to five in advanced labs.
+   first field to six in advanced labs.
 
-Twelve candidate boards are built per level and scored on how close their
-turn density is to a target, how many two-cell colours they contain, and
-whether any colour has swallowed the board. The best one ships.
+Ten valid candidate cubes are built per level and scored on turn density, seam
+use and colour balance. A deterministic Hamiltonian fallback covers the surface
+if every random attempt fails; odd full cubes use a parity-safe joined face
+pair rather than an invalid straight concatenation.
 
 Because the partition covers every playable cell and each path is a simple
 path, the partition *is* a solution. Solvability is a property of construction,
 not of search — there is no solver at runtime and there is no way to ship an
-unsolvable board. `LevelValidator` asserts the invariants anyway, on every
-board, before it reaches the player.
+unsolvable board. `CubeLevelValidator` asserts the invariants anyway, on every
+cube, before it reaches the player.
 
 ### Determinism
 
@@ -88,34 +95,33 @@ A designed stage table, not a linear ramp: the curve flattens where
 hybrid-casual funnels lose players (the first ten levels, and again around
 level 30) instead of climbing straight through them.
 
-| Free track | Board | Colours |
-|---|---|---|
-| 1–6 | 5×5 | 3 |
-| 7–14 | 5×5 | 4 |
-| 15–24 | 6×6 | 4 |
-| 25–36 | 6×6 | 5 |
-| 37–50 | 7×7 | 5 |
-| 51–66 | 7×7 | 6 |
-| 67–84 | 8×8 | 6 |
-| 85–104 | 8×8 | 7 |
-| 105–129 | 9×9 | 7 |
-| 130+ | 9×9 | 8 |
+| Free track | Tile grid per face | Active faces | Circuits |
+|---|---:|---:|---:|
+| 1–4 | 3×3 | 2 | 3 |
+| 5–11 | 3×3 | 3 | 4 |
+| 12–21 | 3×3 | 4 | 5 |
+| 22–31 | 3×3 | 5 | 6 |
+| 32–45 | 3×3 | 6 | 7 |
+| 46–59 | 4×4 | 4 | 7 |
+| 60–77 | 4×4 | 5 | 8 |
+| 78–104 | 4×4 | 6 | 9 |
+| 105–134 | 5×5 | 5 | 11 |
+| 135+ | 5×5 | 6 | 12 |
 
-The Pro track starts at 7×7 with 5 colours and reaches 12×12 with 13, and adds
-wall cells from level 15 (ramping to 10% of the board). That mechanical gap is
-what the subscription actually sells — not a bigger number, a different puzzle.
+The Pro track begins on four faces, reaches all six by level 8, and eventually
+uses 5×5 tiles with 14 circuits. It also adds connected wall tiles after level
+12. The subscription therefore changes how soon the object unfolds and how
+dense its field becomes, without introducing a separate save or product.
 
 On top of the table:
 
 - **Boss levels** every 10th: one size step up and one extra colour.
 - **Breather levels** every 7th non-boss: two colours fewer, no walls. Failure
   streaks are what end sessions; a deliberate easy board interrupts them.
-- **Silhouette cycle**: boards go square, short, square, narrow, wide, square on
-  a six-level cycle, so late levels keep changing shape after the size curve
-  has plateaued.
-- **Twistiness target**: the candidate scorer aims at 0.18 turns per cell early
-  and 0.52 late on the free track, 0.34 to 0.62 on Pro. Early boards read
-  cleanly; late boards are knotted.
+- **Face unfolding**: the first levels teach one visible corner; later stages
+  demand spatial memory across the complete object.
+- **Twistiness target**: the candidate scorer raises turn density gradually and
+  separately rewards seam use. Early cubes read cleanly; late ones are knotted.
 
 ## Scoring
 
@@ -149,9 +155,8 @@ campaign cannot be farmed, and doubled for Pro subscribers.
 ## Accessibility
 
 - Every source and destination is permanently labelled **N** or **S**.
-  **Colour-blind assist** also puts a distinct letter on every circuit, so
-  colour is never the only way to match it. This matters more here than in
-  most games: a board with 14 colours is unplayable if two of them read alike.
+  **Colour-blind assist** also adds a unique four-pip binary marker to every
+  endpoint pair, so colour is never the only way to match up to 14 circuits.
 - Palettes are chosen by **maximising the minimum CIE76 distance** between
   their colours, verified at build time (worst case across all eight palettes:
   ΔE 30.9, threshold 22). Distinguishable colours are a gameplay requirement

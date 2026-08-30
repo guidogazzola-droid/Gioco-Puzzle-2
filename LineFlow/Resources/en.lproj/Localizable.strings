@@ -37,8 +37,8 @@
 "home.daily.play" = "Play";
 "home.daily.replay" = "Play again";
 "home.pro.title" = "Advanced lab";
-"home.pro.subtitle" = "Bigger labs, denser rotor fields and magnetic barriers. Included with Fieldweave Pro.";
-"home.pro.subtitleActive" = "Bigger labs, denser rotor fields and magnetic barriers. Your subscription is active.";
+"home.pro.subtitle" = "More cube faces sooner, denser rotor fields and magnetic barriers. Included with Fieldweave Pro.";
+"home.pro.subtitleActive" = "More cube faces sooner, denser rotor fields and magnetic barriers. Your subscription is active.";
 "home.pro.play" = "Play the Pro track";
 "home.pro.unlock" = "See Fieldweave Pro";
 "home.shop" = "Field styles";
@@ -187,7 +187,7 @@
 /* MARK: - Paywall */
 "paywall.title" = "Fieldweave Pro";
 "paywall.headline.general" = "Everything unlocked, and no ads.";
-"paywall.headline.proTrack" = "The Pro track is a second magnetic lab: bigger grids, denser rotor fields and barriers.";
+"paywall.headline.proTrack" = "The Pro track unfolds more cube faces sooner, with denser rotor fields and barriers.";
 "paywall.headline.removeAds" = "Pro removes every ad — and unlocks the rest of the game too.";
 "paywall.headline.hints" = "Pro gives you unlimited hints.";
 "paywall.headline.cosmetic" = "This style is part of Pro, along with every other one.";

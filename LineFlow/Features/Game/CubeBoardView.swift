@@ -111,6 +111,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
         private var tileEntities: [CubeCell: ModelEntity] = [:]
         private var renderedBlueprintID: String?
         private var renderedTheme: GameTheme?
+        private var renderedAssist = false
 
         private enum PanMode { case drawing, rotating }
         private var panMode: PanMode?
@@ -160,7 +161,8 @@ private struct CubeBoardRealityView: UIViewRepresentable {
         func refreshIfNeeded() {
             let blueprintChanged = renderedBlueprintID != parent.engine.blueprint.id
             let themeChanged = renderedTheme != parent.theme
-            if blueprintChanged || themeChanged {
+            let assistChanged = renderedAssist != parent.colorBlindAssist
+            if blueprintChanged || themeChanged || assistChanged {
                 rebuildStaticScene(resetRotation: blueprintChanged)
             }
             updateDynamicScene()
@@ -171,6 +173,7 @@ private struct CubeBoardRealityView: UIViewRepresentable {
             tileEntities.removeAll(keepingCapacity: true)
             renderedBlueprintID = parent.engine.blueprint.id
             renderedTheme = parent.theme
+            renderedAssist = parent.colorBlindAssist
 
             if resetRotation {
                 let yaw = simd_quatf(angle: -.pi / 5.5, axis: [0, 1, 0])
@@ -293,6 +296,9 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                     core.position.z = 0.024
                     holder.addChild(core)
                     addLetter(polarity, to: holder, cellSize: cellSize, z: 0.058)
+                    if parent.colorBlindAssist {
+                        addAssistMarker(color: color, to: holder, cellSize: cellSize, z: 0.064)
+                    }
                     cubeRoot.addChild(holder)
                 }
             }
@@ -330,6 +336,36 @@ private struct CubeBoardRealityView: UIViewRepresentable {
                 bar(size: [wide, stroke, 0.014], position: [0, -height * 0.40, z])
                 bar(size: [stroke, height * 0.42, 0.014], position: [-wide * 0.46, height * 0.20, z])
                 bar(size: [stroke, height * 0.42, 0.014], position: [wide * 0.46, -height * 0.20, z])
+            }
+        }
+
+        /// Four edge pips encode circuit 1...14 in binary. Matching poles have
+        /// the same pattern, so colour is never the only pairing signal.
+        private func addAssistMarker(
+            color: Int,
+            to holder: Entity,
+            cellSize: Float,
+            z: Float
+        ) {
+            let value = color + 1
+            let positions: [SIMD2<Float>] = [
+                [-0.205, 0.205], [0.205, 0.205],
+                [-0.205, -0.205], [0.205, -0.205]
+            ]
+            let pipMaterial = material(
+                UIColor(white: 0.97, alpha: 0.96), roughness: 0.5, metallic: false
+            )
+            for bit in 0..<4 where value & (1 << bit) != 0 {
+                let pip = ModelEntity(
+                    mesh: .generateSphere(radius: cellSize * 0.028),
+                    materials: [pipMaterial]
+                )
+                pip.position = [
+                    positions[bit].x * cellSize,
+                    positions[bit].y * cellSize,
+                    z
+                ]
+                holder.addChild(pip)
             }
         }
 

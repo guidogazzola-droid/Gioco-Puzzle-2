@@ -17,7 +17,7 @@ each step unblocks the next.
       ships `LineFlow/LineFlow.entitlements` declaring it, and a provisioning
       profile that does not match the entitlement fails signing with a message
       that does not mention Game Center at all.
-- [ ] Reserve "Fieldweave: Magnetic Grid" in App Store Connect. A public App
+- [ ] Reserve "Fieldweave: Magnetic Cube" in App Store Connect. A public App
       Store search found no exact Fieldweave game on 28 August 2026; reservation
       in the existing app record is still the authoritative availability check.
 
@@ -27,11 +27,15 @@ each step unblocks the next.
 - [x] Add deterministic two-port rotors that the player rotates and that
       physically gate trail traversal.
 - [x] Count rotor turns in par and expose field stability in the HUD.
+- [x] Move gameplay onto a freely rotatable RealityKit cube with exact,
+      reversible routes across all twelve edges.
+- [x] Force generated solutions to cross face seams, so 3D is a rule rather
+      than a cosmetic presentation of six flat boards.
 - [x] Replace the icon, splash, onboarding, board markers and product copy with
       the magnetic-lab identity.
-- [ ] Capture a short review video showing: S rejects a reverse start; a closed
-      rotor rejects a trail; one tap opens its port; the completed field reaches
-      100% stability.
+- [ ] Capture a short review video showing: an empty-surface swipe rotates the
+      cube; a circuit continues around an edge; S rejects a reverse start; a
+      closed rotor rejects a trail; the completed field reaches 100% stability.
 - [ ] In Review Notes, describe those behaviours and state that this is a
       substantive gameplay redesign following the previous 4.3(a) rejection.
 
@@ -294,8 +298,8 @@ Neither field blocks submission.
 - [ ] TestFlight with real sandbox accounts — the local StoreKit file does not
       exercise Apple's servers.
 - [ ] VoiceOver pass over the board, the map and the paywall.
-- [ ] Check the largest board (Pro level 200, 13×13, 14 colours) on the smallest
-      supported screen.
+- [ ] Check the largest cube (Pro level 200, six 5×5 faces, 14 circuits) on the
+      smallest supported screen, including rotate-and-resume across hidden faces.
 
 ## 8. Store listing
 
@@ -374,11 +378,11 @@ The app is portrait-only, so the screenshots are portrait.
 The first two are what appear in search results, so they carry the whole
 listing:
 
-1. **A board mid-solve.** A puzzle game sells on the puzzle. Pick a board with
-   six or seven colours - busy enough to look interesting, clear enough to read
-   at thumbnail size.
-2. **A Pro board.** Bigger grid, walls, more colours: this is what the
-   subscription buys, and it reads instantly.
+1. **The cube mid-solve.** Use an angle showing three faces and at least one
+   bright circuit bending around an edge; the 3D distinction must read at
+   thumbnail size.
+2. **A Pro cube.** Show all-six-face progression, barriers and more circuits:
+   this is what the subscription accelerates.
 3. **Level complete, three stars.** Shows the scoring loop.
 4. **The style shop.** Shows there is something to collect.
 5. **Leaderboards.** Shows there are other people.

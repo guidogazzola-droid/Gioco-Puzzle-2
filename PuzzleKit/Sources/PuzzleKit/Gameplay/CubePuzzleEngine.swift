@@ -13,6 +13,7 @@ public struct CubePuzzleEngine: Sendable {
     private let endpointOwners: [CubeCell: Int]
     private let rotorsByCell: [CubeCell: CubeFluxRotor]
     private var dragChangedBoard = false
+    private var dragCountsAsMove = true
 
     public init(blueprint: CubeLevelBlueprint) {
         self.blueprint = blueprint
@@ -91,11 +92,17 @@ public struct CubePuzzleEngine: Sendable {
             paths[color] = [cell]
             occupancy[cell] = color
             activeColor = color
+            dragCountsAsMove = true
             return true
         }
         if let color = occupancy[cell], let index = paths[color].firstIndex(of: cell) {
+            let resumesLooseEnd = index == paths[color].count - 1 && !isConnected(color: color)
             truncate(color: color, keepingThrough: index)
-            dragChangedBoard = true
+            dragChangedBoard = !resumesLooseEnd
+            // A path can span more faces than are visible at once. Lifting a
+            // finger, rotating the cube, then continuing from the loose end is
+            // still the same circuit action and must not make par impossible.
+            dragCountsAsMove = !resumesLooseEnd
             activeColor = color
             return true
         }
@@ -139,10 +146,11 @@ public struct CubePuzzleEngine: Sendable {
 
     public mutating func endDrag() {
         activeColor = nil
-        if dragChangedBoard {
+        if dragChangedBoard && dragCountsAsMove {
             moves += 1
-            dragChangedBoard = false
         }
+        dragChangedBoard = false
+        dragCountsAsMove = true
     }
 
     // MARK: - Actions
@@ -171,6 +179,7 @@ public struct CubePuzzleEngine: Sendable {
         hintsUsed = 0
         activeColor = nil
         dragChangedBoard = false
+        dragCountsAsMove = true
         rotorOrientations = Dictionary(
             uniqueKeysWithValues: rotorsByCell.values.map { ($0.cell, $0.initial) }
         )

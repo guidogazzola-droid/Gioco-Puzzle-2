@@ -37,8 +37,8 @@
 "home.daily.play" = "Gioca";
 "home.daily.replay" = "Rigioca";
 "home.pro.title" = "Laboratorio avanzato";
-"home.pro.subtitle" = "Laboratori più grandi, più rotori e barriere magnetiche. Incluso in Fieldweave Pro.";
-"home.pro.subtitleActive" = "Laboratori più grandi, più rotori e barriere magnetiche. Il tuo abbonamento è attivo.";
+"home.pro.subtitle" = "Più facce del cubo fin da subito, più rotori e barriere magnetiche. Incluso in Fieldweave Pro.";
+"home.pro.subtitleActive" = "Più facce del cubo fin da subito, più rotori e barriere magnetiche. Il tuo abbonamento è attivo.";
 "home.pro.play" = "Gioca il percorso Pro";
 "home.pro.unlock" = "Scopri Fieldweave Pro";
 "home.shop" = "Stili del campo";
@@ -187,7 +187,7 @@
 /* MARK: - Paywall */
 "paywall.title" = "Fieldweave Pro";
 "paywall.headline.general" = "Tutto sbloccato, e zero pubblicità.";
-"paywall.headline.proTrack" = "Il percorso Pro è un secondo laboratorio magnetico: griglie più grandi, più rotori e barriere.";
+"paywall.headline.proTrack" = "Il percorso Pro apre prima più facce del cubo, con più rotori e barriere.";
 "paywall.headline.removeAds" = "Pro toglie ogni pubblicità — e sblocca anche tutto il resto del gioco.";
 "paywall.headline.hints" = "Con Pro gli aiuti sono illimitati.";
 "paywall.headline.cosmetic" = "Questo stile fa parte di Pro, insieme a tutti gli altri.";

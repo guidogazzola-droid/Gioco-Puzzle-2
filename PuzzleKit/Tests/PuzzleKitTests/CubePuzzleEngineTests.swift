@@ -93,4 +93,34 @@ struct CubePuzzleEngineTests {
         #expect(engine.moves == 0)
         #expect(engine.hintsUsed == 0)
     }
+
+    @Test("rotating the cube mid-circuit does not make par unreachable")
+    func looseEndResumesWithoutAnotherMove() {
+        let board = CubeLevelGenerator.generate(level: 40, track: .free)
+        guard let path = board.solution.first(where: { $0.count >= 4 }) else {
+            Issue.record("expected a circuit long enough to pause")
+            return
+        }
+        var engine = CubePuzzleEngine(blueprint: board)
+        let color = board.endpointColor(at: path[0])!
+        for rotor in board.fluxRotors where rotor.color == color {
+            while !engine.isRotorAligned(at: rotor.cell) {
+                _ = engine.rotateRotor(at: rotor.cell)
+            }
+        }
+
+        let started = engine.beginDrag(at: path[0])
+        #expect(started)
+        let firstStep = engine.extendDrag(to: path[1])
+        #expect(firstStep)
+        engine.endDrag()
+        let movesAfterFirstRun = engine.moves
+
+        let resumed = engine.beginDrag(at: path[1])
+        #expect(resumed)
+        for cell in path.dropFirst(2) { _ = engine.extendDrag(to: cell) }
+        engine.endDrag()
+        #expect(engine.moves == movesAfterFirstRun)
+        #expect(engine.isConnected(color: color))
+    }
 }

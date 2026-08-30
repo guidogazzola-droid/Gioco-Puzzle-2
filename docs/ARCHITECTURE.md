@@ -38,7 +38,7 @@ pixels, it belongs in PuzzleKit.**
   GameViewModel  Views    AdService
       │
       ▼
-  PuzzleEngine  ←  LevelGenerator
+ CubePuzzleEngine  ←  CubeLevelGenerator
 ```
 
 `AppServices` is the only place the save file, the App Store and the ad network
@@ -63,15 +63,20 @@ entirely.
 
 ## Rendering
 
-The board is a single `Canvas` pass, not a grid of views. A 13×13 field is 169
-cells plus up to 14 trails, 28 magnetic poles, five rotors and their field
-halos; as views that would be a layout pass per frame under a drag, and as one
-draw call it is not.
+`CubeBoardView` embeds a non-AR RealityKit scene in SwiftUI. The camera, lights,
+cube core, surface tiles and collision shapes persist for the life of a level;
+only trail and rotor entities are refreshed while the engine changes. This
+keeps finger tracking responsive without rebuilding up to 150 collision tiles
+on every drag event.
 
-`BoardGeometry` owns the mapping in both directions — point→cell for the
-gesture, cell→rect for the drawing. Keeping it in one value type is what stops
-hit-testing and drawing from drifting apart, which is the classic way a grid
-game ends up feeling "off by half a cell".
+Every tile is named from `(face, x, y)`, so RealityKit hit-testing returns the
+same `CubeCell` used by generation and gameplay. `CubeTopology` owns seam
+folding for all consumers. Trails crossing an edge are rendered as two surface
+segments meeting at a bevel point rather than as a chord through the cube.
+
+An empty-surface pan rotates `cubeRoot`; a pan beginning on N or a loose trail
+end routes current. Lifting to expose a hidden face and resuming the loose end
+does not add another scored move.
 
 `GameTheme` is the one place cosmetic ids become drawing values. Adding a skin
 means adding a catalogue entry and a case in an enum; it never means touching
@@ -92,15 +97,14 @@ copy of that player's progress.
 
 | Suite | Runs with | Covers |
 |---|---|---|
-| `PuzzleKitTests` | `swift test`, anywhere | generation, engine rules, scoring, entitlements, ad pacing, save migration |
-| `LineFlowTests` | Xcode / `xcodebuild test` | persistence on disk, board geometry, service wiring, theme resolution |
+| `PuzzleKitTests` | `swift test`, anywhere | cube topology, generation, engine rules, scoring, entitlements, ad pacing, save migration |
+| `LineFlowTests` | Xcode / `xcodebuild test` | persistence on disk, cubical service wiring, theme resolution, legacy geometry |
 | `tools/verify.py` | Python, anywhere | the generation algorithm as an executable spec, palettes, localisation, product wiring, project file |
 
-The Python harnesses are not a substitute for the Swift tests; they cover what
-a Swift test cannot reach. `tools/generator_reference.py` is a line-for-line
-twin of `LevelGenerator.swift` and is how the algorithm itself was validated —
-800 levels across both tracks with zero invalid boards — independently of the
-port.
+The Python harness remains an independent executable specification for the
+legacy generator and validates shared palettes, localisation, products and the
+project file. Swift tests additionally sweep the cubical generator and prove
+all face-edge transforms reversible at every supported side length.
 
 ## Conventions
 
